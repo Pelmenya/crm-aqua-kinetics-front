@@ -3,10 +3,18 @@ import { AppRoot } from '@telegram-apps/telegram-ui';
 import { Navigate, Route, Routes, HashRouter } from 'react-router-dom';
 
 import { routes } from '@/navigation/routes.tsx';
+import { useEffect } from 'react';
 
 export function App() {
   const lp = useLaunchParams();
   const isDark = useSignal(miniApp.isDark);
+
+  useEffect(() => {
+    // Update the data-theme attribute based on isDark value
+    const theme = isDark === true ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [isDark]);
+
 
   return (
     <AppRoot

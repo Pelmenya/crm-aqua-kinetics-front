@@ -7,7 +7,8 @@ import { Page } from '@/components/Page.tsx';
 
 export const ThemeParamsPage: FC = () => {
   const tp = useSignal(themeParams.state);
-
+  console.log( Object
+    .entries(tp))
   return (
     <Page>
       <List>
