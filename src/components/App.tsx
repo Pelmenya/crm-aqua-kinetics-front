@@ -15,7 +15,6 @@ export function App() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [isDark]);
 
-
   return (
     <AppRoot
       appearance={isDark ? 'dark' : 'light'}

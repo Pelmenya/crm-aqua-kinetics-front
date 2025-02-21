@@ -11,6 +11,8 @@ import './index.css';
 
 // Mock the environment in case, we are outside Telegram.
 import './mockEnv.ts';
+import { Provider as ReduxProvider } from 'react-redux';
+import { store } from './redux/store.ts';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
@@ -20,9 +22,11 @@ try {
 
   root.render(
     <StrictMode>
-      <Root/>
+      <ReduxProvider store={store}>
+        <Root />
+      </ReduxProvider>
     </StrictMode>,
   );
 } catch (e) {
-  root.render(<EnvUnsupported/>);
+  root.render(<EnvUnsupported />);
 }
