@@ -41,8 +41,8 @@ export function init(debug: boolean): void {
     })
     .then(() => {
       viewport.bindCssVars();
-      //viewport.expand();
-      viewport.requestFullscreen();
+      viewport.expand();
+      //viewport.requestFullscreen();
     });
 
   // Define components-related CSS variables.

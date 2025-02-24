@@ -1,4 +1,4 @@
-import { authApi } from '@/servises/auth-api';
+import { authApi } from '@/features/auth/api/auth-api';
 import { configureStore } from '@reduxjs/toolkit';
 
 export const store = configureStore({

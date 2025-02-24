@@ -16,12 +16,12 @@ export const WelcomePage: FC = () => {
 					<img className="absolute top-15 rounded-3xl left-10 z-1 h-[395px]" src={Girl} alt='Girl' />
 					<img src={Arc} className='absolute z-2 top-95 left-0 w-full' />
 					<div className='absolute text-primary text-3xl font-bold pl-4 top-100 z-3'>
-						<p>Добро</p>
+						<p className='font-sans font-bold'>Добро</p>
 						<p>пожаловать</p>
 						<p className='text-base-content text-sm mt-2'>Рады помочь очистить воду</p>
 					</div>
 				</div>
-				<div className='absolute bottom-0 w-full z-4 flex flex-col p-4 gap-2'>
+				<div className='absolute top-130 w-full z-4 flex flex-col p-4 gap'>
 					<button className='btn btn-primary'>
 						Стать клиентом
 					</button>

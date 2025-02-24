@@ -3,12 +3,11 @@ import { useEffect, type FC } from 'react';
 import { Link } from '@/components/Link/Link.tsx';
 import { Page } from '@/components/Page.tsx';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
-import { usePostAuthMutation } from '@/servises/auth-api';
+import { usePostAuthMutation } from '@/features/auth/api/auth-api';
 
 export const IndexPage: FC = () => {
   const lp = useLaunchParams();
-//  const { data } = useGetAuthQuery('');
-  const [postAuth, { data, error }] = usePostAuthMutation();
+  const [postAuth, { data }] = usePostAuthMutation();
 
   useEffect(() => {
     if (lp.initDataRaw) {
@@ -16,14 +15,7 @@ export const IndexPage: FC = () => {
     }
   }, [lp.initDataRaw, postAuth]);
 
-  useEffect(() => {
-    if (data) {
-      console.log('Данные пользователя:', data);
-    }
-    if (error) {
-      console.error('Ошибка авторизации:', error);
-    }
-  }, [data, error]);
+
 
   return (
     <Page back={false}>
