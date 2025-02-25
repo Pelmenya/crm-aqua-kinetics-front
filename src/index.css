@@ -55,6 +55,7 @@ html, body, #root {
   overflow: hidden;
   overscroll-behavior: none;
 }
+
 #root {
   /* Preserve scrolling behavior */
   overflow-y: auto;
