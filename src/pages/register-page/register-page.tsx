@@ -12,6 +12,7 @@ export type TRegisterFormInputs = {
   lastName: string;
   phone: string;
   email: string;
+  password: string;
 };
 
 const schema = yup.object().shape({
@@ -19,6 +20,7 @@ const schema = yup.object().shape({
   lastName: yup.string().required("Фамилия обязательна"),
   phone: yup.string().matches(phoneRegex, "Пример: +79999999999").required("Телефон обязателен"),
   email: yup.string().matches(emailRegex, "Неверный формат почты").required("Почта обязательна"),
+  password: yup.string().required("Пароль обязателен"),
 });
 
 export const RegisterPage: FC = () => {
@@ -61,6 +63,13 @@ export const RegisterPage: FC = () => {
           register={register}
           name="email"
           error={errors.email?.message}
+        />
+        <InputField
+          type="password"
+          placeholder="Пароль"
+          register={register}
+          name="password"
+          error={errors.password?.message}
         />
       </FormWithTitle>
     </Page>

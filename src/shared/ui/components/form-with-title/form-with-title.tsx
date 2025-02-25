@@ -10,7 +10,7 @@ export type TFormWithTitleProps = {
 export const FormWithTitle: FC<TFormWithTitleProps> = ({ title, onSubmit, submitButtonText, children }) => {
 	return (
 		<form onSubmit={onSubmit} className="p-4 w-full flex flex-col gap-6 items-center justify-center">
-			<h1>{title}</h1>
+			<h1 className="text-xl font-medium">{title}</h1>
 			{children}
 			<button type="submit" className="btn btn-primary w-full">
 				{submitButtonText}

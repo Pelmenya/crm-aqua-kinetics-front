@@ -1,6 +1,5 @@
 
 import { UseFormRegister, Path, FieldValues } from "react-hook-form";
-import cn from 'classnames';
 
 
 type TInputFieldProps<T extends FieldValues> = {
@@ -18,7 +17,7 @@ export const InputField = <T extends FieldValues>({ type, placeholder, register,
         {...register(name)}
         type={type}
         placeholder={placeholder}
-        className={cn('input input-primary w-full', { ['input-error']: error })}
+        className='input w-full input-primary'
       />
       {error && <span className="absolute left-2 top-10 text-error text-[12px]">{error}</span>}
     </div>
