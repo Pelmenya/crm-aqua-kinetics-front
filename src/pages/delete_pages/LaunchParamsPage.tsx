@@ -9,7 +9,7 @@ export const LaunchParamsPage: FC = () => {
   const lp = useLaunchParams();
 
   return (
-    <Page>
+<Page>
       <List>
         <DisplayData
           rows={[

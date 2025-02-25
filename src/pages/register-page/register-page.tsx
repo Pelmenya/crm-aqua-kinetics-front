@@ -1,11 +1,13 @@
 import { Page } from "@/shared/ui/components/page/page";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InputField } from "@/shared/ui/components/input-field/input-field";
 import { emailRegex, phoneRegex } from "@/shared/lib/regex/regex";
 import { FormWithTitle } from "@/shared/ui/components/form-with-title/form-with-title";
+import { useLaunchParams } from "@telegram-apps/sdk-react";
+import { usePostAuthMutation } from "@/features/auth/api/auth-api";
 
 export type TRegisterFormInputs = {
   firstName: string;
@@ -24,14 +26,31 @@ const schema = yup.object().shape({
 });
 
 export const RegisterPage: FC = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<TRegisterFormInputs>({
+  const lp = useLaunchParams();
+  const [postAuth, { data: chatData }] = usePostAuthMutation();
+
+  useEffect(() => {
+    if (lp.initDataRaw) {
+      postAuth(lp.initDataRaw).catch(console.error);
+    }
+  }, [lp.initDataRaw, postAuth]);
+
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<TRegisterFormInputs>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data: TRegisterFormInputs) => {
     console.log(data);
+    console.log(chatData);
     // Обработка данных формы
   };
+
+  useEffect(() => {
+    if (chatData) {
+      setValue('firstName', chatData.user.first_name);
+      setValue('lastName', chatData.user.last_name);
+    }
+  }, [chatData, setValue]);
 
   return (
     <Page back={true}>
@@ -72,6 +91,7 @@ export const RegisterPage: FC = () => {
           error={errors.password?.message}
         />
       </FormWithTitle>
+      {/*       <pre>{chatData ? JSON.stringify(chatData, null, 2) : 'Нет данных о пользователе'}</pre> */}
     </Page>
   );
 }

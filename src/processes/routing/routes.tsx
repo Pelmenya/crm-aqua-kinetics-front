@@ -9,18 +9,18 @@ import { WelcomePage } from '@/pages/welcome-page/welcome-page';
 import { ComponentType } from 'react';
 
 interface Route {
-  path: string;
-  Component: ComponentType;
-  title?: string;
-  icon?: JSX.Element;
+    path: string;
+    Component: ComponentType;
+    title?: string;
+    icon?: JSX.Element;
 }
 
 export const routes: Route[] = [
-  { path: '/', Component: IndexPage },
-  { path: '/welcome-page', Component: WelcomePage },
-  { path: '/register', Component: RegisterPage },
-  { path: '/login', Component: LoginPage },
-  { path: '/init-data', Component: InitDataPage, title: 'Init Data' },
-  { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
-  { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },
+    { path: '/', Component: IndexPage },
+    { path: '/welcome-page', Component: WelcomePage },
+    { path: '/register', Component: RegisterPage },
+    { path: '/login', Component: LoginPage },
+    { path: '/init-data', Component: InitDataPage, title: 'Init Data' },
+    { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
+    { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },
 ];

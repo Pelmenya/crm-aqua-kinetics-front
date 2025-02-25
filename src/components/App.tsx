@@ -6,26 +6,26 @@ import { routes } from '@/processes/routing/routes';
 import { useEffect } from 'react';
 
 export function App() {
-  const lp = useLaunchParams();
-  const isDark = useSignal(miniApp.isDark);
+    const lp = useLaunchParams();
+    const isDark = useSignal(miniApp.isDark);
 
-  useEffect(() => {
-    // Update the data-theme attribute based on isDark value
-    const theme = isDark === true ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [isDark]);
+    useEffect(() => {
+        // Update the data-theme attribute based on isDark value
+        const theme = isDark === true ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+    }, [isDark]);
 
-  return (
-    <AppRoot
-      appearance={isDark ? 'dark' : 'light'}
-      platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
-    >
-      <HashRouter>
-        <Routes>
-          {routes.map((route) => <Route key={route.path} {...route} />)}
-          <Route path="*" element={<Navigate to="/"/>}/>
-        </Routes>
-      </HashRouter>
-    </AppRoot>
-  );
+    return (
+        <AppRoot
+            appearance={isDark ? 'dark' : 'light'}
+            platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
+        >
+            <HashRouter>
+                <Routes>
+                    {routes.map((route) => <Route key={route.path} {...route} />)}
+                    <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+            </HashRouter>
+        </AppRoot>
+    );
 }

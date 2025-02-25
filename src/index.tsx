@@ -17,26 +17,26 @@ import { store } from './app/store/store.ts';
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
 try {
-  // Configure all application dependencies.
-  init(retrieveLaunchParams().startParam === 'debug' || import.meta.env.DEV);
-  //Пока так для запрета закрытия
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', () => {
-      if(window.visualViewport) document.body.style.height = window.visualViewport.height + 'px';
+    // Configure all application dependencies.
+    init(retrieveLaunchParams().startParam === 'debug' || import.meta.env.DEV);
+    //Пока так для запрета закрытия
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', () => {
+            if (window.visualViewport) document.body.style.height = window.visualViewport.height + 'px';
+        });
+    }
+    // This will ensure user never overscroll the page
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 0) window.scrollTo(0, 0);
     });
-  }
-  // This will ensure user never overscroll the page
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 0) window.scrollTo(0, 0);
-  });
 
-  root.render(
-    <StrictMode>
-      <ReduxProvider store={store}>
-        <Root />
-      </ReduxProvider>
-    </StrictMode>,
-  );
+    root.render(
+        <StrictMode>
+            <ReduxProvider store={store}>
+                <Root />
+            </ReduxProvider>
+        </StrictMode>,
+    );
 } catch (e) {
-  root.render(<EnvUnsupported />);
+    root.render(<EnvUnsupported />);
 }
