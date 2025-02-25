@@ -8,7 +8,6 @@
 
 @plugin "daisyui";
 
-
 @plugin "daisyui/theme" {
   name: "light";
   default: false;
@@ -44,3 +43,8 @@
   --noise: 0;
 }
 
+@layer components {
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-info text-transparent bg-clip-text;
+  }
+}

@@ -20,5 +20,5 @@ export function Page({ children, back = true }: PropsWithChildren<{
     backButton.hide();
   }, [back]);
 
-  return <>{children}</>;
+  return <div className='bg-base-100 w-[100vw] h-[100vh] flex items-center justify-center max-w-md'>{children}</div>;
 }
