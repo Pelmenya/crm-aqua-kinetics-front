@@ -7,7 +7,7 @@ export const Logo: FC = () => {
 	const isDark = useSignal(miniApp.isDark);
 
 	return (
-		<div className='p-4'>
+		<div className='p-4 w-full h-full flex items-center justify-center'>
 			{isDark ? <img src={LogoWhite} alt='Logo Aqua Kinetics' /> : <img src={LogoBlack} alt='Logo Aqua Kinetics' />}
 		</div>)
 
