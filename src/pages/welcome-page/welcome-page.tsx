@@ -10,7 +10,7 @@ export const WelcomePage: FC = () => {
 
 	return (
 		<Page back={true}>
-			<div className='bg-base-100 max-w-sm flex flex-col justify-between gap-16'>
+			<div className='bg-base-100  flex flex-col justify-between gap-16'>
 				<div className='relative w-full'>
 					<img src={BGImage} alt="Background" className='w-full' />
 					<img className="absolute top-15 rounded-3xl left-10 z-1 h-[395px]" src={Girl} alt='Girl' />

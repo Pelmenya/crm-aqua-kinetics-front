@@ -3,6 +3,7 @@ import { InitDataPage } from '@/pages/delete_pages/InitDataPage';
 import { LaunchParamsPage } from '@/pages/delete_pages/LaunchParamsPage';
 import { ThemeParamsPage } from '@/pages/delete_pages/ThemeParamsPage';
 import { IndexPage } from '@/pages/index-page/index-page';
+import { LoginPage } from '@/pages/login-page/login-page';
 import { RegisterPage } from '@/pages/register-page/register-page';
 import { WelcomePage } from '@/pages/welcome-page/welcome-page';
 import { ComponentType } from 'react';
@@ -18,6 +19,7 @@ export const routes: Route[] = [
   { path: '/', Component: IndexPage },
   { path: '/welcome-page', Component: WelcomePage },
   { path: '/register', Component: RegisterPage },
+  { path: '/login', Component: LoginPage },
   { path: '/init-data', Component: InitDataPage, title: 'Init Data' },
   { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
   { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },
