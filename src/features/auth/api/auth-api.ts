@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://newly-wired-grouse.cloudpub.ru',
+        baseUrl: import.meta.env.VITE_BACKEND_BASE_URL,
     }),
 
     endpoints: (builder) => ({
@@ -18,14 +18,7 @@ export const authApi = createApi({
                 credentials: 'include'
             }),
         }),
-        getAuth: builder.query<string | undefined, string | undefined>({
-            query: () => ({
-                url: '',
-                method: 'GET',
-            }),
-        }),
-
     }),
 });
 
-export const { usePostAuthMutation, useGetAuthQuery } = authApi;
+export const { usePostAuthMutation } = authApi;
