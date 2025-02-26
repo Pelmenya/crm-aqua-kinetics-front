@@ -1,4 +1,4 @@
-import { TTGChatData } from '@/entities/user/model/user';
+import { TTGUser } from '@/entities/user/model/user';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const authApi = createApi({
@@ -8,7 +8,7 @@ export const authApi = createApi({
     }),
 
     endpoints: (builder) => ({
-        postAuth: builder.mutation<TTGChatData, string | undefined>({
+        postAuth: builder.mutation<TTGUser, string | undefined>({
             query: (authKey) => ({
                 url: 'auth',
                 method: 'POST',
