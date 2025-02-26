@@ -7,14 +7,13 @@ import { InputField } from "@/shared/ui/components/input-field/input-field";
 import { emailRegex, phoneRegex } from "@/shared/lib/regex/regex";
 import { FormWithTitle } from "@/shared/ui/components/form-with-title/form-with-title";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
-import { usePostAuthMutation } from "@/features/auth/api/auth-api";
+import { usePostAuthMutation, usePutRegisterMutation } from "@/features/auth/api/auth-api";
 
 export type TRegisterFormInputs = {
     firstName: string;
     lastName: string;
     phone: string;
     email: string;
-    password: string;
 };
 
 const schema = yup.object().shape({
@@ -22,12 +21,12 @@ const schema = yup.object().shape({
     lastName: yup.string().required("Фамилия обязательна"),
     phone: yup.string().matches(phoneRegex, "Пример: +79999999999").required("Телефон обязателен"),
     email: yup.string().matches(emailRegex, "Неверный формат почты").required("Почта обязательна"),
-    password: yup.string().required("Пароль обязателен"),
 });
 
 export const RegisterPage: FC = () => {
     const lp = useLaunchParams();
     const [postAuth, { data: user }] = usePostAuthMutation();
+    const [putRegister] = usePutRegisterMutation(); // Используем мутацию для обновления пользователя
 
     useEffect(() => {
         if (lp.initDataRaw) {
@@ -39,9 +38,17 @@ export const RegisterPage: FC = () => {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data: TRegisterFormInputs) => {
-        console.log(data);
-        // Обработка данных формы
+    const onSubmit = async (data: TRegisterFormInputs) => {
+        try {
+            const authKey = lp.initDataRaw;
+            await putRegister({
+                ...data,
+                authKey
+            }).unwrap();
+            console.log('User updated successfully');
+        } catch (error) {
+            console.error('Error updating user:', error);
+        }
     };
 
     useEffect(() => {
