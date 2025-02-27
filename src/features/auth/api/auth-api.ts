@@ -1,4 +1,4 @@
-import { TUser } from '@/entities/user/model/user';
+import { TUser } from '@/entities/user/model/user.entity';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const authApi = createApi({

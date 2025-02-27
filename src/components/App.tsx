@@ -4,6 +4,7 @@ import { Navigate, Route, Routes, HashRouter } from 'react-router-dom';
 
 import { routes } from '@/processes/routing/routes';
 import { useEffect } from 'react';
+import { AuthProvider } from '@/app/providers/auth-provider/auth-provider';
 
 export function App() {
     const lp = useLaunchParams();
@@ -21,10 +22,12 @@ export function App() {
             platform={['macos', 'ios'].includes(lp.platform) ? 'ios' : 'base'}
         >
             <HashRouter>
-                <Routes>
-                    {routes.map((route) => <Route key={route.path} {...route} />)}
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
+                <AuthProvider>
+                    <Routes>
+                        {routes.map((route) => <Route key={route.path} {...route} />)}
+                        <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
+                </AuthProvider>
             </HashRouter>
         </AppRoot>
     );

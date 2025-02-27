@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TUser } from '@/entities/user/model/user';
+import { TUser } from '@/entities/user/model/user.entity';
 
 interface UserState {
   user: TUser | null;
