@@ -5,7 +5,7 @@ import { Page } from '@/shared/ui/components/page/page';
 import BGImage from './bg-image.png';
 import Girl from './girl.png';
 import { Link } from '@/processes/link/link';
-import { useAppSelector } from '@/shared/hooks/use-app-selector';
+import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
 import { getUserState } from '@/entities/user/model/user-selectors';
 
 export const WelcomePage: FC = () => {
@@ -29,7 +29,7 @@ export const WelcomePage: FC = () => {
                 </div>
                 <div className='w-full relative z-4 flex flex-col p-4 gap-2'>
                     {user?.is_auth ?
-                        <Link to='/login' className='btn btn-primary btn-outline'>
+                        <Link to='/account' className='btn btn-primary btn-outline'>
                             Войти
                         </Link>
                         :

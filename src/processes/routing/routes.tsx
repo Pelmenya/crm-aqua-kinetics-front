@@ -1,4 +1,5 @@
 
+import { AccountPage } from '@/pages/account-page/account-page';
 import { InitDataPage } from '@/pages/delete_pages/InitDataPage';
 import { LaunchParamsPage } from '@/pages/delete_pages/LaunchParamsPage';
 import { ThemeParamsPage } from '@/pages/delete_pages/ThemeParamsPage';
@@ -17,7 +18,8 @@ interface Route {
 export const routes: Route[] = [
     { path: '/', Component: IndexPage },
     { path: '/welcome-page', Component: WelcomePage },
-    { path: '/register', Component: RegisterPage, title: 'Init Data'},
+    { path: '/register', Component: RegisterPage},
+    { path: '/account', Component: AccountPage},
     { path: '/init-data', Component: InitDataPage },
     { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
     { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },

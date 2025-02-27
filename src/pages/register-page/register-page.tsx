@@ -7,7 +7,12 @@ import { InputField } from "@/shared/ui/components/input-field/input-field";
 import { emailRegex, phoneRegex } from "@/shared/lib/regex/regex";
 import { FormWithTitle } from "@/shared/ui/components/form-with-title/form-with-title";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
-import { usePostAuthMutation, usePutRegisterMutation } from "@/features/auth/api/auth-api";
+import { usePutRegisterMutation } from "@/features/auth/api/auth-api";
+import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
+import { getUserState } from "@/entities/user/model/user-selectors";
+import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
+import { setUser } from "@/entities/user/model/user-slice";
+import { useNavigate } from "react-router-dom";
 
 export type TRegisterFormInputs = {
     firstName: string;
@@ -24,15 +29,11 @@ const schema = yup.object().shape({
 });
 
 export const RegisterPage: FC = () => {
+    const navigate = useNavigate();
+    const { user } = useAppSelector(getUserState);
+    const dispatch = useAppDispatch();
     const lp = useLaunchParams();
-    const [postAuth, { data: user }] = usePostAuthMutation();
     const [putRegister] = usePutRegisterMutation(); // Используем мутацию для обновления пользователя
-
-    useEffect(() => {
-        if (lp.initDataRaw) {
-            postAuth(lp.initDataRaw).catch(console.error);
-        }
-    }, [lp.initDataRaw, postAuth]);
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<TRegisterFormInputs>({
         resolver: yupResolver(schema),
@@ -41,11 +42,13 @@ export const RegisterPage: FC = () => {
     const onSubmit = async (data: TRegisterFormInputs) => {
         try {
             const authKey = lp.initDataRaw;
-            await putRegister({
+            const updateUser = await putRegister({
                 ...data,
                 authKey
             }).unwrap();
-            console.log('User updated successfully');
+            dispatch(setUser(updateUser));
+            console.log('User updated successfully', updateUser);
+            navigate('/account');
         } catch (error) {
             console.error('Error updating user:', error);
         }

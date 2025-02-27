@@ -1,0 +1,17 @@
+import { Notification } from "@/shared/ui/icons/notigication";
+import { Settings } from "@/shared/ui/icons/settings";
+import { FC } from "react";
+
+export type TAccountProps = {
+    title: string;
+}
+export const AccountHeader: FC<TAccountProps> = ({ title }) => {
+
+    return (
+        <header className="px-4 py-2 flex justify-between">
+            <Settings />
+            <h1>{title}</h1>
+            <Notification />
+        </header>
+    )
+}

@@ -1,7 +1,7 @@
 import { useEffect, FC, ReactNode } from 'react';
 import { usePostAuthMutation } from '@/features/auth/api/auth-api';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
-import { useAppDispatch } from '@/shared/hooks/use-app-dispatch';
+import { useAppDispatch } from '@/shared/lib/hooks/use-app-dispatch';
 import { setUser } from '@/entities/user/model/user-slice';
 import { Page } from '@/shared/ui/components/page/page';
 import { Logo } from '@/shared/ui/components/logo/logo';
