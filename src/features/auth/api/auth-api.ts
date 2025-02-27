@@ -1,4 +1,4 @@
-import { TTGUser } from '@/entities/user/model/user';
+import { TUser } from '@/entities/user/model/user';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const authApi = createApi({
@@ -9,7 +9,7 @@ export const authApi = createApi({
 
     endpoints: (builder) => ({
         // При первом заходе создаем юзера из ТГ
-        postAuth: builder.mutation<TTGUser, string | undefined>({
+        postAuth: builder.mutation<TUser, string | undefined>({
             query: (authKey) => ({
                 url: 'init',
                 method: 'POST',
@@ -20,7 +20,7 @@ export const authApi = createApi({
             }),
         }),
         // Апдейтим юзера из ТГ с email и phone
-        putRegister: builder.mutation<TTGUser, { email: string; phone: string; authKey: string | undefined }>({
+        putRegister: builder.mutation<TUser, { email: string; phone: string; authKey: string | undefined }>({
             query: ({ email, phone, authKey }) => ({
                 url: 'register',
                 method: 'PUT',

@@ -1,7 +1,7 @@
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 
-import { App } from '@/components/App.tsx';
-import { ErrorBoundary } from '@/components/ErrorBoundary.tsx';
+import { App } from '@/components/app';
+import { ErrorBoundary } from '@/components/error-boundary';
 import { publicUrl } from '@/helpers/publicUrl.ts';
 
 function ErrorBoundaryError({ error }: { error: unknown }) {
