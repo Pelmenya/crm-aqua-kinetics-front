@@ -8,9 +8,9 @@ export type TAccountProps = {
 export const AccountHeader: FC<TAccountProps> = ({ title }) => {
 
     return (
-        <header className="px-4 py-2 flex justify-between">
+        <header className="py-2 flex justify-between">
             <Settings />
-            <h1>{title}</h1>
+            <h1 className="font-medium">{title}</h1>
             <Notification />
         </header>
     )

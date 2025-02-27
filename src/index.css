@@ -4,6 +4,7 @@
 
 @theme {
   --font-sans: 'Montserrat', 'sans-serif';
+  --text-min: .75rem;
 }
 
 @plugin "daisyui";
