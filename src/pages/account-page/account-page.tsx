@@ -8,7 +8,7 @@ import { Services } from "./components/services/services"
 export const AccountPage: FC = () => {
 
     return (
-        <Page back={true} footer={true}>
+        <Page footer={true}>
             <div className="w-full h-full px-4 gap-2 bg-base-300">
                 <AccountHeader title="Личный кабинет" />
                 <UserInfo />
