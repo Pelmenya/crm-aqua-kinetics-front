@@ -13,7 +13,11 @@ export const AddHouseStepOne: FC = () => {
         <div className="px-4 pt-6 w-full h-full flex flex-col gap-4">
             <ToggleRealEstateButtons active={activeType} onToggle={setActiveType} />
             <PeopleSlider value={residents} onChange={setResidents} />
-            <WaterSource active={activeSource} onToggle={setActiveSource}/>
+            <WaterSource active={activeSource} onToggle={setActiveSource} />
+            <div className="w-full flex flex-col gap-2">
+                <h3 className="text-sm font-semibold">Адрес</h3>
+                <input type="text" className="input input-primary w-full" />
+            </div>
         </div>
     );
 };
