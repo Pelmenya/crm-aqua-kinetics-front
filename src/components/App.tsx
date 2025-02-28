@@ -11,7 +11,6 @@ export function App() {
     const isDark = useSignal(miniApp.isDark);
 
     useEffect(() => {
-        // Update the data-theme attribute based on isDark value
         const theme = isDark === true ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', theme);
     }, [isDark]);
@@ -24,7 +23,13 @@ export function App() {
             <HashRouter>
                 <AuthProvider>
                     <Routes>
-                        {routes.map((route) => <Route key={route.path} {...route} />)}
+                        {routes.map((route) => (
+                            <Route key={route.path} path={route.path} element={<route.Component />}>
+                                {route.children && route.children.map((child) => (
+                                    <Route key={child.path} path={child.path} element={<child.Component />} />
+                                ))}
+                            </Route>
+                        ))}
                         <Route path="*" element={<Navigate to="/" />} />
                     </Routes>
                 </AuthProvider>

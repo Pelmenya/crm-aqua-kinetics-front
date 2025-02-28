@@ -3,12 +3,12 @@ import { FC } from "react"
 import { AccountHeader } from "./components/account-header/account-header"
 import { UserInfo } from "./components/user-info/user-info"
 import { RealEstate } from "./components/real-estate/real-estate"
-import { Services } from "./components/services/servises"
+import { Services } from "./components/services/services"
 
 export const AccountPage: FC = () => {
 
     return (
-        <Page back={true}>
+        <Page back={true} footer={true}>
             <div className="w-full h-full px-4 gap-2 bg-base-300">
                 <AccountHeader title="Личный кабинет" />
                 <UserInfo />

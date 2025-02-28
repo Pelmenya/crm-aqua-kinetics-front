@@ -14,7 +14,7 @@ export const UserInfo: FC = () => {
                 </div>
             </div>
             <div>
-                <p className="font-bold text-xl">{user?.first_name} {user?.last_name}</p>
+                <p className="font-semibold text-xl">{user?.first_name} {user?.last_name}</p>
                 <p className="text-min opacity-50">{getRole(user?.role)}</p>
             </div>
         </div>

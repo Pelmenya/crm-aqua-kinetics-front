@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { backButton } from '@telegram-apps/sdk-react';
 import { PropsWithChildren, useEffect } from 'react';
+import { Footer } from '@/widgets/footer/ui/footer';
 
-export function Page({ children, back = true }: PropsWithChildren<{
+export function Page({ children, back = true, footer = false }: PropsWithChildren<{
     /**
      * True if it is allowed to go back from this page.
      */
-    back?: boolean
+    back?: boolean;
+    footer?:boolean;
 }>) {
     const navigate = useNavigate();
 
@@ -20,5 +22,10 @@ export function Page({ children, back = true }: PropsWithChildren<{
         backButton.hide();
     }, [back]);
 
-    return <div className='bg-base-100 w-[100vw] h-[100vh] max-w-sm'>{children}</div>;
+    return (
+        <div className='bg-base-100 w-[100vw] h-[100vh] max-w-sm relative'>
+            {children}
+            {footer ? <Footer /> : null}
+        </div>
+    );
 }
