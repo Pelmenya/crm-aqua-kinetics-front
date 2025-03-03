@@ -1,31 +1,30 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// Определите типы для состояния
-interface Coordinates {
+type TCoordinates = {
     latitude: number;
     longitude: number;
-}
+};
 
-interface WaterIntakePoints {
+type TWaterIntakePoints = {
     toilet: number;
     sink: number;
     bath: number;
     washingMachine: number;
     dishWasher: number;
     showerCabin: number;
-}
+};
 
-interface RealEstateState {
+type TRealEstateState = {
     address: string | null;
-    coordinates: Coordinates | null;
-    waterIntakePoints: WaterIntakePoints;
+    coordinates: TCoordinates | null;
+    waterIntakePoints: TWaterIntakePoints;
     activeType: 'house' | 'apartment';
     residents: number;
     activeSource: 'borehole' | 'well' | 'reservoir' | 'waterSupply';
-}
+};
 
 // Установите начальное состояние
-const initialState: RealEstateState = {
+const initialState: TRealEstateState = {
     address: null,
     coordinates: null,
     waterIntakePoints: {
@@ -37,7 +36,7 @@ const initialState: RealEstateState = {
         showerCabin: 0,
     },
     activeType: 'house',
-    residents: 5,
+    residents: 2,
     activeSource: 'borehole',
 };
 
@@ -46,16 +45,24 @@ export const realEstateSlice = createSlice({
     name: 'realEstate',
     initialState,
     reducers: {
+        setInitialState(state, action: PayloadAction<TRealEstateState>) {
+            state.address = action.payload.address;
+            state.coordinates = action.payload.coordinates;
+            state.waterIntakePoints = action.payload.waterIntakePoints;
+            state.activeType = action.payload.activeType;
+            state.residents = action.payload.residents;
+            state.activeSource = action.payload.activeSource;
+        },
         setRealEstateAddress(state, action: PayloadAction<string | null>) {
             state.address = action.payload;
         },
-        setRealEstateCoordinates(state, action: PayloadAction<Coordinates | null>) {
+        setRealEstateCoordinates(state, action: PayloadAction<TCoordinates | null>) {
             state.coordinates = action.payload;
         },
-        incrementWaterIntakePoint(state, action: PayloadAction<keyof WaterIntakePoints>) {
+        incrementWaterIntakePoint(state, action: PayloadAction<keyof TWaterIntakePoints>) {
             state.waterIntakePoints[action.payload] += 1;
         },
-        decrementWaterIntakePoint(state, action: PayloadAction<keyof WaterIntakePoints>) {
+        decrementWaterIntakePoint(state, action: PayloadAction<keyof TWaterIntakePoints>) {
             if (state.waterIntakePoints[action.payload] > 0) {
                 state.waterIntakePoints[action.payload] -= 1;
             }
@@ -74,6 +81,7 @@ export const realEstateSlice = createSlice({
 
 // Экспортируйте экшены
 export const {
+    setInitialState,
     setRealEstateAddress,
     setRealEstateCoordinates,
     incrementWaterIntakePoint,
