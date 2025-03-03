@@ -13,7 +13,7 @@ import { decrementWaterIntakePoint, incrementWaterIntakePoint } from "../model/r
 
 export const AddHouseStepThree: FC = () => {
     const dispatch = useDispatch();
-    
+
     // Получаем количество каждой точки водоразбора
     const toiletCount = useSelector(getWaterIntakePointCount('toilet'));
     const sinkCount = useSelector(getWaterIntakePointCount('sink'));
@@ -26,7 +26,7 @@ export const AddHouseStepThree: FC = () => {
         <div className="w-full h-full pt-6 pb-4 px-4 flex flex-col justify-between">
             <div className="flex flex-col gap-2">
                 <h3 className="text-sm font-semibold">Точки водоразбора</h3>
-                <WaterIntakePoint 
+                <WaterIntakePoint
                     name="Унитаз или биде"
                     count={toiletCount}
                     onIncrement={() => dispatch(incrementWaterIntakePoint('toilet'))}
@@ -34,7 +34,7 @@ export const AddHouseStepThree: FC = () => {
                 >
                     <Toilet />
                 </WaterIntakePoint>
-                <WaterIntakePoint 
+                <WaterIntakePoint
                     name="Раковина"
                     count={sinkCount}
                     onIncrement={() => dispatch(incrementWaterIntakePoint('sink'))}
@@ -42,7 +42,7 @@ export const AddHouseStepThree: FC = () => {
                 >
                     <Sink />
                 </WaterIntakePoint>
-                <WaterIntakePoint 
+                <WaterIntakePoint
                     name="Ванная"
                     count={bathCount}
                     onIncrement={() => dispatch(incrementWaterIntakePoint('bath'))}
@@ -50,7 +50,7 @@ export const AddHouseStepThree: FC = () => {
                 >
                     <Bath />
                 </WaterIntakePoint>
-                <WaterIntakePoint 
+                <WaterIntakePoint
                     name="Стиральная машина"
                     count={washingMachineCount}
                     onIncrement={() => dispatch(incrementWaterIntakePoint('washingMachine'))}
@@ -58,7 +58,7 @@ export const AddHouseStepThree: FC = () => {
                 >
                     <WashhingMachine />
                 </WaterIntakePoint>
-                <WaterIntakePoint 
+                <WaterIntakePoint
                     name="Посудомоечная машина"
                     count={dishWasherCount}
                     onIncrement={() => dispatch(incrementWaterIntakePoint('dishWasher'))}
@@ -66,7 +66,7 @@ export const AddHouseStepThree: FC = () => {
                 >
                     <DishWasher />
                 </WaterIntakePoint>
-                <WaterIntakePoint 
+                <WaterIntakePoint
                     name="Душевая кабина"
                     count={showerCabinCount}
                     onIncrement={() => dispatch(incrementWaterIntakePoint('showerCabin'))}
@@ -75,7 +75,16 @@ export const AddHouseStepThree: FC = () => {
                     <ShowerCabin />
                 </WaterIntakePoint>
             </div>
-            <Link to='/account' className="btn btn-primary">Сохранить</Link>
+            {(
+                toiletCount
+                || sinkCount
+                || bathCount
+                || washingMachineCount
+                || dishWasherCount
+                || showerCabinCount)
+                ? <Link to='/account' className="btn btn-primary">Сохранить</Link>
+                : <button disabled className="btn btn-primary">Сохранить</button>
+            }
         </div>
     );
 }
