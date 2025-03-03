@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 export const ShowerCabin: FC = () =>
-    <svg width="16" height="24" viewBox="0 0 16 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="16" height="24" viewBox="0 0 16 24" className="opacity-80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fillRule="evenodd" clipRule="evenodd" d="M0.8 23.2H15.2V2C15.2 1.3384 14.6616 0.8 14 0.8H2C1.3384 0.8 0.8 1.3384 0.8 2V23.2ZM15.6 24H0.4C0.1788 24 0 23.8212 0 23.6V2C0 0.8972 0.8972 0 2 0H14C15.1028 0 16 0.8972 16 2V23.6C16 23.8212 15.8212 24 15.6 24Z" fill="currentColor" />
         <path fillRule="evenodd" clipRule="evenodd" d="M2.4 23.2H13.6V2.8C13.6 2.5792 13.4208 2.4 13.2 2.4H2.8C2.5792 2.4 2.4 2.5792 2.4 2.8V23.2ZM14 24H2C1.7788 24 1.6 23.8212 1.6 23.6V2.8C1.6 2.1384 2.1384 1.6 2.8 1.6H13.2C13.8616 1.6 14.4 2.1384 14.4 2.8V23.6C14.4 23.8212 14.2212 24 14 24Z" fill="currentColor" />
         <path fillRule="evenodd" clipRule="evenodd" d="M3.6 24C3.3788 24 3.2 23.8212 3.2 23.6V5.2C3.2 4.0972 4.0972 3.2 5.2 3.2H7.6C8.7028 3.2 9.6 4.0972 9.6 5.2C9.6 5.4212 9.4212 5.6 9.2 5.6C8.9788 5.6 8.8 5.4212 8.8 5.2C8.8 4.5384 8.2616 4 7.6 4H5.2C4.5384 4 4 4.5384 4 5.2V23.6C4 23.8212 3.8212 24 3.6 24Z" fill="currentColor" />
