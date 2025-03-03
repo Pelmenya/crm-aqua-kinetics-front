@@ -19,6 +19,9 @@ interface RealEstateState {
     address: string | null;
     coordinates: Coordinates | null;
     waterIntakePoints: WaterIntakePoints;
+    activeType: 'house' | 'apartment';
+    residents: number;
+    activeSource: 'borehole' | 'well' | 'reservoir' | 'waterSupply';
 }
 
 // Установите начальное состояние
@@ -33,6 +36,9 @@ const initialState: RealEstateState = {
         dishWasher: 0,
         showerCabin: 0,
     },
+    activeType: 'house',
+    residents: 5,
+    activeSource: 'borehole',
 };
 
 // Создайте slice
@@ -54,6 +60,15 @@ export const realEstateSlice = createSlice({
                 state.waterIntakePoints[action.payload] -= 1;
             }
         },
+        setActiveType(state, action: PayloadAction<'house' | 'apartment'>) {
+            state.activeType = action.payload;
+        },
+        setResidents(state, action: PayloadAction<number>) {
+            state.residents = action.payload;
+        },
+        setActiveSource(state, action: PayloadAction<'borehole' | 'well' | 'reservoir' | 'waterSupply'>) {
+            state.activeSource = action.payload;
+        },
     },
 });
 
@@ -63,6 +78,9 @@ export const {
     setRealEstateCoordinates,
     incrementWaterIntakePoint,
     decrementWaterIntakePoint,
+    setActiveType,
+    setResidents,
+    setActiveSource,
 } = realEstateSlice.actions;
 
 // Экспортируйте редьюсер

@@ -6,7 +6,7 @@ import { Borehole } from "./components/borehole";
 import { WaterSourceOption } from "./components/water-source-option/water-source-option";
 
 
-export const WaterSource: FC<{ active: string, onToggle: (type: string) => void }> = ({ active, onToggle }) => {
+export const WaterSource: FC<{ active: string, onToggle: (type: 'borehole' | 'well' | 'reservoir' | 'waterSupply') => void }> = ({ active, onToggle }) => {
 
     return (
         <div className="flex flex-col gap-2">

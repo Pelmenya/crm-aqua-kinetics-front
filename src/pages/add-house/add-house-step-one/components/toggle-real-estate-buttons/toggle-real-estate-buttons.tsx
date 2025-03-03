@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-export const ToggleRealEstateButtons: FC<{ active: string, onToggle: (type: string) => void }> = ({ active, onToggle }) => {
+export const ToggleRealEstateButtons: FC<{ active: string, onToggle: (type: "house" | "apartment") => void }> = ({ active, onToggle }) => {
     return (
         <div className="w-full flex items-center">
             <div className="join w-full bg-base-100">
