@@ -1,5 +1,5 @@
 import { TCreateRealEstate } from "@/features/real-estate/api/real-estate-api";
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import apartmentsBackground from './bg-apartament.jpg';
 import houseBackground from './bg-house.png';
 
@@ -7,13 +7,14 @@ export const RealEstateCard: FC<Partial<TCreateRealEstate>> = ({ address, active
 
     // Выбираем фон в зависимости от activeType
     const backgroundStyle = activeType === "apartment" ? apartmentsBackground : houseBackground;
+    const typeRealEstate  = useMemo(() => activeType === 'apartment' ? 'Квартира по адресу:': 'Дом по адресу:', [activeType])
 
     return (
         <div className="border border-base-300 bg-base-100 rounded-box flex column items-center justify-center">
             <div className="w-full h-[106px] relative">
                 <div className="relative z-3 p-4">
-                    <p>{activeType}</p>
-                    <p>{address}</p>
+                    <p className="font-medium tracking-tight text-[16px]">{typeRealEstate}</p>
+                    <p className="tracking-tight text-min max-w-56 opacity-70">{address}</p>
                 </div>
                 <div className="absolute top-0 right-0 w-[207px] h-[106px] rounded-tr-box rounded-br-box overflow-hidden">
                     <img src={backgroundStyle} className="w-full h-full z-0" />

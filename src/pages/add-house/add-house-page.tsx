@@ -9,7 +9,7 @@ export const AddHousePage: FC = () => {
     
     return (
         <Page back={true}>
-            <div className="flex flex-col w-full h-full items-center bg-base-300 pt-4">
+            <div className="flex flex-col w-full h-[100vh] items-center bg-base-300 pt-4">
                 <progress className="progress progress-primary w-72" value={progress} max="100"></progress>
                 <Outlet />
             </div>

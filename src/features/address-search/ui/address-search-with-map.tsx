@@ -52,7 +52,7 @@ export const AddressSearchWithMap = () => {
 
     const commonClasses = 'rounded-box peer h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm';
     const labelClasses = cn(
-        'bg-base-100 block relative overflow-hidden rounded-lg border border-gray-200 px-3 pt-3 shadow-sm w-full transition duration-300 ease-in-out',
+        'bg-base-100 block relative overflow-hidden rounded-lg border border-base-200 px-3 pt-3 shadow-sm w-full transition duration-300 ease-in-out',
         'focus-within:border-primary focus-within:ring-1 focus-within:ring-primary'
     );
 
