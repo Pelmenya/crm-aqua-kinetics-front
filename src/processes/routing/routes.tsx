@@ -11,6 +11,7 @@ import { IndexPage } from '@/pages/index-page/index-page';
 import { RegisterPage } from '@/pages/register-page/register-page';
 import { WelcomePage } from '@/pages/welcome-page/welcome-page';
 import { ComponentType } from 'react';
+import { RealEstatePage } from '@/pages/real-estate-page/real-estate-page';
 
 interface Route {
     path: string;
@@ -32,6 +33,7 @@ export const routes: Route[] = [
             { path: '/add-house/step-3', Component: AddHouseStepThree },
         ]
     },
+    { path: '/real-estate-page/:id', Component: RealEstatePage },
     { path: '/init-data', Component: InitDataPage },
     { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
     { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },

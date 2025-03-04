@@ -18,7 +18,7 @@ export const RealEstateList: FC<{ realEstatesList: TCreateRealEstate[] }> = ({ r
             {
                 realEstatesList.map(
                     realEstate =>
-                        <RealEstateCard key={realEstate.id} address={realEstate.address} activeType={realEstate.activeType} />
+                        <RealEstateCard key={realEstate.id} id={realEstate.id} address={realEstate.address} activeType={realEstate.activeType} />
                 )
             }
         </div>
