@@ -7,13 +7,15 @@ import { WashhingMachine } from "./components/washing-machine";
 import { DishWasher } from "./components/dishwasher";
 import { ShowerCabin } from "./components/shower-cabin";
 import { getRealEstateState, getWaterIntakePointCount } from "../model/real-estate-selectors";
-import { decrementWaterIntakePoint, incrementWaterIntakePoint, setProgress } from "../model/real-estate-slice";
+import { decrementWaterIntakePoint, incrementWaterIntakePoint, setInitialState, setProgress } from "../model/real-estate-slice";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
 import { TCreateRealEstate, useCreateRealEstateMutation } from "../api/real-estate-api";
 import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
+import { useNavigate } from "react-router-dom";
 
 export const AddHouseStepThree: FC = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw;
@@ -47,6 +49,8 @@ export const AddHouseStepThree: FC = () => {
                 newRealEstate: realEstateData,
                 authKey: authKey || '',
             }).unwrap();
+            dispatch(setInitialState());
+            navigate('/account');
             console.log("Данные успешно сохранены!", newRealEstateData);
         } catch (error) {
             console.error("Ошибка при сохранении данных:", error);

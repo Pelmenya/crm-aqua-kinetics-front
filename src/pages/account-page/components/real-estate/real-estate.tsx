@@ -5,7 +5,7 @@ import { Link } from "@/processes/link/link";
 
 
 export const RealEstate: FC = () => {
-
+    
     return (
         <Base>
             <Link to="/add-house/step-1" className="opacity-50 pt-1 flex flex-col items-center gap-1">
