@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type TCoordinates = {
+export type TCoordinates = {
     latitude: number;
     longitude: number;
 };
 
-type TWaterIntakePoints = {
+export type TWaterIntakePoints = {
     toilet: number;
     sink: number;
     bath: number;
@@ -14,7 +14,7 @@ type TWaterIntakePoints = {
     showerCabin: number;
 };
 
-type TRealEstateState = {
+export type TRealEstateState = {
     address: string | null;
     coordinates: TCoordinates | null;
     waterIntakePoints: TWaterIntakePoints;
@@ -90,6 +90,3 @@ export const {
     setResidents,
     setActiveSource,
 } = realEstateSlice.actions;
-
-// Экспортируйте редьюсер
-export default realEstateSlice.reducer;

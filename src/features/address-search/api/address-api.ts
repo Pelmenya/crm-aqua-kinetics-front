@@ -31,7 +31,7 @@ export const addressApi = createApi({
             query: (q: string) => ({
                 url: `suggest/address?q=${q}`,
                 method: 'GET',
-                credentials: 'include' // обязательно для проставления cookie
+                credentials: 'include'
             }),
             // Вы можете добавить transformResponse для обработки ответа, если это необходимо
         }),
