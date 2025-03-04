@@ -1,4 +1,4 @@
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect } from "react";
 import { WaterIntakePoint } from "./components/water-intake-point/water-intake-point";
 import { Toilet } from "./components/toilet";
 import { Sink } from "./components/sink";
@@ -7,7 +7,7 @@ import { WashhingMachine } from "./components/washing-machine";
 import { DishWasher } from "./components/dishwasher";
 import { ShowerCabin } from "./components/shower-cabin";
 import { getRealEstateState, getWaterIntakePointCount } from "../model/real-estate-selectors";
-import { decrementWaterIntakePoint, incrementWaterIntakePoint } from "../model/real-estate-slice";
+import { decrementWaterIntakePoint, incrementWaterIntakePoint, setProgress } from "../model/real-estate-slice";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
 import { TCreateRealEstate, useCreateRealEstateMutation } from "../api/real-estate-api";
 import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
@@ -28,7 +28,7 @@ export const AddHouseStepThree: FC = () => {
 
     // Получаем состояние недвижимости из Redux
     const realEstateState = useAppSelector(getRealEstateState);
-    
+
     const realEstateData: TCreateRealEstate = {
         ...realEstateState,
         coordinates: realEstateState.coordinates ? {
@@ -43,7 +43,7 @@ export const AddHouseStepThree: FC = () => {
     // Обработчик для сохранения объекта недвижимости
     const handleSave = useCallback(async () => {
         try {
-           const newRealEstateData = await createRealEstate({
+            const newRealEstateData = await createRealEstate({
                 newRealEstate: realEstateData,
                 authKey: authKey || '',
             }).unwrap();
@@ -52,6 +52,27 @@ export const AddHouseStepThree: FC = () => {
             console.error("Ошибка при сохранении данных:", error);
         }
     }, [createRealEstate, realEstateState, authKey]);
+
+    useEffect(() => {
+        if (
+            toiletCount
+            || sinkCount
+            || bathCount
+            || washingMachineCount
+            || dishWasherCount
+            || showerCabinCount) {
+            dispatch(setProgress(100))
+        } else {
+            dispatch(setProgress(80))
+        }
+    }, [
+        toiletCount,
+        sinkCount,
+        bathCount,
+        washingMachineCount,
+        dishWasherCount,
+        showerCabinCount
+    ]);
 
     return (
         <div className="w-full h-full pt-6 pb-4 px-4 flex flex-col justify-between">

@@ -15,6 +15,7 @@ export type TWaterIntakePoints = {
 };
 
 export type TRealEstateState = {
+    progress: number;
     address: string | null;
     coordinates: TCoordinates | null;
     waterIntakePoints: TWaterIntakePoints;
@@ -25,6 +26,7 @@ export type TRealEstateState = {
 
 // Установите начальное состояние
 const initialState: TRealEstateState = {
+    progress: 60,
     address: null,
     coordinates: null,
     waterIntakePoints: {
@@ -45,13 +47,14 @@ export const realEstateSlice = createSlice({
     name: 'realEstate',
     initialState,
     reducers: {
-        setInitialState(state, action: PayloadAction<TRealEstateState>) {
-            state.address = action.payload.address;
-            state.coordinates = action.payload.coordinates;
-            state.waterIntakePoints = action.payload.waterIntakePoints;
-            state.activeType = action.payload.activeType;
-            state.residents = action.payload.residents;
-            state.activeSource = action.payload.activeSource;
+        setInitialState(state) {
+            state.address = initialState.address;
+            state.coordinates = initialState.coordinates;
+            state.waterIntakePoints = initialState.waterIntakePoints;
+            state.activeType = initialState.activeType;
+            state.residents = initialState.residents;
+            state.activeSource = initialState.activeSource;
+            state.progress = initialState.progress;
         },
         setRealEstateAddress(state, action: PayloadAction<string | null>) {
             state.address = action.payload;
@@ -76,6 +79,9 @@ export const realEstateSlice = createSlice({
         setActiveSource(state, action: PayloadAction<'borehole' | 'well' | 'reservoir' | 'waterSupply'>) {
             state.activeSource = action.payload;
         },
+        setProgress(state, action: PayloadAction<number>) {
+            state.progress = action.payload;
+        },
     },
 });
 
@@ -89,4 +95,5 @@ export const {
     setActiveType,
     setResidents,
     setActiveSource,
+    setProgress,
 } = realEstateSlice.actions;
