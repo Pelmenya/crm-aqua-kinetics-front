@@ -9,8 +9,6 @@ export const RealEstatePage: React.FC = () => {
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw || '';
     const { id } = useParams<{ id: string }>();
-    console.log(id)
-
     const { data, error, isLoading } = useGetRealEstateByIdQuery({ id: Number(id), authKey });
 
     if (isLoading) return <div>Loading...</div>;

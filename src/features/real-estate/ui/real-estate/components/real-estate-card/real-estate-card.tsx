@@ -15,12 +15,12 @@ export const RealEstateCard: FC<Partial<TCreateRealEstate>> = ({ id, address, ac
     return (
         <div onClick={
             () => navigate(`/real-estate-page/${id}`)}
-            className="border border-base-300 bg-base-100 rounded-box flex column items-center justify-center"
+            className="border border-base-300 bg-base-100 rounded-box flex column items-center justify-center cursor-pointer"
         >
             <div className="w-full h-[106px] relative">
                 <div className="relative z-3 p-4">
                     <p className="font-medium tracking-tight text-[16px]">{typeRealEstate}</p>
-                    <p className="tracking-tight text-min max-w-56 opacity-70">{address}</p>
+                    <p className="tracking-tight text-min max-w-56 opacity-70 line-clamp-3">{address}</p>
                 </div>
                 <div className="absolute top-0 right-0 w-[207px] h-[106px] rounded-tr-box rounded-br-box overflow-hidden">
                     <img src={backgroundStyle} className="w-full h-full z-0" />
