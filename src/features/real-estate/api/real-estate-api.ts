@@ -8,6 +8,7 @@ export type TGeoJSONCoordinates = {
 };
 
 export type TCreateRealEstate = Omit<TRealEstateState, 'coordinates'> & {
+    id?: number;
     coordinates: TGeoJSONCoordinates | null;
 };
 
@@ -19,7 +20,7 @@ export const realEstateApi = createApi({
         baseUrl: import.meta.env.VITE_BACKEND_BASE_URL + '/real-estate',
     }),
     endpoints: (builder) => ({
-        getRealEstates: builder.query<TRealEstateState[], void>({
+        getRealEstates: builder.query<TCreateRealEstate[], string>({
             query: (authKey) => ({
                 url: '/',
                 method: 'GET',

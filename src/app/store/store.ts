@@ -2,8 +2,8 @@ import { configureStore, Action, ThunkAction } from '@reduxjs/toolkit';
 import { authApi } from '@/features/auth/api/auth-api';
 import { addressApi } from '@/features/address-search/api/address-api';
 import { userSlice } from '@/entities/user/model/user-slice';
-import { realEstateSlice } from '@/features/add-house/model/real-estate-slice';
-import { realEstateApi } from '@/features/add-house/api/real-estate-api';
+import { realEstateSlice } from '@/features/real-estate/model/real-estate-slice';
+import { realEstateApi } from '@/features/real-estate/api/real-estate-api';
 
 export const store = configureStore({
     reducer: {

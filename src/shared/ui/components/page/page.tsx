@@ -8,7 +8,7 @@ export function Page({ children, back = true, footer = false }: PropsWithChildre
      * True if it is allowed to go back from this page.
      */
     back?: boolean;
-    footer?:boolean;
+    footer?: boolean;
 }>) {
     const navigate = useNavigate();
 
@@ -23,9 +23,9 @@ export function Page({ children, back = true, footer = false }: PropsWithChildre
     }, [back]);
 
     return (
-        <div className='bg-base-100 w-[100vw] h-[100vh] max-w-sm relative'>
+        <div className='bg-base-100 w-[100vw] min-h-[100vh] max-w-sm relative'>
             {children}
-            {footer ? <Footer /> : null}
+            {footer && <Footer />}
         </div>
     );
 }

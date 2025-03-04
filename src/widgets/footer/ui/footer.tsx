@@ -13,7 +13,7 @@ export const Footer: FC = () => {
     };
 
     return (
-        <div className="bg-base-100 w-full py-2 px-4 flex justify-between items-center fixed bottom-0 left-0">
+        <div className="bg-base-100 w-full py-2 px-4 flex justify-between items-center fixed z-100 bottom-0 left-0">
             <div className={getIconColor('/account')}>
                 <Home />
             </div>

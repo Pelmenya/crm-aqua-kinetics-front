@@ -6,8 +6,8 @@ import cn from 'classnames';
 import { useAppDispatch } from '@/shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
 import { useGetAddressSuggestionsQuery, useGetCoordinatesQuery } from '../api/address-api';
-import { setRealEstateAddress, setRealEstateCoordinates } from '@/features/add-house/model/real-estate-slice';
-import { getRealEstateAddress, getRealEstateCoordinates } from '@/features/add-house/model/real-estate-selectors';
+import { setRealEstateAddress, setRealEstateCoordinates } from '@/features/real-estate/model/real-estate-slice';
+import { getRealEstateAddress, getRealEstateCoordinates } from '@/features/real-estate/model/real-estate-selectors';
 import { Map } from '@/shared/ui/components/map/map';
 
 export const AddressSearchWithMap = () => {
