@@ -15,10 +15,10 @@ export const RealEstateCard: FC<Partial<TCreateRealEstate>> = ({ address, active
                     <p>{activeType}</p>
                     <p>{address}</p>
                 </div>
-                <div className="absolute top-0 right-0 w-[207px] h-[106px] rounded-box">
-                    <img src={backgroundStyle} className="w-full h-full z-0 rounded-box" />
+                <div className="absolute top-0 right-0 w-[207px] h-[106px] rounded-tr-box rounded-br-box overflow-hidden">
+                    <img src={backgroundStyle} className="w-full h-full z-0" />
                     <div
-                        className="absolute rounded-box top-0 left-0 w-full h-full z-1 pointer-events-none"
+                        className="absolute top-0 left-0 w-full h-full z-1 pointer-events-none rounded-tr-box rounded-br-box"
                         style={{
                             background: 'linear-gradient(to right, var(--color-base-100), rgba(255, 255, 255, .5))'
                         }} />
