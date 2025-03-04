@@ -2,9 +2,9 @@ import { AddressSearchWithMap } from "@/features/address-search/ui/address-searc
 import { Link } from "@/processes/link/link";
 import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
 import { FC, useEffect } from "react";
-import { getRealEstateAddress } from "../model/real-estate-selectors";
+import { getRealEstateAddress } from "../../model/real-estate-selectors";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
-import { setProgress } from "../model/real-estate-slice";
+import { setProgress } from "../../model/real-estate-slice";
 
 export const AddHouseStepTwo: FC = () => {
     const dispatch = useAppDispatch();
