@@ -2,18 +2,18 @@ import { Page } from "@/shared/ui/components/page/page"
 import { FC } from "react"
 import { AccountHeader } from "./components/account-header/account-header"
 import { UserInfo } from "./components/user-info/user-info"
-import { RealEstate } from "../../features/real-estate/ui/real-estate/real-estate"
-import { Services } from "./components/services/services"
+import { Outlet } from "react-router-dom"
+import { useRoleBasedNavigation } from "@/shared/lib/hooks/use-role-based-navigation"
 
 export const AccountPage: FC = () => {
+    useRoleBasedNavigation('/account'); // передаем базовый путь
 
     return (
-        <Page footer={true}>
+        <Page back={false} footer={true}>
             <div className="w-full h-full px-4 gap-2 bg-base-300 pb-16">
                 <AccountHeader title="Личный кабинет" />
                 <UserInfo />
-                <RealEstate />
-                <Services />
+                <Outlet />
             </div>
         </Page>
 

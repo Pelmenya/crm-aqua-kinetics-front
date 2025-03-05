@@ -12,6 +12,8 @@ import { RegisterPage } from '@/pages/register-page/register-page';
 import { WelcomePage } from '@/pages/welcome-page/welcome-page';
 import { ComponentType } from 'react';
 import { RealEstatePage } from '@/pages/real-estate-page/real-estate-page';
+import { AccountClient } from '@/pages/account-page/components/account-client/account-client';
+import { AccountService } from '@/pages/account-page/components/account-service/account-service';
 
 interface Route {
     path: string;
@@ -25,7 +27,17 @@ export const routes: Route[] = [
     { path: '/', Component: IndexPage },
     { path: '/welcome-page', Component: WelcomePage },
     { path: '/register', Component: RegisterPage },
-    { path: '/account', Component: AccountPage },
+    {
+        path: '/account',
+        Component: AccountPage,
+        children: [
+/*      { path: '/account/admin', Component: <></> },
+        { path: '/account/manager', Component: <></> },
+ */   
+            { path: '/account/client', Component: AccountClient },
+            { path: '/account/service', Component: AccountService },
+        ]
+    },
     {
         path: '/add-house', Component: AddHousePage, children: [
             { path: '/add-house/step-1', Component: AddHouseStepOne },

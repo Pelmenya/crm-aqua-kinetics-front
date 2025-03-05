@@ -8,11 +8,7 @@ export const UserInfo: FC = () => {
 
     return (
         <div className="flex gap-6 py-4">
-            <div className="avatar">
-                <div className="w-16 rounded-full">
-                    <img className="avatar" src={user?.photo_url} alt={user?.username} />
-                </div>
-            </div>
+            <img className="avatar w-18 h-18 rounded-full" src={user?.photo_url} alt={user?.username} />
             <div>
                 <p className="font-semibold text-xl">{user?.first_name} {user?.last_name}</p>
                 <p className="text-min opacity-50">{getRole(user?.role)}</p>

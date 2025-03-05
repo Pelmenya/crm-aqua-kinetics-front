@@ -9,7 +9,7 @@ interface ConfirmDialogProps {
     message: string;
 }
 
-const ConfirmDialog: FC<ConfirmDialogProps> = ({ isOpen, onClose, onConfirm, title, message }) => {
+export const ConfirmDialog: FC<ConfirmDialogProps> = ({ isOpen, onClose, onConfirm, title, message }) => {
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={onClose}>
@@ -62,5 +62,3 @@ const ConfirmDialog: FC<ConfirmDialogProps> = ({ isOpen, onClose, onConfirm, tit
         </Transition>
     );
 };
-
-export default ConfirmDialog;

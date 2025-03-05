@@ -9,7 +9,7 @@ export function getRole(role?: UserRole): string {
         case UserRole.CLIENT:
             return 'Клиент';
         case UserRole.SERVICE:
-            return 'Служба поддержки';
+            return 'Служба сервиса';
         default:
             return 'Неизвестная роль';
     }
