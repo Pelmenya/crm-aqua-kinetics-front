@@ -3,14 +3,14 @@ import { FC } from "react";
 
 export type TCardServiceProps = {
     title: string;
-    state?: string;
+    status?: string;
 }
-export const CardService: FC<TCardServiceProps> = ({ title, state }) => {
+export const CardService: FC<TCardServiceProps> = ({ title, status }) => {
     return (
         <Base>
             <div className="flex flex-col">
                 <h5 className="font-medium tracking-tight text-[16px]">{title}</h5>
-                {state ? <p className="text-min opacity-50">{state}</p> : null}
+                {status ? <p className="text-min opacity-50">{status}</p> : null}
             </div>
         </Base>
     )
