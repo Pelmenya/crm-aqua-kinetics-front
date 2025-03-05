@@ -2,19 +2,17 @@ import { TCreateRealEstate } from "@/features/real-estate/api/real-estate-api";
 import { FC, useMemo } from "react";
 import apartmentsBackground from './bg-apartament.jpg';
 import houseBackground from './bg-house.png';
-import { useNavigate } from "react-router-dom";
 
-export const RealEstateCard: FC<Partial<TCreateRealEstate>> = ({ id, address, activeType }) => {
+export const RealEstateCard: FC<Partial<TCreateRealEstate> & { onClick?: () => void }> = ({ address, activeType, onClick }) => {
 
-    const navigate = useNavigate();
+
     // Выбираем фон в зависимости от activeType
     const backgroundStyle = activeType === "apartment" ? apartmentsBackground : houseBackground;
     const typeRealEstate = useMemo(() => activeType === 'apartment' ? 'Квартира по адресу:' : 'Дом по адресу:', [activeType])
 
 
     return (
-        <div onClick={
-            () => navigate(`/real-estate-page/${id}`)}
+        <div onClick={onClick}
             className="border border-base-300 bg-base-100 rounded-box flex column items-center justify-center cursor-pointer"
         >
             <div className="w-full h-[106px] relative">

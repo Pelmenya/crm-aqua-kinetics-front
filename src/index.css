@@ -8,8 +8,6 @@
   --text-ex-min: .625rem;
 }
 
-@plugin "line-clamp";
-
 @plugin "daisyui";
 
 @plugin "daisyui/theme" {
