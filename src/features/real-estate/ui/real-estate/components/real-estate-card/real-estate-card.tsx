@@ -10,7 +10,6 @@ export const RealEstateCard: FC<Partial<TCreateRealEstate> & { onClick?: () => v
     const backgroundStyle = activeType === "apartment" ? apartmentsBackground : houseBackground;
     const typeRealEstate = useMemo(() => activeType === 'apartment' ? 'Квартира по адресу:' : 'Дом по адресу:', [activeType])
 
-
     return (
         <div onClick={onClick}
             className="border border-base-300 bg-base-100 rounded-box flex column items-center justify-center cursor-pointer"
