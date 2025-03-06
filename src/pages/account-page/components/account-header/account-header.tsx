@@ -1,4 +1,4 @@
-import { Notification } from "@/shared/ui/icons/notigication";
+import { Notification } from "@/shared/ui/icons/notification";
 import { Settings } from "@/shared/ui/icons/settings";
 import { FC } from "react";
 
