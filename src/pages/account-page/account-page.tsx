@@ -10,7 +10,7 @@ export const AccountPage: FC = () => {
 
     return (
         <Page back={false} footer={true}>
-            <div className="w-full h-full px-4 gap-2 bg-base-300 pb-16">
+            <div className="w-full h-full min-h-[100vh] px-4 gap-2 bg-base-300 pb-16">
                 <AccountHeader title="Личный кабинет" />
                 <UserInfo />
                 <Outlet />

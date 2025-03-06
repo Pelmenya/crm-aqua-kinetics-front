@@ -14,6 +14,7 @@ import { ComponentType } from 'react';
 import { RealEstatePage } from '@/pages/real-estate-page/real-estate-page';
 import { AccountClient } from '@/pages/account-page/components/account-client/account-client';
 import { AccountService } from '@/pages/account-page/components/account-service/account-service';
+import { CalendarPage } from '@/pages/calendar-page/calendar-page';
 
 interface Route {
     path: string;
@@ -37,6 +38,10 @@ export const routes: Route[] = [
             { path: '/account/client', Component: AccountClient },
             { path: '/account/service', Component: AccountService },
         ]
+    },
+    {
+        path: '/calendar', 
+        Component: CalendarPage,
     },
     {
         path: '/add-house', Component: AddHousePage, children: [
