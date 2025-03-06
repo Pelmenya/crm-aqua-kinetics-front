@@ -52,6 +52,7 @@ export const LocationPage: FC = () => {
                     onQueryChange={(query) => dispatch(setLocationAddress(query))}
                     onSelectAddress={(address) => dispatch(setLocationAddress(address))}
                     onCoordinatesChange={(coords) => dispatch(setLocationCoordinates(coords))}
+                    zoom={7}
                 />
                 <InputField
                     type="text"

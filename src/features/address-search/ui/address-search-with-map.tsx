@@ -1,8 +1,6 @@
 import React, { useMemo, useEffect } from 'react';
 import { Combobox } from '@headlessui/react';
 import _ from 'lodash';
-import cn from 'classnames';
-
 import { useGetAddressSuggestionsQuery, useGetCoordinatesQuery } from '../api/address-api';
 import { Map } from '@/shared/ui/components/map/map';
 
@@ -11,6 +9,7 @@ type TAddressSearchWithMapProps = {
     selectedAddress: string | null;
     coordinates: { latitude: number; longitude: number } | null;
     radiusKm?: number;
+    zoom?: number;
     onQueryChange: (query: string) => void;
     onSelectAddress: (address: string) => void;
     onCoordinatesChange: (coordinates: { latitude: number; longitude: number } | null) => void;
@@ -21,6 +20,7 @@ export const AddressSearchWithMap: React.FC<TAddressSearchWithMapProps> = ({
     selectedAddress,
     coordinates,
     radiusKm,
+    zoom,
     onQueryChange,
     onSelectAddress,
     onCoordinatesChange,
@@ -49,35 +49,15 @@ export const AddressSearchWithMap: React.FC<TAddressSearchWithMapProps> = ({
         onSelectAddress(value);
     };
 
-    const commonClasses = 'rounded-box peer h-8 w-full border-none bg-transparent p-0 placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 sm:text-sm';
-    const labelClasses = cn(
-        'bg-base-100 block relative overflow-hidden rounded-lg border border-base-200 px-3 pt-3 shadow-sm w-full transition duration-300 ease-in-out',
-        'focus-within:border-primary focus-within:ring-1 focus-within:ring-primary'
-    );
-
     return (
         <div className="w-full max-w-lg mx-auto">
             <div className="relative container">
                 <Combobox value={query} onChange={handleSelect}>
-                    <div className={labelClasses}>
-                        <Combobox.Input
-                            onChange={handleChange}
-                            className={commonClasses}
-                            placeholder="Введите адрес"
-                        />
-                        <span
-                            className={cn(
-                                'absolute left-3 text-sm transition-all duration-100 ease-in-out pointer-events-none',
-                                {
-                                    'top-3 text-xs': query,
-                                    'top-1/2 transform -translate-y-1/2 peer-focus:top-3 peer-focus:text-xs':
-                                        query !== '' || !query,
-                                }
-                            )}
-                        >
-                            Введите адрес
-                        </span>
-                    </div>
+                    <Combobox.Input
+                        onChange={handleChange}
+                        className="input input-primary w-full"
+                        placeholder="Введите адрес"
+                    />
                     {query && suggestions.length === 0 && (
                         <Combobox.Options className="absolute z-10 bg-base-100 border border-primary rounded-md shadow-lg max-h-60 mt-1 w-full overflow-auto">
                             <div className="p-2">
@@ -109,7 +89,7 @@ export const AddressSearchWithMap: React.FC<TAddressSearchWithMapProps> = ({
             </div>
             {coordinates && (
                 <div className="grid w-full mt-4">
-                    <Map coordinates={[coordinates.latitude, coordinates.longitude]} radiusKm = { radiusKm }/>
+                    <Map coordinates={[coordinates.latitude, coordinates.longitude]} radiusKm={radiusKm} zoom={zoom}/>
                     <p className='mt-2'>Координаты: {coordinates.latitude + ', ' + coordinates.longitude}</p>
                 </div>
             )}

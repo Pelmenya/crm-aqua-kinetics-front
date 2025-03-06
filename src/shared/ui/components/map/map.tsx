@@ -3,12 +3,13 @@ import { Loading } from '../loading/loading';
 
 export type MapProps = {
     coordinates: number[] | null;
-    radiusKm?: number; // Новый пропс для радиуса в километрах
+    radiusKm?: number;
+    zoom?: number; 
 };
 
-export const Map = ({ coordinates, radiusKm }: MapProps) => {
+export const Map = ({ coordinates, radiusKm, zoom = 17 }: MapProps) => {
     if (!coordinates) {
-        return <Loading size='loading-lg' color='text-primary' type='loading-infinity' />;
+        return <Loading size='loading-lg' color='text-primary' type='loading-infinity' />; // Или отображайте индикатор загрузки
     }
     
     // Конвертируем радиус из километров в метры для отображения на карте
@@ -22,7 +23,7 @@ export const Map = ({ coordinates, radiusKm }: MapProps) => {
         >
             <div className='border border-base-300 bg-base-100 rounded-box p-4'>
                 <MapComponent
-                    state={{ center: coordinates, zoom: 17 }}
+                    state={{ center: coordinates, zoom }}
                     width={'100%'}
                     height={'250px'}
                 >
