@@ -7,13 +7,13 @@ export type TCoordinates = {
 
 export type TLocationState = {
     address: string | null;
-    radiusKm: number;
+    radiusKm: number | null;
     coordinates: TCoordinates | null;
 };
 
 const initialState: TLocationState = {
     address: null,
-    radiusKm: 0,
+    radiusKm: null,
     coordinates: null,
 };
 
@@ -24,7 +24,7 @@ export const locationSlice = createSlice({
         setLocationAddress(state, action: PayloadAction<string | null>) {
             state.address = action.payload;
         },
-        setRadiusKm(state, action: PayloadAction<number>) {
+        setRadiusKm(state, action: PayloadAction<number | null>) {
             state.radiusKm = action.payload;
         },
         setLocationCoordinates(state, action: PayloadAction<TCoordinates | null>) {
