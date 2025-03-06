@@ -2,7 +2,7 @@ import { FC } from "react";
 import { ToggleRealEstateButtons } from "./components/toggle-real-estate-buttons/toggle-real-estate-buttons";
 import { PeopleSlider } from "./components/people-slider/people-slider";
 import { WaterSource } from "./components/water-source/water-source";
-import { Link } from "@/processes/link/link";
+import { Link } from "@/app/link/link";
 import { setActiveSource, setActiveType, setResidents } from "../../model/real-estate-slice";
 import { getActiveSource, getActiveType, getResidents } from "../../model/real-estate-selectors";
 import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";

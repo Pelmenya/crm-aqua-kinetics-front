@@ -1,5 +1,5 @@
 import { AddressSearchWithMap } from "@/features/address-search/ui/address-search-with-map";
-import { Link } from "@/processes/link/link";
+import { Link } from "@/app/link/link";
 import { FC, useState, useEffect } from "react";
 import { getRealEstateAddress, getRealEstateCoordinates } from "../../model/real-estate-selectors";
 import { setProgress, setRealEstateAddress, setRealEstateCoordinates } from "../../model/real-estate-slice";

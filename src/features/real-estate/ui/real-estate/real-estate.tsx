@@ -1,7 +1,7 @@
 import { Base } from "@/shared/ui/components/base/base";
 import { RoundPlus } from "@/features/real-estate/ui/real-estate/components/round-plus/round-plus";
 import { FC, useEffect} from "react";
-import { Link } from "@/processes/link/link";
+import { Link } from "@/app/link/link";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
 import { useGetRealEstatesQuery } from "../../api/real-estate-api";
 import { RealEstateList } from "./components/real-estate-list/real-estate-list";

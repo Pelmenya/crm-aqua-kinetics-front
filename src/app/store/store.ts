@@ -4,6 +4,7 @@ import { addressApi } from '@/features/address-search/api/address-api';
 import { userSlice } from '@/entities/user/model/user-slice';
 import { realEstateSlice } from '@/features/real-estate/model/real-estate-slice';
 import { realEstateApi } from '@/features/real-estate/api/real-estate-api';
+import { locationSlice } from '@/entities/location/model/location-slice';
 
 export const store = configureStore({
     reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
         [realEstateApi.reducerPath]: realEstateApi.reducer,
         user: userSlice.reducer,
         realEstate: realEstateSlice.reducer,
+        location: locationSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat([

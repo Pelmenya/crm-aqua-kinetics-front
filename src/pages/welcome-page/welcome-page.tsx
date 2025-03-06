@@ -4,7 +4,7 @@ import { Page } from '@/shared/ui/components/page/page';
 
 import BGImage from './bg-image.png';
 import Girl from './girl.png';
-import { Link } from '@/processes/link/link';
+import { Link } from '@/app/link/link';
 import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
 import { getUserState } from '@/entities/user/model/user-selectors';
 

@@ -1,7 +1,8 @@
 import { FC } from "react"
 import { CardService } from "../card-service/card-service"
 import { Base } from "@/shared/ui/components/base/base"
-import { Link } from "@/processes/link/link";
+import { Link } from "@/app/link/link";
+import { Location } from "@/shared/ui/icons/loacation";
 
 export const AccountService: FC = () => {
 
@@ -23,10 +24,16 @@ export const AccountService: FC = () => {
 
                 </Link>
             </Base>
-
-            <div className="grid gap-2 grid-cols-2">
-                <CardService title="Установки" status="Еще нет установок" />
-                <CardService title="Рейтинг" status="Еще нет рейтинга" />
+            <div className="flex flex-col gap-2">
+                <div className="grid gap-2 grid-cols-2">
+                    <CardService title="Установки" status="Еще нет установок" />
+                    <CardService title="Рейтинг" status="Еще нет рейтинга" />
+                </div>
+                <Link to="/location" >
+                    <CardService title="Ваша локация" status="Укажите локацию" >
+                        <Location />
+                    </CardService>
+                </Link>
             </div>
         </div>
     )

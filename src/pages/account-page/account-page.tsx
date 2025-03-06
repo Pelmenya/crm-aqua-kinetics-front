@@ -1,7 +1,7 @@
 import { Page } from "@/shared/ui/components/page/page"
 import { FC } from "react"
 import { AccountHeader } from "./components/account-header/account-header"
-import { UserInfo } from "./components/user-info/user-info"
+import { UserInfo } from "../../entities/user/ui/user-info/user-info"
 import { Outlet } from "react-router-dom"
 import { useRoleBasedNavigation } from "@/shared/lib/hooks/use-role-based-navigation"
 

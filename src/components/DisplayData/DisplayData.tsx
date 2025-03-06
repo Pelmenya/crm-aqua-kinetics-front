@@ -3,7 +3,7 @@ import { Cell, Checkbox, Section } from '@telegram-apps/telegram-ui';
 import type { FC, ReactNode } from 'react';
 
 import { RGB } from '@/components/RGB/RGB.tsx';
-import { Link } from '@/processes/link/link';
+import { Link } from '@/app/link/link';
 
 import './DisplayData.css';
 

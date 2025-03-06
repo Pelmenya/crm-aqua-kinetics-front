@@ -2,7 +2,7 @@ import { useLaunchParams, miniApp, useSignal } from '@telegram-apps/sdk-react';
 import { AppRoot } from '@telegram-apps/telegram-ui';
 import { Navigate, Route, Routes, HashRouter } from 'react-router-dom';
 
-import { routes } from '@/processes/routing/routes';
+import { routes } from '@/app/routing/routes';
 import { useEffect } from 'react';
 import { AuthProvider } from '@/app/providers/auth-provider/auth-provider';
 
