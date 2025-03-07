@@ -7,6 +7,7 @@ import { RealEstateCard } from '@/features/real-estate/ui/real-estate/components
 import { Base } from '@/shared/ui/components/base/base';
 import { ButtonWithIcon } from '@/shared/ui/components/button-with-icon/button-with-icon';
 import { ConfirmDialog } from '@/shared/ui/components/confirm-dialog/confirm-dialog';
+import { Loading } from '@/shared/ui/components/loading/loading';
 
 export const RealEstatePage: React.FC = () => {
     const navigate = useNavigate();
@@ -43,7 +44,7 @@ export const RealEstatePage: React.FC = () => {
 
     const typeRealEstate = useMemo(() => data?.activeType === 'apartment' ? 'квартиру' : 'дом', [data?.activeType]);
 
-    if (isLoading) return <div>Loading...</div>;
+    if (isLoading) return <Loading color="text-primary" size="loading-xs" type="loading-infinity" />;
     if (error) return <div>Error loading real estate data</div>;
 
     return (

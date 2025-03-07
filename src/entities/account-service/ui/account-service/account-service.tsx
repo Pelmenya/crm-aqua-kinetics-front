@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { CardService } from "../card-service/card-service"
+import { CardService } from "../../../../pages/account-page/components/card-service/card-service"
 import { Base } from "@/shared/ui/components/base/base"
 import { Link } from "@/app/link/link";
 import { Location } from "@/shared/ui/icons/loacation";
@@ -29,7 +29,7 @@ export const AccountService: FC = () => {
                     <CardService title="Установки" status="Еще нет установок" />
                     <CardService title="Рейтинг" status="Еще нет рейтинга" />
                 </div>
-                <Link to="/location" >
+                <Link to="/service-location" >
                     <CardService title="Ваша локация" status="Укажите локацию" >
                         <Location />
                     </CardService>

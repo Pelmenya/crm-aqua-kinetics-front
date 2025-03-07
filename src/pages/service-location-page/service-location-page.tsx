@@ -5,10 +5,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { InputField } from "@/shared/ui/components/input-field/input-field";
 import { FormWithTitle } from "@/shared/ui/components/form-with-title/form-with-title";
 import { AddressSearchWithMap } from "@/features/address-search/ui/address-search-with-map";
-import { getLocationState } from "@/entities/location/model/location-selectors";
+import { getLocationState } from "@/entities/account-service/model/account-service-selectors";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
 import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
-import { setLocationAddress, setLocationCoordinates, setRadiusKm } from "@/entities/location/model/location-slice";
+import { setAddress, setCoordinates, setRadiusKm } from "@/entities/account-service/model/account-service-slice";
 import { Page } from "@/shared/ui/components/page/page";
 
 export type TLocationFormInputs = {
@@ -25,7 +25,7 @@ const schema = yup.object().shape({
         .min(0, "Радиус не может быть отрицательным"),
 });
 
-export const LocationPage: FC = () => {
+export const  ServiceLocationPage: FC = () => {
     const dispatch = useAppDispatch();
     const location = useAppSelector(getLocationState);
 
@@ -70,9 +70,9 @@ export const LocationPage: FC = () => {
                     selectedAddress={location.address}
                     coordinates={location.coordinates}
                     radiusKm={location.radiusKm || 0}
-                    onQueryChange={(query) => dispatch(setLocationAddress(query))}
-                    onSelectAddress={(address) => dispatch(setLocationAddress(address))}
-                    onCoordinatesChange={(coords) => dispatch(setLocationCoordinates(coords))}
+                    onQueryChange={(query) => dispatch(setAddress(query))}
+                    onSelectAddress={(address) => dispatch(setAddress(address))}
+                    onCoordinatesChange={(coords) => dispatch(setCoordinates(coords))}
                     zoom={7}
                 />
             </FormWithTitle>

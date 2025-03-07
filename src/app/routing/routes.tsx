@@ -13,9 +13,9 @@ import { WelcomePage } from '@/pages/welcome-page/welcome-page';
 import { ComponentType } from 'react';
 import { RealEstatePage } from '@/pages/real-estate-page/real-estate-page';
 import { AccountClient } from '@/pages/account-page/components/account-client/account-client';
-import { AccountService } from '@/pages/account-page/components/account-service/account-service';
-import { CalendarPage } from '@/pages/calendar-page/calendar-page';
-import { LocationPage } from '@/pages/location-page/location-page';
+import { AccountService } from '@/entities/account-service/ui/account-service/account-service';
+import { ServiceCalendarPage } from '@/pages/calendar-page/calendar-page';
+import { ServiceLocationPage } from '@/pages/service-location-page/service-location-page';
 
 interface Route {
     path: string;
@@ -41,12 +41,12 @@ export const routes: Route[] = [
         ]
     },
     {
-        path: '/calendar', 
-        Component: CalendarPage,
+        path: '/service-calendar', 
+        Component: ServiceCalendarPage,
     },
     {
-        path: '/location', 
-        Component: LocationPage,
+        path: '/service-location', 
+        Component: ServiceLocationPage,
     },
     {
         path: '/add-house', Component: AddHousePage, children: [
