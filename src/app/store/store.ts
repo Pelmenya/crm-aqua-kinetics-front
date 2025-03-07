@@ -5,12 +5,14 @@ import { userSlice } from '@/entities/user/model/user-slice';
 import { realEstateSlice } from '@/features/real-estate/model/real-estate-slice';
 import { realEstateApi } from '@/features/real-estate/api/real-estate-api';
 import { accountServiceSlice } from '@/entities/account-service/model/account-service-slice';
+import { accountServiceApi } from '@/entities/account-service/api/account-service-api';
 
 export const store = configureStore({
     reducer: {
         [authApi.reducerPath]: authApi.reducer,
         [addressApi.reducerPath]: addressApi.reducer,
         [realEstateApi.reducerPath]: realEstateApi.reducer,
+        [accountServiceApi.reducerPath]: accountServiceApi.reducer,
         user: userSlice.reducer,
         realEstate: realEstateSlice.reducer,
         accountService: accountServiceSlice.reducer,
@@ -20,6 +22,7 @@ export const store = configureStore({
             authApi.middleware,
             addressApi.middleware,
             realEstateApi.middleware,
+            accountServiceApi.middleware,
         ]),
 });
 

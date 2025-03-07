@@ -9,7 +9,7 @@ export const AccountService: FC = () => {
     return (
         <div className="flex flex-col gap-2">
             <Base>
-                <Link to="/calendar" className="flex flex-col items-center gap-2">
+                <Link to="/service-calendar" className="flex flex-col items-center gap-2">
                     <svg
                         className="opacity-60"
                         width="48"

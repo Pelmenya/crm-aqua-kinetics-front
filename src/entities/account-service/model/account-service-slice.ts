@@ -6,6 +6,7 @@ export type TCoordinates = {
 };
 
 export type TAccountServiceState = {
+    id: string | null;
     address: string | null;
     radiusKm: number | null;
     coordinates: TCoordinates | null;
@@ -14,9 +15,10 @@ export type TAccountServiceState = {
 };
 
 const initialState: TAccountServiceState = {
+    id: null,
     address: null,
-    radiusKm: null,
     coordinates: null,
+    radiusKm: null,
     carNumber: null,
     carModel: null,
 };
@@ -41,6 +43,7 @@ export const accountServiceSlice = createSlice({
             state.carModel = action.payload;
         },
         resetAccountServiceState(state) {
+            state.id = initialState.id;
             state.address = initialState.address;
             state.radiusKm = initialState.radiusKm;
             state.coordinates = initialState.coordinates;

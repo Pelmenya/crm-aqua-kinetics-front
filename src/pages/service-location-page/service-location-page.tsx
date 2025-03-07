@@ -5,11 +5,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { InputField } from "@/shared/ui/components/input-field/input-field";
 import { FormWithTitle } from "@/shared/ui/components/form-with-title/form-with-title";
 import { AddressSearchWithMap } from "@/features/address-search/ui/address-search-with-map";
-import { getLocationState } from "@/entities/account-service/model/account-service-selectors";
+import { getAccountServiceState } from "@/entities/account-service/model/account-service-selectors";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
 import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
 import { setAddress, setCoordinates, setRadiusKm } from "@/entities/account-service/model/account-service-slice";
 import { Page } from "@/shared/ui/components/page/page";
+import { TCreateAccountService, useCreateOrUpdateAccountServiceMutation } from "@/entities/account-service/api/account-service-api";
+import { useLaunchParams } from "@telegram-apps/sdk-react";
 
 export type TLocationFormInputs = {
     radiusKm: number;
@@ -19,32 +21,44 @@ const schema = yup.object().shape({
     radiusKm: yup
         .number()
         .nullable() // Разрешаем null значение
-        .transform((value, originalValue) => originalValue.trim() === '' ? null : value) // Преобразуем пустую строку в null
         .typeError("Значение должно быть числом")
         .required("Радиус не должен быть пустым")
         .min(0, "Радиус не может быть отрицательным"),
 });
 
-export const  ServiceLocationPage: FC = () => {
+export const ServiceLocationPage: FC = () => {
     const dispatch = useAppDispatch();
-    const location = useAppSelector(getLocationState);
+    const accountService = useAppSelector(getAccountServiceState);
+    const [createAccountService] = useCreateOrUpdateAccountServiceMutation();
 
     const { register, handleSubmit, setValue, formState: { errors } } = useForm<TLocationFormInputs>({
         resolver: yupResolver(schema),
     });
+    const lp = useLaunchParams();
+    const authKey = lp.initDataRaw || '';
 
-    const onSubmit = async (data: TLocationFormInputs) => {
-        console.log(data);
-        if (data.radiusKm !== null) {
-            dispatch(setRadiusKm(data.radiusKm));
+    const onSubmit = async () => {
+        try {
+            const newAccountService: TCreateAccountService = {
+                ...accountService,
+                coordinates: accountService.coordinates ? {
+                    type: 'Point',
+                    coordinates: [accountService.coordinates.longitude, accountService.coordinates.latitude]
+                } : null
+            };
+
+            await createAccountService({ newAccountService, authKey }).unwrap();
+            console.log("Account service created successfully");
+        } catch (error) {
+            console.error("Failed to create account service", error);
         }
     };
 
     useEffect(() => {
-        if (location.radiusKm !== undefined && location.radiusKm !== null) {
-            setValue('radiusKm', location.radiusKm, { shouldValidate: true });
+        if (accountService.radiusKm !== undefined && accountService.radiusKm !== null) {
+            setValue('radiusKm', accountService.radiusKm, { shouldValidate: true });
         }
-    }, [location.radiusKm, setValue]);
+    }, [accountService.radiusKm, setValue]);
 
     // Функция для обработки ввода в поле radiusKm
     const handleRadiusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,10 +80,10 @@ export const  ServiceLocationPage: FC = () => {
                     onInput={handleRadiusChange}
                 />
                 <AddressSearchWithMap
-                    query={location.address || ''}
-                    selectedAddress={location.address}
-                    coordinates={location.coordinates}
-                    radiusKm={location.radiusKm || 0}
+                    query={accountService.address || ''}
+                    selectedAddress={accountService.address}
+                    coordinates={accountService.coordinates || null}
+                    radiusKm={accountService.radiusKm || 0}
                     onQueryChange={(query) => dispatch(setAddress(query))}
                     onSelectAddress={(address) => dispatch(setAddress(address))}
                     onCoordinatesChange={(coords) => dispatch(setCoordinates(coords))}
