@@ -3,7 +3,7 @@ import { FC, ReactNode } from "react";
 
 export type TCardServiceProps = {
     title: string;
-    status?: string;
+    status?: ReactNode;
     children?: ReactNode;
 }
 export const CardService: FC<TCardServiceProps> = ({ title, status, children }) => {

@@ -62,3 +62,9 @@ html, body, #root {
   /* Preserve scrolling behavior */
   overflow-y: auto;
 }
+
+.react-datepicker__day--highlighted-custom {
+    background-color: #fde68a;
+    color: #000;
+  }
+ 

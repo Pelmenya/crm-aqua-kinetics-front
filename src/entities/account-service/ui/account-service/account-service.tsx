@@ -3,8 +3,18 @@ import { CardService } from "../../../../pages/account-page/components/card-serv
 import { Base } from "@/shared/ui/components/base/base"
 import { Link } from "@/app/link/link";
 import { Location } from "@/shared/ui/icons/loacation";
+import { useLaunchParams } from "@telegram-apps/sdk-react";
+import { useGetAccountServiceByUserQuery } from "../../api/account-service-api";
+import { Loading } from "@/shared/ui/components/loading/loading";
 
 export const AccountService: FC = () => {
+
+    const lp = useLaunchParams();
+    const authKey = lp.initDataRaw || '';
+
+    const { data: accountServiceFromBack, isLoading } = useGetAccountServiceByUserQuery(authKey, {
+        refetchOnMountOrArgChange: true,
+    });
 
     return (
         <div className="flex flex-col gap-2">
@@ -30,7 +40,15 @@ export const AccountService: FC = () => {
                     <CardService title="Рейтинг" status="Еще нет рейтинга" />
                 </div>
                 <Link to="/service-location" >
-                    <CardService title="Ваша локация" status="Укажите локацию" >
+                    <CardService title="Ваша локация"
+                        status={
+                            isLoading ?
+                                <Loading color="text-primary" size="loading-xs" type="loading-infinity" />
+                                :
+                                accountServiceFromBack?.address
+                                    ? accountServiceFromBack.address
+                                    : "Укажите локацию"
+                        }>
                         <Location />
                     </CardService>
                 </Link>
