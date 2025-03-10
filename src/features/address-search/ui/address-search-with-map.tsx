@@ -8,6 +8,7 @@ type TAddressSearchWithMapProps = {
     query: string;
     selectedAddress: string | null;
     coordinates: { latitude: number; longitude: number } | null;
+    isViewCoordinates?: boolean;
     radiusKm?: number;
     zoom?: number;
     onQueryChange: (query: string) => void;
@@ -19,6 +20,7 @@ export const AddressSearchWithMap: React.FC<TAddressSearchWithMapProps> = ({
     query,
     selectedAddress,
     coordinates,
+    isViewCoordinates = true,
     radiusKm,
     zoom,
     onQueryChange,
@@ -89,8 +91,8 @@ export const AddressSearchWithMap: React.FC<TAddressSearchWithMapProps> = ({
             </div>
             {coordinates && (
                 <div className="grid w-full mt-4">
-                    <Map coordinates={[coordinates.latitude, coordinates.longitude]} radiusKm={radiusKm} zoom={zoom}/>
-                    <p className='mt-2'>Координаты: {coordinates.latitude + ', ' + coordinates.longitude}</p>
+                    <Map coordinates={[coordinates.latitude, coordinates.longitude]} radiusKm={radiusKm} zoom={zoom} />
+                    {isViewCoordinates && <p className='mt-2'>Координаты: {coordinates.latitude + ', ' + coordinates.longitude}</p>}
                 </div>
             )}
         </div>
