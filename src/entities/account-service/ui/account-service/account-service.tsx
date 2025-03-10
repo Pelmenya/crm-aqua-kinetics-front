@@ -6,6 +6,7 @@ import { Location } from "@/shared/ui/icons/loacation";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
 import { useGetAccountServiceByUserQuery } from "../../api/account-service-api";
 import { Loading } from "@/shared/ui/components/loading/loading";
+import { Profile } from "@/shared/ui/icons/profile";
 
 export const AccountService: FC = () => {
 
@@ -50,6 +51,12 @@ export const AccountService: FC = () => {
                                     : "Укажите локацию"
                         }>
                         <Location />
+                    </CardService>
+                </Link>
+                <Link to="/service-profile" >
+                    <CardService title="Ваш профиль"
+                        status={"Укажите режим работы, авто, номер авто"}>
+                        <Profile />
                     </CardService>
                 </Link>
             </div>

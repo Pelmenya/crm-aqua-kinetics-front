@@ -16,6 +16,7 @@ import { AccountClient } from '@/pages/account-page/components/account-client/ac
 import { AccountService } from '@/entities/account-service/ui/account-service/account-service';
 import { ServiceCalendarPage } from '@/pages/calendar-page/calendar-page';
 import { ServiceLocationPage } from '@/pages/service-location-page/service-location-page';
+import { ServiceProfilePage } from '@/pages/service-profile-page/service-profile-page';
 
 interface Route {
     path: string;
@@ -47,6 +48,10 @@ export const routes: Route[] = [
     {
         path: '/service-location', 
         Component: ServiceLocationPage,
+    },
+    {
+        path: '/service-profile', 
+        Component: ServiceProfilePage,
     },
     {
         path: '/add-house', Component: AddHousePage, children: [
