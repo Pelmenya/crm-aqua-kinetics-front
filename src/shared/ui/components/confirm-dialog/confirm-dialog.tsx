@@ -1,4 +1,4 @@
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { FC, Fragment } from 'react';
 
 interface ConfirmDialogProps {
@@ -16,7 +16,7 @@ export const ConfirmDialog: FC<ConfirmDialogProps> = ({ isOpen, onClose, onConfi
                 <div className="fixed inset-0 bg-base-300 opacity-70" />
                 <div className="fixed inset-0 overflow-y-auto">
                     <div className="flex items-center justify-center min-h-full p-4 text-center">
-                        <Transition.Child
+                        <TransitionChild
                             as={Fragment}
                             enter="ease-out duration-300"
                             enterFrom="opacity-0 scale-95"
@@ -25,13 +25,13 @@ export const ConfirmDialog: FC<ConfirmDialogProps> = ({ isOpen, onClose, onConfi
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-base-100 shadow-xl rounded-2xl">
-                                <Dialog.Title
+                            <DialogPanel className="max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-base-100 shadow-xl rounded-2xl">
+                                <DialogTitle
                                     as="h3"
                                     className="text-lg font-medium leading-6"
                                 >
                                     {title}
-                                </Dialog.Title>
+                                </DialogTitle>
                                 <div className="mt-2">
                                     <p className="text-sm">
                                         {message}
@@ -54,8 +54,8 @@ export const ConfirmDialog: FC<ConfirmDialogProps> = ({ isOpen, onClose, onConfi
                                         Отмена
                                     </button>
                                 </div>
-                            </Dialog.Panel>
-                        </Transition.Child>
+                            </DialogPanel>
+                        </TransitionChild>
                     </div>
                 </div>
             </Dialog>

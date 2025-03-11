@@ -1,4 +1,4 @@
-import { Dialog, Transition } from '@headlessui/react';
+import { Dialog, DialogPanel, DialogTitle, Transition, TransitionChild } from '@headlessui/react';
 import { FC, Fragment, useState, useEffect } from 'react';
 import { TWorkDay } from "@/shared/lib/types/t-work-day";
 
@@ -30,7 +30,7 @@ export const WorkDayEditorModal: FC<WorkDayEditorModalProps> = ({ isOpen, workDa
         <div className="fixed inset-0 bg-black opacity-30" />
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-full p-4 text-center">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 scale-95"
@@ -39,10 +39,10 @@ export const WorkDayEditorModal: FC<WorkDayEditorModalProps> = ({ isOpen, workDa
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                <Dialog.Title as="h3" className="text-lg font-medium leading-6">
+              <DialogPanel className="max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
+                <DialogTitle as="h3" className="text-lg font-medium leading-6">
                   Редактировать рабочий день
-                </Dialog.Title>
+                </DialogTitle>
                 <div className="mt-2">
                   <div className="mb-4">
                     <label className="block mb-1">Начало рабочего дня:</label>
@@ -72,8 +72,8 @@ export const WorkDayEditorModal: FC<WorkDayEditorModalProps> = ({ isOpen, workDa
                   <button className="btn btn-secondary" onClick={onRemove}>Удалить</button>
                   <button className="btn btn-secondary" onClick={onClose}>Отмена</button>
                 </div>
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>

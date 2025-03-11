@@ -42,6 +42,7 @@ export const AccountService: FC = () => {
                 </div>
                 <Link to="/service-location" >
                     <CardService title="Ваша локация"
+                        fullWidth={true}
                         status={
                             isLoading ?
                                 <Loading color="text-primary" size="loading-xs" type="loading-infinity" />
@@ -54,8 +55,11 @@ export const AccountService: FC = () => {
                     </CardService>
                 </Link>
                 <Link to="/service-profile" >
-                    <CardService title="Ваш профиль"
-                        status={"Укажите режим работы, авто, номер авто"}>
+                    <CardService 
+                        fullWidth={true}
+                        title="Ваш профиль"
+                        status={"Укажите режим работы, авто, номер авто"}
+                    >
                         <Profile />
                     </CardService>
                 </Link>
