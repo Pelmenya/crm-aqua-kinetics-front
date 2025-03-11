@@ -50,7 +50,7 @@ export const ServiceWeekly: FC = () => {
           workDay={selectedWorkDay}
           onClose={() => setIsEditorOpen(false)}
           onSave={handleEditorSave}
-          onRemove={handleRemove} // Теперь действительно удаляет день
+          onRemove={handleRemove} 
         />
       )}
     </div>

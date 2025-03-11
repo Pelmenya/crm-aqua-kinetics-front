@@ -10,7 +10,6 @@ const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
 
 export const WeeklyDatePicker: FC<WeeklyDatePickerProps> = ({ workDays, onDaySelect }) => {
   const toggleDaySelection = (dayIndex: number) => {
-    // Приводим dayIndex к индексу в формате Date.getDay(), где воскресенье это 0
     const dateIndex = (dayIndex + 1) % 7;
 
     const existingDay = workDays.find(day => day.date.getDay() === dateIndex);
@@ -19,10 +18,11 @@ export const WeeklyDatePicker: FC<WeeklyDatePickerProps> = ({ workDays, onDaySel
       onDaySelect(existingDay);
     } else {
       const newWorkDay: TWorkDay = {
-        // Условная дата для идентификации дня недели. Дата 5 января 2025 года — это воскресенье.
         date: new Date(2025, 0, 5 + dateIndex),
-        startHour: 9,
+        startHour: 8,
+        startMinute: 0, 
         endHour: 17,
+        endMinute: 0,
       };
       onDaySelect(newWorkDay);
     }

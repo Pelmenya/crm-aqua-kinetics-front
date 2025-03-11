@@ -1,6 +1,6 @@
 import { Base } from "@/shared/ui/components/base/base";
-import { ButtonWithIcon } from "@/shared/ui/components/button-with-icon/button-with-icon";
 import { FC, ReactNode } from "react";
+import { Counter } from "@/shared/ui/components/counter/counter"; // Импортируем новый компонент
 
 interface WaterIntakePointProps {
     name: string;
@@ -26,11 +26,12 @@ export const WaterIntakePoint: FC<WaterIntakePointProps> = ({
                     </div>
                     {name}
                 </div>
-                <div className="flex items-center">
-                    <ButtonWithIcon onClick={onDecrement} disabled={count <= 0} icon="minus" />
-                    <p className="text-center w-6 text-xs">{count}</p>
-                    <ButtonWithIcon onClick={onIncrement} icon="plus" />
-                </div>
+                <Counter
+                    count={count}
+                    onIncrement={onIncrement}
+                    onDecrement={onDecrement}
+                    minCount={0}
+                />
             </div>
         </Base>
     );
