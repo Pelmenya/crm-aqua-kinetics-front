@@ -8,7 +8,7 @@ type TInputFieldProps<T extends FieldValues> = {
     error?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
     label?: string;
-    onInput?:  (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onInput?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const InputField = <T extends FieldValues>({

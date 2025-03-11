@@ -7,6 +7,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ServiceWeekly } from "./components/service-weekly/service-weekly";
 
+// Регулярное выражение для проверки российского номера (латиница и кириллица)
+const russianCarNumberRegex = /^[ABEKMHOPCTYXАВЕКМНОРСТУХ]\d{3}[ABEKMHOPCTYXАВЕКМНОРСТУХ]{2}\s?\d{2,3}$/;
+
 export type TProfileFormInputs = {
     carModel?: string;
     carNumber?: string;
@@ -14,19 +17,19 @@ export type TProfileFormInputs = {
 
 const schema = yup.object().shape({
     carModel: yup.string(),
-    carNumber: yup.string(),
+    carNumber: yup
+        .string()
+        .matches(russianCarNumberRegex, "Некорректный формат номера автомобиля"),
 });
 
-
 export const ServiceProfilePage: FC = () => {
-
     const { register, handleSubmit, formState: { errors } } = useForm<TProfileFormInputs>({
         resolver: yupResolver(schema),
     });
 
     const onSubmit = () => {
-
-    }
+        // Обработка данных формы
+    };
 
     return (
         <Page back={true}>
