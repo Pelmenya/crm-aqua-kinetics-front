@@ -1,5 +1,8 @@
+import { TNullable } from "./t-nullable";
+
 export type TWorkDay = {
-    date: Date;
+    date: TNullable<Date>;
+    dayOfWeek?: number;
     startHour: number;
     startMinute: number;
     endHour: number;

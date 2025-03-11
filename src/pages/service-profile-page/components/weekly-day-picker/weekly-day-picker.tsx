@@ -1,24 +1,28 @@
 import { FC } from 'react';
 import { TWorkDay } from '@/shared/lib/types/t-work-day';
 
-interface WeeklyDatePickerProps {
+type TWeeklyDayPickerProps = {
   workDays: TWorkDay[];
   onDaySelect: (day: TWorkDay) => void;
 }
+const daysOfWeek = [1, 2, 3, 4, 5, 6, 0];
 
-const daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+const getDayByIdx = (idx: number): string => {
+    const dayNames = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+    return dayNames[idx] || "";
+};
 
-export const WeeklyDatePicker: FC<WeeklyDatePickerProps> = ({ workDays, onDaySelect }) => {
+export const WeeklyDayPicker: FC<TWeeklyDayPickerProps> = ({ workDays, onDaySelect }) => {
   const toggleDaySelection = (dayIndex: number) => {
-    const dateIndex = (dayIndex + 1) % 7;
 
-    const existingDay = workDays.find(day => day.date.getDay() === dateIndex);
+    const existingDay = workDays.find(day => day.dayOfWeek === dayIndex);
 
     if (existingDay) {
       onDaySelect(existingDay);
     } else {
       const newWorkDay: TWorkDay = {
-        date: new Date(2025, 0, 5 + dateIndex),
+        date: null,
+        dayOfWeek: dayIndex,
         startHour: 8,
         startMinute: 0, 
         endHour: 17,
@@ -32,13 +36,13 @@ export const WeeklyDatePicker: FC<WeeklyDatePickerProps> = ({ workDays, onDaySel
     <div className="p-4">
       <h2 className="text-lg text-center font-bold mb-4">Выберите рабочие дни (Неделя)</h2>
       <div className="flex space-x-2">
-        {daysOfWeek.map((day, index) => (
+        {daysOfWeek.map((day) => (
           <button
-            key={index}
-            className={`p-2 btn btn-md btn-outline ${workDays.some(d => d.date.getDay() === (index + 1) % 7) ? 'btn-warning' : ''}`}
-            onClick={() => toggleDaySelection(index)}
+            key={day}
+            className={`p-2 btn btn-md btn-outline ${workDays.some(d => d.dayOfWeek === day) ? 'btn-warning' : ''}`}
+            onClick={() => toggleDaySelection(day)}
           >
-            {day}
+            {getDayByIdx(day)}
           </button>
         ))}
       </div>

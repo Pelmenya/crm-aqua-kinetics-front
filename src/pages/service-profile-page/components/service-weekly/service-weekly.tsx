@@ -1,44 +1,27 @@
-import { FC, useState, useCallback } from "react";
+import { FC, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { TWorkDay } from "@/shared/lib/types/t-work-day";
-import { WeeklyDatePicker } from "../weekly-date-picker/weekly-date-picker";
+import { WeeklyDayPicker } from "../weekly-day-picker/weekly-day-picker";
 import { WorkDayEditorModal } from "../work-day-editor-modal/work-day-editor-modal";
 import { Base } from "@/shared/ui/components/base/base";
+import { getAccountServiceState } from "@/entities/account-service/model/account-service-selectors";
+import { closeEditor, removeWorkDay, saveWorkDay, selectWorkDay } from "@/entities/account-service/model/account-service-slice";
 
 export const ServiceWeekly: FC = () => {
-    const [workDays, setWorkDays] = useState<TWorkDay[]>([]);
-    const [selectedWorkDay, setSelectedWorkDay] = useState<TWorkDay | null>(null);
-    const [isEditorOpen, setIsEditorOpen] = useState(false);
+    const dispatch = useDispatch();
+    const { workDays, selectedWorkDay, isEditorOpen } = useSelector(getAccountServiceState);
 
     const handleDaySelect = useCallback((day: TWorkDay) => {
-        setSelectedWorkDay(day);
-        setIsEditorOpen(true);
-    }, []);
+        dispatch(selectWorkDay(day));
+    }, [dispatch]);
 
     const handleEditorSave = useCallback((updatedDay: TWorkDay) => {
-        setWorkDays(prevDays => {
-            const dayExists = prevDays.some(day => day.date.getTime() === updatedDay.date.getTime());
-
-            if (dayExists) {
-                return prevDays.map(day =>
-                    day.date.getTime() === updatedDay.date.getTime() ? updatedDay : day
-                );
-            } else {
-                return [...prevDays, updatedDay];
-            }
-        });
-
-        setIsEditorOpen(false);
-    }, []);
+        dispatch(saveWorkDay(updatedDay));
+    }, [dispatch]);
 
     const handleRemove = useCallback(() => {
-        if (selectedWorkDay) {
-            setWorkDays(prevDays =>
-                prevDays.filter(day => day.date.getTime() !== selectedWorkDay.date.getTime())
-            );
-            setSelectedWorkDay(null);
-            setIsEditorOpen(false);
-        }
-    }, [selectedWorkDay]);
+        dispatch(removeWorkDay());
+    }, [dispatch]);
 
     return (
         <div className="flex flex-col items-center justify-center px-4">
@@ -46,13 +29,13 @@ export const ServiceWeekly: FC = () => {
             <p>Управляйте своим расписанием.</p>
             <p className="text-center mb-4">Изменить конкретную дату можно на вкладке календаря</p>
             <Base>
-                <WeeklyDatePicker workDays={workDays} onDaySelect={handleDaySelect} />
+                <WeeklyDayPicker workDays={workDays} onDaySelect={handleDaySelect} />
             </Base>
             {selectedWorkDay && (
                 <WorkDayEditorModal
                     isOpen={isEditorOpen}
                     workDay={selectedWorkDay}
-                    onClose={() => setIsEditorOpen(false)}
+                    onClose={() => dispatch(closeEditor())}
                     onSave={handleEditorSave}
                     onRemove={handleRemove}
                 />
