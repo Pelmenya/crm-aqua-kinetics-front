@@ -5,10 +5,11 @@ import { InputField } from "@/shared/ui/components/input-field/input-field";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { ServiceWeekly } from "./components/service-weekly/service-weekly";
 
 export type TProfileFormInputs = {
-    carModel: string;
-    carNumber: string;
+    carModel?: string;
+    carNumber?: string;
 };
 
 const schema = yup.object().shape({
@@ -19,7 +20,7 @@ const schema = yup.object().shape({
 
 export const ServiceProfilePage: FC = () => {
 
-    const { register, handleSubmit, setValue, formState: { errors } } = useForm<TProfileFormInputs>({
+    const { register, handleSubmit,  formState: { errors } } = useForm<TProfileFormInputs>({
         resolver: yupResolver(schema),
     });
 
@@ -51,7 +52,7 @@ export const ServiceProfilePage: FC = () => {
                         error={errors.carNumber?.message}
                         placeholder="Номер авто"
                     />
-
+                    <ServiceWeekly />
                 </FormWithTitle>
             </div>
         </Page>
