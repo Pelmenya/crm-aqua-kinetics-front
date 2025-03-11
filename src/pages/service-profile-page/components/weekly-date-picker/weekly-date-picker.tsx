@@ -30,12 +30,12 @@ export const WeeklyDatePicker: FC<WeeklyDatePickerProps> = ({ workDays, onDaySel
 
   return (
     <div className="p-4">
-      <h2 className="text-lg font-bold mb-4">Выберите рабочие дни (Неделя)</h2>
+      <h2 className="text-lg text-center font-bold mb-4">Выберите рабочие дни (Неделя)</h2>
       <div className="flex space-x-2">
         {daysOfWeek.map((day, index) => (
           <button
             key={index}
-            className={`p-2 border ${workDays.some(d => d.date.getDay() === (index + 1) % 7) ? 'bg-blue-200' : ''}`}
+            className={`p-2 btn btn-md btn-outline ${workDays.some(d => d.date.getDay() === (index + 1) % 7) ? 'btn-warning' : ''}`}
             onClick={() => toggleDaySelection(index)}
           >
             {day}

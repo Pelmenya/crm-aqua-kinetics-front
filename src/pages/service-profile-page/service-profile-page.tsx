@@ -20,11 +20,11 @@ const schema = yup.object().shape({
 
 export const ServiceProfilePage: FC = () => {
 
-    const { register, handleSubmit,  formState: { errors } } = useForm<TProfileFormInputs>({
+    const { register, handleSubmit, formState: { errors } } = useForm<TProfileFormInputs>({
         resolver: yupResolver(schema),
     });
 
-    const onSubmit= () => {
+    const onSubmit = () => {
 
     }
 
@@ -52,7 +52,9 @@ export const ServiceProfilePage: FC = () => {
                         error={errors.carNumber?.message}
                         placeholder="Номер авто"
                     />
-                    <ServiceWeekly />
+                    <div className="px-4">
+                        <ServiceWeekly />
+                    </div>
                 </FormWithTitle>
             </div>
         </Page>

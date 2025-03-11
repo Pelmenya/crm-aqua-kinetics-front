@@ -20,7 +20,7 @@ export const FormWithTitle: FC<TFormWithTitleProps> = ({
     return (
         <form onSubmit={onSubmit} className="p-4 w-full h-full min-h-[100vh] flex flex-col gap-4 items-center justify-between">
             <div className="w-full flex flex-col gap-4 items-center justify-center">
-                <h1 className="text-xl font-medium">{title}</h1>
+                <h1 className="text-2xl font-bold">{title}</h1>
                 {children}
             </div>
             <button className="btn btn-primary w-full" disabled={isLoading || isDisabledSubmitBtn}>
