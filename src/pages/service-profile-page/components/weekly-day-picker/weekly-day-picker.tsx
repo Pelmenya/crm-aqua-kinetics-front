@@ -38,6 +38,7 @@ export const WeeklyDayPicker: FC<TWeeklyDayPickerProps> = ({ workDays, onDaySele
       <div className="flex space-x-2">
         {daysOfWeek.map((day) => (
           <button
+            type="button"
             key={day}
             className={`p-2 btn btn-md btn-outline ${workDays.some(d => d.dayOfWeek === day) ? 'btn-warning' : ''}`}
             onClick={() => toggleDaySelection(day)}

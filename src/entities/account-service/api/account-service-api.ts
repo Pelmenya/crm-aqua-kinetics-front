@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TAccountServiceState } from '../model/account-service-slice';
+import { TWorkDay } from '@/shared/lib/types/t-work-day';
 
 export type TCoordinates = {
     latitude: number;
@@ -9,7 +10,9 @@ export type TCoordinates = {
 // Тип для создания AccountService
 export type TCreateAccountService = Omit<TAccountServiceState, 'coordinates'> & {
     coordinates: { type: 'Point'; coordinates: [number, number] } | null;
+    workDays: TWorkDay[];
 };
+
 
 export const accountServiceApi = createApi({
     reducerPath: 'accountServiceApi',
