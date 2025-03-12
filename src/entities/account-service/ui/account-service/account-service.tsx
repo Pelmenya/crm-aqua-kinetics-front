@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import { CardService } from "../../../../pages/account-page/components/card-service/card-service"
 import { Base } from "@/shared/ui/components/base/base"
 import { Link } from "@/app/link/link";
@@ -11,6 +11,7 @@ import { daysOfWeek } from "@/shared/lib/helpers/days-of-week";
 import { getDayByIdx } from "@/shared/lib/helpers/get-day-by-idx";
 
 export const AccountService: FC = () => {
+    const [isProfile, setIsProfile] = useState(false);
 
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw || '';
@@ -19,14 +20,23 @@ export const AccountService: FC = () => {
         refetchOnMountOrArgChange: true,
     });
 
+    useEffect(() => {
+        if (accountServiceFromBack) {
+            if (Boolean(accountServiceFromBack?.carModel)
+                || Boolean(accountServiceFromBack?.carNumber)
+                || Boolean(accountServiceFromBack?.workDays?.length))
+                setIsProfile(true);
+        }
+
+    }, [accountServiceFromBack])
+    
     return (
         <div className="flex flex-col gap-2">
             <Base>
                 <Link to="/service-calendar" className="flex flex-col items-center gap-2">
                     <svg
-                        className="opacity-60"
-                        width="48"
-                        height="48"
+                        width="30"
+                        height="30"
                         viewBox="0 0 24 24"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
@@ -60,19 +70,12 @@ export const AccountService: FC = () => {
                     <CardService
                         fullWidth={true}
                         title="Ваш профиль"
-                        statusText={!(
-                            Boolean(accountServiceFromBack?.carModel)
-                            || Boolean(accountServiceFromBack?.carNumber)
-                            || Boolean(accountServiceFromBack?.workDays?.length)
-                        )}
+                        statusText={!isProfile}
                         status={
                             isLoading || isFetching
                                 ? <Loading color="text-primary" size="loading-xs" type="loading-infinity" />
-                                : (
-                                    Boolean(accountServiceFromBack?.carModel)
-                                    || Boolean(accountServiceFromBack?.carNumber)
-                                    || Boolean(accountServiceFromBack?.workDays?.length)
-                                ) ?
+                                : isProfile
+                                    ?
                                     <>
                                         <p className="text-min opacity-50">
                                             {accountServiceFromBack?.carModel && accountServiceFromBack?.carModel}
@@ -92,10 +95,6 @@ export const AccountService: FC = () => {
                                                 </button>
                                             ))}
                                         </div>
-
-
-
-
                                         }
                                     </>
                                     : "Укажите режим работы, авто, номер авто"

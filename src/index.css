@@ -1,5 +1,6 @@
 @import './app/fonts/fonts.css';
 
+
 @import "tailwindcss";
 
 @theme {
@@ -63,8 +64,69 @@ html, body, #root {
   overflow-y: auto;
 }
 
-.react-datepicker__day--highlighted-custom {
-    background-color: #fde68a;
-    color: #000;
-}
+/* Добавляем родительский класс для повышения специфичности для календаря */
+.custom-datepicker {
+    .react-datepicker {
+      width: calc(100vw - 2rem);
+      border: 1px solid var(--color-base-300);
+      background-color: var(--color-base-100);
+    }
+  
+    .react-datepicker__header {
+      background-color: var(--color-base-300);
+      width: calc(100vw - 2rem);
+      font-family: var(--font-sans);
+    }
+  
+    .react-datepicker__day-name {
+      @apply text-base-content text-lg w-10 font-sans;
+    }
+  
+    .react-datepicker__day {
+      @apply bg-base-100 text-base-content font-sans rounded-box text-lg w-10 h-10 text-center leading-10;
+    }
+  
+    .react-datepicker__day:hover,
+    .react-datepicker__day--today:hover,
+    .react-datepicker__day--selected:hover {
+      background-color: var(--color-base-100);
+    }
+  
+    .react-datepicker__day:active {
+      background-color: var(--color-primary);
+    }
+  
+    h2.react-datepicker__current-month {
+      @apply uppercase mb-1 text-primary text-lg font-sans;
+    }
+  
+    .react-datepicker__day--selected {
+      @apply bg-base-100 text-base-content font-sans rounded-box text-lg w-10 h-10 text-center leading-10;
+    }
+  
+    .react-datepicker__triangle {
+      @apply hidden;
+    }
+  
+    .react-datepicker-popper {
+      @apply mt-[-0.375rem];
+    }
+  
+    .react-datepicker__day--highlighted-custom {
+      background-color: var(--color-warning);
+      @apply bg-warning rounded-box;
+    }
+  
+    .react-datepicker__day--highlighted-custom:focus,
+    .react-datepicker__day--highlighted-custom:hover {
+      background-color: var(--color-warning);
+      outline: none;
+      box-shadow: none;
+      @apply bg-warning rounded-box;
+    }
  
+    .react-datepicker__day--highlighted-custom:active {
+      background-color: var(--color-primary);
+    }
+  }
+  
