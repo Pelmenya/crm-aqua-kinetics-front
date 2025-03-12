@@ -199,6 +199,7 @@ export const ServiceCalendarPage: FC = () => {
         />
         {selectedWorkDay && isEditorOpen && (
           <WorkDayEditorModal
+            date={selectedWorkDay.date || undefined}
             isOpen={isEditorOpen}
             workDay={selectedWorkDay}
             onClose={onCloseEditor}

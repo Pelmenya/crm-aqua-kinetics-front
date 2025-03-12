@@ -9,6 +9,7 @@ interface WorkDayEditorModalProps {
     onClose: () => void;
     onSave: (day: TWorkDay) => void;
     onRemove: () => void;
+    date?: Date;
 }
 
 export const WorkDayEditorModal: FC<WorkDayEditorModalProps> = ({
@@ -16,7 +17,8 @@ export const WorkDayEditorModal: FC<WorkDayEditorModalProps> = ({
     workDay,
     onClose,
     onSave,
-    onRemove
+    onRemove,
+    date,
 }) => {
     const [startHour, setStartHour] = useState(workDay.startHour);
     const [startMinute, setStartMinute] = useState(workDay.startMinute);
@@ -51,8 +53,8 @@ export const WorkDayEditorModal: FC<WorkDayEditorModalProps> = ({
                             leaveTo="opacity-0 scale-95"
                         >
                             <DialogPanel className="max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-base-100 shadow-xl rounded-2xl">
-                                <DialogTitle as="h3" className="text-lg font-medium leading-6">
-                                    Редактировать рабочий день
+                                <DialogTitle as="h3" className="text-lg font-medium leading-6 text-center">
+                                    {date ? 'Редактировать рабочий день ' + date.toLocaleDateString() : 'Редактировать рабочий день'}
                                 </DialogTitle>
                                 <div className="mt-4">
                                     <div className="mb-4">
