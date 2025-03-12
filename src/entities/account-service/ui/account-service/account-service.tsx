@@ -7,13 +7,15 @@ import { useLaunchParams } from "@telegram-apps/sdk-react";
 import { useGetAccountServiceByUserQuery } from "../../api/account-service-api";
 import { Loading } from "@/shared/ui/components/loading/loading";
 import { Profile } from "@/shared/ui/icons/profile";
+import { daysOfWeek } from "@/shared/lib/helpers/days-of-week";
+import { getDayByIdx } from "@/shared/lib/helpers/get-day-by-idx";
 
 export const AccountService: FC = () => {
 
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw || '';
 
-    const { data: accountServiceFromBack, isLoading } = useGetAccountServiceByUserQuery(authKey, {
+    const { data: accountServiceFromBack, isLoading, isFetching } = useGetAccountServiceByUserQuery(authKey, {
         refetchOnMountOrArgChange: true,
     });
 
@@ -44,7 +46,7 @@ export const AccountService: FC = () => {
                     <CardService title="Ваша локация"
                         fullWidth={true}
                         status={
-                            isLoading ?
+                            isLoading || isFetching ?
                                 <Loading color="text-primary" size="loading-xs" type="loading-infinity" />
                                 :
                                 accountServiceFromBack?.address
@@ -55,15 +57,54 @@ export const AccountService: FC = () => {
                     </CardService>
                 </Link>
                 <Link to="/service-profile" >
-                    <CardService 
+                    <CardService
                         fullWidth={true}
                         title="Ваш профиль"
-                        status={"Укажите режим работы, авто, номер авто"}
+                        statusText={!(
+                            Boolean(accountServiceFromBack?.carModel)
+                            || Boolean(accountServiceFromBack?.carNumber)
+                            || Boolean(accountServiceFromBack?.workDays?.length)
+                        )}
+                        status={
+                            isLoading || isFetching
+                                ? <Loading color="text-primary" size="loading-xs" type="loading-infinity" />
+                                : (
+                                    Boolean(accountServiceFromBack?.carModel)
+                                    || Boolean(accountServiceFromBack?.carNumber)
+                                    || Boolean(accountServiceFromBack?.workDays?.length)
+                                ) ?
+                                    <>
+                                        <p className="text-min opacity-50">
+                                            {accountServiceFromBack?.carModel && accountServiceFromBack?.carModel}
+                                            {" "}
+                                            {accountServiceFromBack?.carNumber && accountServiceFromBack?.carNumber}
+                                        </p>
+                                        {accountServiceFromBack?.workDays && <div className="flex space-x-2 pt-1">
+                                            {daysOfWeek.map((day) => (
+                                                <button
+                                                    type="button"
+                                                    key={day}
+                                                    className={`p-2 btn btn-xs btn-outline opacity-90 ${accountServiceFromBack?.workDays?.some(d => d.dayOfWeek === day) ? 'btn-warning' : ''}`}
+                                                >
+                                                    <span className="text-ex-min">
+                                                        {getDayByIdx(day)}
+                                                    </span>
+                                                </button>
+                                            ))}
+                                        </div>
+
+
+
+
+                                        }
+                                    </>
+                                    : "Укажите режим работы, авто, номер авто"
+                        }
                     >
                         <Profile />
                     </CardService>
                 </Link>
             </div>
-        </div>
+        </div >
     )
 }

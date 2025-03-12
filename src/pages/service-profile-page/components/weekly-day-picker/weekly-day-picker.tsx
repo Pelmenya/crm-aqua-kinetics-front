@@ -1,16 +1,13 @@
 import { FC } from 'react';
 import { TWorkDay } from '@/shared/lib/types/t-work-day';
+import { daysOfWeek } from '@/shared/lib/helpers/days-of-week';
+import { getDayByIdx } from '@/shared/lib/helpers/get-day-by-idx';
 
 type TWeeklyDayPickerProps = {
   workDays: TWorkDay[];
   onDaySelect: (day: TWorkDay) => void;
 }
-const daysOfWeek = [1, 2, 3, 4, 5, 6, 0];
 
-const getDayByIdx = (idx: number): string => {
-    const dayNames = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
-    return dayNames[idx] || "";
-};
 
 export const WeeklyDayPicker: FC<TWeeklyDayPickerProps> = ({ workDays, onDaySelect }) => {
   const toggleDaySelection = (dayIndex: number) => {

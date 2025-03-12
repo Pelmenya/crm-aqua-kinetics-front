@@ -65,7 +65,8 @@ export const ServiceLocationPage: FC = () => {
                 coordinates: accountServiceFromRedux.coordinates ? {
                     type: 'Point',
                     coordinates: [accountServiceFromRedux.coordinates.longitude, accountServiceFromRedux.coordinates.latitude]
-                } : null
+                } : null,
+                workDays: null,
             };
 
            const account = await createAccountService({ newAccountService, authKey }).unwrap();

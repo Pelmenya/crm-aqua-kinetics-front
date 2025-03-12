@@ -7,7 +7,7 @@ export const UserInfo: FC = () => {
     const { user } = useAppSelector(getUserState);
 
     return (
-        <div className="flex gap-6 py-4">
+        <div className="flex gap-6 pt-2 pb-3">
             <img className="avatar w-18 h-18 rounded-full" src={user?.photo_url} alt={user?.username} />
             <div>
                 <p className="font-semibold text-xl">{user?.first_name} {user?.last_name}</p>

@@ -14,7 +14,7 @@ export type TAccountServiceState = {
     coordinates: TNullable<TCoordinates>;
     carNumber: TNullable<string>;
     carModel: TNullable<string>;
-    workDays: TWorkDay[];
+    workDays: TNullable<TWorkDay[]>; // Изменено на TNullable
     selectedWorkDay: TNullable<TWorkDay>;
     isEditorOpen: boolean;
 };
@@ -26,7 +26,7 @@ const initialState: TAccountServiceState = {
     radiusKm: null,
     carNumber: null,
     carModel: null,
-    workDays: [],
+    workDays: null, // Установлено в null
     selectedWorkDay: null,
     isEditorOpen: false,
 };
@@ -61,7 +61,7 @@ export const accountServiceSlice = createSlice({
             state.selectedWorkDay = initialState.selectedWorkDay;
             state.isEditorOpen = initialState.isEditorOpen;
         },
-        setWorkDays(state, action: PayloadAction<TWorkDay[]>) {
+        setWorkDays(state, action: PayloadAction<TNullable<TWorkDay[]>>) { // Обновлено: поддержка null
             state.workDays = action.payload;
         },
         selectWorkDay(state, action: PayloadAction<TNullable<TWorkDay>>) {
@@ -70,20 +70,20 @@ export const accountServiceSlice = createSlice({
         },
         saveWorkDay(state, action: PayloadAction<TWorkDay>) {
             const updatedDay = action.payload;
-            const dayExists = state.workDays.some(day => day.dayOfWeek === updatedDay.dayOfWeek);
+            const dayExists = state.workDays?.some(day => day.dayOfWeek === updatedDay.dayOfWeek);
 
             if (dayExists) {
-                state.workDays = state.workDays.map(day =>
+                state.workDays = state.workDays?.map(day =>
                     day.dayOfWeek === updatedDay.dayOfWeek ? updatedDay : day
-                );
+                ) || [];
             } else {
-                state.workDays.push(updatedDay);
+                state.workDays = state.workDays ? [...state.workDays, updatedDay] : [updatedDay];
             }
             state.isEditorOpen = false;
         },
         removeWorkDay(state) {
             if (state.selectedWorkDay) {
-                state.workDays = state.workDays.filter(day => day.dayOfWeek !== state.selectedWorkDay?.dayOfWeek);
+                state.workDays = state.workDays?.filter(day => day.dayOfWeek !== state.selectedWorkDay?.dayOfWeek) || null;
                 state.selectedWorkDay = null;
                 state.isEditorOpen = false;
             }
@@ -107,4 +107,3 @@ export const {
     removeWorkDay,
     closeEditor,
 } = accountServiceSlice.actions;
-

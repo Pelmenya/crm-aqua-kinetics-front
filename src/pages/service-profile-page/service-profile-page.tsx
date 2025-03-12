@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -10,14 +10,16 @@ import { ServiceWeekly } from "./components/service-weekly/service-weekly";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
 import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
-import { 
-    TCreateAccountService, 
-    useCreateOrUpdateAccountServiceMutation, 
-    useGetAccountServiceByUserQuery 
+import {
+    TCreateAccountService,
+    useCreateOrUpdateAccountServiceMutation,
+    useGetAccountServiceByUserQuery
 } from "@/entities/account-service/api/account-service-api";
 import { getAccountServiceState } from "@/entities/account-service/model/account-service-selectors";
 import { setCarModel, setCarNumber } from "@/entities/account-service/model/account-service-slice";
 import { Loading } from "@/shared/ui/components/loading/loading";
+import { TWorkDay } from "@/shared/lib/types/t-work-day";
+import { TNullable } from "@/shared/lib/types/t-nullable";
 
 // Регулярное выражение для проверки российского номера (латиница и кириллица)
 const russianCarNumberRegex = /^[ABEKMHOPCTYXАВЕКМНОРСТУХ]\d{3}[ABEKMHOPCTYXАВЕКМНОРСТУХ]{2}\s?\d{2,3}$/;
@@ -55,6 +57,10 @@ export const ServiceProfilePage: FC = () => {
         refetchOnMountOrArgChange: true,
     });
 
+    const [workDays, setWorkDays] = useState<TNullable<TWorkDay[]>>(accountServiceFromRedux.workDays);
+    const [selectedWorkDay, setSelectedWorkDay] = useState<TWorkDay | null>(null);
+    const [isEditorOpen, setIsEditorOpen] = useState(false);
+
     useEffect(() => {
         if (authKey) {
             refetch();
@@ -71,8 +77,41 @@ export const ServiceProfilePage: FC = () => {
                 dispatch(setCarNumber(accountServiceFromBack.carNumber || ''));
                 setValue('carNumber', accountServiceFromBack.carNumber || '');
             }
+            setWorkDays(accountServiceFromBack.workDays);
         }
     }, [accountServiceFromBack, accountServiceFromRedux, dispatch, setValue]);
+
+    const onDaySelect = useCallback((day: TWorkDay) => {
+        setSelectedWorkDay(day);
+        setIsEditorOpen(true);
+    }, []);
+
+    const onEditorSave = useCallback((updatedDay: TWorkDay) => {
+        const dayExists = workDays ? workDays.some(day => day.dayOfWeek === updatedDay.dayOfWeek) : null;
+
+        if (dayExists && workDays) {
+            setWorkDays(workDays.map(day =>
+                day.dayOfWeek === updatedDay.dayOfWeek ? updatedDay : day
+            ));
+        } else {
+            if (workDays) {
+                setWorkDays([...workDays, updatedDay]);
+            }
+        }
+        setIsEditorOpen(false);
+    }, [workDays]);
+
+    const onRemove = useCallback(() => {
+        if (selectedWorkDay && workDays) {
+            setWorkDays(workDays.filter(day => day.dayOfWeek !== selectedWorkDay.dayOfWeek));
+            setSelectedWorkDay(null);
+            setIsEditorOpen(false);
+        }
+    }, [selectedWorkDay, workDays]);
+
+    const onCloseEditor = useCallback(() => {
+        setIsEditorOpen(false);
+    }, []);
 
     const onSubmit = async (data: TProfileFormInputs) => {
         try {
@@ -84,6 +123,7 @@ export const ServiceProfilePage: FC = () => {
                 } : null,
                 carModel: data.carModel || null,
                 carNumber: data.carNumber || null,
+                workDays
             };
 
             const account = await createAccountService({ newAccountService, authKey }).unwrap();
@@ -123,7 +163,15 @@ export const ServiceProfilePage: FC = () => {
                         placeholder="Номер авто"
                     />
                     <div className="px-4">
-                        <ServiceWeekly />
+                        <ServiceWeekly
+                            workDays={workDays || []}
+                            selectedWorkDay={selectedWorkDay}
+                            isEditorOpen={isEditorOpen}
+                            onDaySelect={onDaySelect}
+                            onEditorSave={onEditorSave}
+                            onRemove={onRemove}
+                            onCloseEditor={onCloseEditor}
+                        />
                     </div>
                 </FormWithTitle>
             </div>
