@@ -55,6 +55,6 @@ export const accountServiceApi = createApi({
 
 export const {
     useCreateOrUpdateAccountServiceMutation,
-    useGetAccountServiceByUserQuery,    
+    useGetAccountServiceByUserQuery,
     useDeleteAccountServiceMutation,
 } = accountServiceApi;

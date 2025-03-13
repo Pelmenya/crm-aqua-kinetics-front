@@ -12,7 +12,8 @@ export const WorkScheduleCalendar: FC<{
   onDaySelect: (day: TWorkDay) => void;
 }> = ({ workDays, onDaySelect }) => {
   const handleSelect = (date: Date) => {
-    const existingDay = workDays.find((day) => day.date?.toDateString() === date.toDateString());
+    console.log(date.toDateString())
+    const existingDay = workDays.find((day) => new Date(String(day.date)).toDateString() === date.toDateString());
     if (existingDay) {
       onDaySelect(existingDay);
     } else {
