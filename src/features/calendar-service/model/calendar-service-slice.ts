@@ -1,4 +1,3 @@
-// store/calendarSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TWorkDay } from "@/shared/lib/types/t-work-day";
 import { TNullable } from '@/shared/lib/types/t-nullable';
@@ -27,12 +26,15 @@ export const calendarServiceSlice = createSlice({
             state.isEditorOpen = action.payload !== null;
         },
         saveWorkDay(state, action: PayloadAction<TWorkDay>) {
-            const updatedDay = action.payload;
-            const dayExists = state.workDays?.some(day => day.date?.toDateString() === updatedDay.date?.toDateString());
+            const updatedDay = { 
+                ...action.payload, 
+                date: action.payload.date ? new Date(action.payload.date).toISOString() : null // Преобразуем дату в строку, если она существует
+            };
+            const dayExists = state.workDays?.some(day => day.date === updatedDay.date);
 
             if (dayExists) {
                 state.workDays = state.workDays?.map(day =>
-                    day.date?.toDateString() === updatedDay.date?.toDateString() ? updatedDay : day
+                    day.date === updatedDay.date ? updatedDay : day
                 ) || [];
             } else {
                 state.workDays = state.workDays ? [...state.workDays, updatedDay] : [updatedDay];
@@ -41,7 +43,7 @@ export const calendarServiceSlice = createSlice({
         },
         removeWorkDay(state) {
             if (state.selectedWorkDay) {
-                state.workDays = state.workDays?.filter(day => day.date?.toDateString() !== state.selectedWorkDay?.date?.toDateString()) || null;
+                state.workDays = state.workDays?.filter(day => day.date !== state.selectedWorkDay?.date) || null;
                 state.selectedWorkDay = null;
                 state.isEditorOpen = false;
             }

@@ -6,18 +6,23 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 registerLocale('ru', ru);
 
-
 export const WorkScheduleCalendar: FC<{
   workDays: TWorkDay[];
   onDaySelect: (day: TWorkDay) => void;
 }> = ({ workDays, onDaySelect }) => {
   const handleSelect = (date: Date) => {
     console.log(date.toDateString())
-    const existingDay = workDays.find((day) => new Date(String(day.date)).toDateString() === date.toDateString());
+    const existingDay = workDays.find((day) => day.date && new Date(day.date).toDateString() === date.toDateString());
     if (existingDay) {
       onDaySelect(existingDay);
     } else {
-      const newWorkDay: TWorkDay = { date, startHour: 9, startMinute: 0, endHour: 17, endMinute: 0 }; // Default work hours
+      const newWorkDay: TWorkDay = { 
+          date: date.toISOString(), 
+          startHour: 9, 
+          startMinute: 0, 
+          endHour: 17, 
+          endMinute: 0 
+      };
       onDaySelect(newWorkDay);
     }
   };
@@ -26,7 +31,7 @@ export const WorkScheduleCalendar: FC<{
   const minDate = new Date(today.getFullYear(), today.getMonth(), 1);
 
   return (
-    <div className="p-4 custom-datepicker"> {/* кастомный клас для переопределения интерфейса календаря*/}
+    <div className="p-4 custom-datepicker">
       <DatePicker
         selected={null}
         onChange={() => { }}
@@ -34,9 +39,8 @@ export const WorkScheduleCalendar: FC<{
         highlightDates={workDays
           .filter(day => day.date !== null)
           .map(day => ({
-            'react-datepicker__day--highlighted-custom': [day.date as Date],
-          }))
-        }
+            'react-datepicker__day--highlighted-custom': [new Date(day.date as string)],
+          }))}
         locale="ru"
         placeholderText="Выберите рабочие дни"
         onSelect={(date) => handleSelect(date as Date)}

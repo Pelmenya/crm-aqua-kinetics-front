@@ -33,7 +33,14 @@ export const WorkDayEditorModal: FC<WorkDayEditorModalProps> = ({
     }, [workDay]);
 
     const handleSave = () => {
-        onSave({ ...workDay, startHour, startMinute, endHour, endMinute });
+        onSave({ 
+            ...workDay, 
+            date: workDay.date ? new Date(workDay.date).toISOString() : null, // Преобразуем дату в строку ISO, если она существует
+            startHour, 
+            startMinute, 
+            endHour, 
+            endMinute 
+        });
         onClose();
     };
 

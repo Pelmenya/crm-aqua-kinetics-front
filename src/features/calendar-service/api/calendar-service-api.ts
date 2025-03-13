@@ -18,7 +18,7 @@ export const calendarServiceApi = createApi({
                 },
             }),
         }),
-        updateCalendarWorkDay: builder.mutation<TWorkDay, { authKey: string; updateDto: Partial<TWorkDay> }>({
+        updateCalendarWorkDay: builder.mutation<TWorkDay[], { authKey: string; updateDto: Partial<TWorkDay> }>({
             query: ({ authKey, updateDto }) => ({
                 url: 'calendar',
                 method: 'PUT',
@@ -29,7 +29,7 @@ export const calendarServiceApi = createApi({
                 },
             }),
         }),
-        deleteCalendarWorkDay: builder.mutation<void, { authKey: string; updateDto: Partial<TWorkDay> }>({
+        deleteCalendarWorkDay: builder.mutation<TWorkDay[], { authKey: string; updateDto: Partial<TWorkDay> }>({
             query: ({ authKey, updateDto }) => ({
                 url: 'calendar',
                 method: 'DELETE',
