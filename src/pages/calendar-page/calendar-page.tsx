@@ -46,7 +46,7 @@ export const ServiceCalendarPage: FC = () => {
 
     const onEditorSave = useCallback(async (updatedDay: TWorkDay) => {
         try {
-            const result = await updateCalendarWorkDay({ authKey, updateDto: { ...updatedDay, date: updatedDay.date ? new Date(updatedDay.date).toISOString() : null, isDeleted: false }}).unwrap();
+            const result = await updateCalendarWorkDay({ authKey, updateDto: { ...updatedDay, isDeleted: false }}).unwrap();
             dispatch(setWorkDays(result));
             dispatch(closeEditor());
         } catch (error) {

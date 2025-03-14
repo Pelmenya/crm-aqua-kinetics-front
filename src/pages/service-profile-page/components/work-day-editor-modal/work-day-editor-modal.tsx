@@ -35,12 +35,13 @@ export const WorkDayEditorModal: FC<WorkDayEditorModalProps> = ({
     const handleSave = () => {
         onSave({ 
             ...workDay, 
-            date: workDay.date ? new Date(workDay.date).toISOString() : null, // Преобразуем дату в строку ISO, если она существует
+            date: date ? new Date(date).toLocaleDateString('en-CA') : null, // Преобразуем дату в строку ISO, если она существует
             startHour, 
             startMinute, 
             endHour, 
             endMinute 
         });
+        console.log("DATE PROP:", date)
         onClose();
     };
 

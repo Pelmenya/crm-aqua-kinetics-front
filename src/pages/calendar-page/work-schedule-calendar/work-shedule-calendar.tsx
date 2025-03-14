@@ -12,12 +12,12 @@ export const WorkScheduleCalendar: FC<{
 }> = ({ workDays, onDaySelect }) => {
   const handleSelect = (date: Date) => {
     console.log(date.toDateString())
-    const existingDay = workDays.find((day) => day.date && new Date(day.date).toDateString() === date.toDateString());
+    const existingDay = workDays.find((day) => day.date && new Date(day.date).toLocaleDateString('en-CA') === date.toLocaleDateString('en-CA'));
     if (existingDay) {
       onDaySelect(existingDay);
     } else {
       const newWorkDay: TWorkDay = { 
-          date: date.toISOString(), 
+          date: date.toLocaleDateString('en-CA'), 
           startHour: 9, 
           startMinute: 0, 
           endHour: 17, 

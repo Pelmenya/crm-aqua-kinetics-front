@@ -42,7 +42,7 @@ export const InitDataPage: FC = () => {
       { title: 'auth_date', value: authDate.toLocaleString() },
       { title: 'auth_date (raw)', value: authDate.getTime() / 1000 },
       { title: 'hash', value: hash },
-      { title: 'can_send_after', value: initData.canSendAfterDate()?.toISOString() },
+      { title: 'can_send_after', value: initData.canSendAfterDate()?.toLocaleDateString('en-CA') },
       { title: 'can_send_after (raw)', value: canSendAfter },
       { title: 'query_id', value: queryId },
       { title: 'start_param', value: startParam },

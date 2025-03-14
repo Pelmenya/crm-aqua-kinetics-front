@@ -28,7 +28,7 @@ export const calendarServiceSlice = createSlice({
         saveWorkDay(state, action: PayloadAction<TWorkDay>) {
             const updatedDay = { 
                 ...action.payload, 
-                date: action.payload.date ? new Date(action.payload.date).toISOString() : null // Преобразуем дату в строку, если она существует
+                date: action.payload.date ? new Date(action.payload.date).toLocaleDateString('en-CA') : null // Преобразуем дату в строку, если она существует
             };
             const dayExists = state.workDays?.some(day => day.date === updatedDay.date);
 
