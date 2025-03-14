@@ -8,17 +8,24 @@ import { TWorkDay } from "@/shared/lib/types/t-work-day";
 import { WorkScheduleCalendar } from './work-schedule-calendar/work-shedule-calendar';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
 import { Loading } from '@/shared/ui/components/loading/loading';
-import { 
-    useDeleteCalendarWorkDayMutation, 
-    useFillCalendarMutation, 
-    useUpdateCalendarWorkDayMutation 
+import {
+    useDeleteCalendarWorkDayMutation,
+    useFillCalendarMutation,
+    useUpdateCalendarWorkDayMutation
 } from '@/features/calendar-service/api/calendar-service-api';
+import { useGetAccountServiceByUserQuery } from '@/entities/account-service/api/account-service-api';
 
 export const ServiceCalendarPage: FC = () => {
     const dispatch = useAppDispatch();
 
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw || '';
+
+    // данные об аккаунте
+    const { data: accountServiceData, isLoading: isAccountServiceLoading } = useGetAccountServiceByUserQuery(authKey);
+
+    // calendarMonths из данных аккаунта или используйте значение по умолчанию
+    const effectiveCalendarMonths = accountServiceData?.calendarMonths ?? 2;
 
     const workDays = useAppSelector(state => state.calendarService.workDays);
     const selectedWorkDay = useAppSelector(state => state.calendarService.selectedWorkDay);
@@ -46,7 +53,7 @@ export const ServiceCalendarPage: FC = () => {
 
     const onEditorSave = useCallback(async (updatedDay: TWorkDay) => {
         try {
-            const result = await updateCalendarWorkDay({ authKey, updateDto: { ...updatedDay, isDeleted: false }}).unwrap();
+            const result = await updateCalendarWorkDay({ authKey, updateDto: { ...updatedDay, isDeleted: false } }).unwrap();
             dispatch(setWorkDays(result));
             dispatch(closeEditor());
         } catch (error) {
@@ -75,10 +82,11 @@ export const ServiceCalendarPage: FC = () => {
             <div className="flex flex-col items-center justify-center h-full">
                 <h1 className="text-2xl font-bold mb-1">Календарь</h1>
                 <p className="text-center mb-2">Здесь вы можете управлять своим расписанием</p>
-                {isLoadingFill || isUpdateLoading || isDeleteLoading
+                {isLoadingFill || isUpdateLoading || isDeleteLoading || isAccountServiceLoading
                     ? <Loading color="text-primary" size="loading-xs" type="loading-infinity" />
                     : <WorkScheduleCalendar
                         workDays={workDays || []}
+                        calendarMonths={effectiveCalendarMonths}
                         onDaySelect={onDaySelect}
                     />}
                 {selectedWorkDay && isEditorOpen && (

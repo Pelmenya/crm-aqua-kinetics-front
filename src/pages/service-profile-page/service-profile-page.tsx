@@ -20,6 +20,7 @@ import { setCarModel, setCarNumber } from "@/entities/account-service/model/acco
 import { Loading } from "@/shared/ui/components/loading/loading";
 import { TWorkDay } from "@/shared/lib/types/t-work-day";
 import { TNullable } from "@/shared/lib/types/t-nullable";
+import { RangeSlider } from "@/shared/ui/components/range-slider.tsx/range-slider";
 
 // Регулярное выражение для проверки российского номера (латиница и кириллица)
 const russianCarNumberRegex = /^[ABEKMHOPCTYXАВЕКМНОРСТУХ]\d{3}[ABEKMHOPCTYXАВЕКМНОРСТУХ]{2}\s?\d{2,3}$/;
@@ -58,6 +59,7 @@ export const ServiceProfilePage: FC = () => {
     });
 
     const [workDays, setWorkDays] = useState<TNullable<TWorkDay[]>>(accountServiceFromRedux.workDays);
+    const [calendarMonths, setCalendarMonths] = useState<TNullable<number>>(accountServiceFromRedux.calendarMonths);
     const [selectedWorkDay, setSelectedWorkDay] = useState<TWorkDay | null>(null);
     const [isEditorOpen, setIsEditorOpen] = useState(false);
 
@@ -78,6 +80,7 @@ export const ServiceProfilePage: FC = () => {
                 setValue('carNumber', accountServiceFromBack.carNumber || '');
             }
             setWorkDays(accountServiceFromBack.workDays);
+            setCalendarMonths(accountServiceFromBack.calendarMonths);
         }
     }, [accountServiceFromBack, accountServiceFromRedux, dispatch, setValue]);
 
@@ -123,11 +126,11 @@ export const ServiceProfilePage: FC = () => {
                 } : null,
                 carModel: data.carModel || null,
                 carNumber: data.carNumber || null,
-                workDays
+                workDays,
+                calendarMonths,
             };
 
-            const account = await createAccountService({ newAccountService, authKey }).unwrap();
-            console.log(account);
+            await createAccountService({ newAccountService, authKey }).unwrap();
             navigate('/account');
         } catch (error) {
             console.log("Failed to create account service", error);
@@ -173,6 +176,15 @@ export const ServiceProfilePage: FC = () => {
                             onCloseEditor={onCloseEditor}
                         />
                     </div>
+                    <RangeSlider
+                        className="w-full"
+                        value={calendarMonths || 2}
+                        onChange={setCalendarMonths}
+                        unit="мес."
+                        min={1}
+                        max={12}
+                        label={"Заполнять календарь на"}
+                    />
                 </FormWithTitle>
             </div>
         </Page>

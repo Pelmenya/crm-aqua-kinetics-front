@@ -26,9 +26,9 @@ export const ServiceWeekly: FC<ServiceWeeklyProps> = ({
 }) => {
     return (
         <div className="flex flex-col items-center justify-center px-4">
-            <h1 className="text-xl font-bold">Еженедельное расписание</h1>
-            <p>Управляйте своим расписанием.</p>
-            <p className="text-center mb-4">Изменить конкретную дату можно на вкладке календаря</p>
+            <h1 className="text-lg font-bold">Еженедельное расписание</h1>
+            <p className="text-center text-xs">Управляйте своим расписанием.</p>
+            <p className="text-center text-xs mb-4">Изменить конкретную дату можно на вкладке календаря</p>
             <Base>
                 <WeeklyDayPicker workDays={workDays || []} onDaySelect={onDaySelect} />
             </Base>

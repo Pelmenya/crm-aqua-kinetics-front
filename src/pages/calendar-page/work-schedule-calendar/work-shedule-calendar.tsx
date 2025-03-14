@@ -8,10 +8,15 @@ registerLocale('ru', ru);
 
 export const WorkScheduleCalendar: FC<{
   workDays: TWorkDay[];
+  calendarMonths: number;
   onDaySelect: (day: TWorkDay) => void;
-}> = ({ workDays, onDaySelect }) => {
+}> = ({ 
+    workDays,
+    calendarMonths,
+    onDaySelect 
+}) => {
+
   const handleSelect = (date: Date) => {
-    console.log(date.toDateString())
     const existingDay = workDays.find((day) => day.date && new Date(day.date).toLocaleDateString('en-CA') === date.toLocaleDateString('en-CA'));
     if (existingDay) {
       onDaySelect(existingDay);
@@ -28,7 +33,8 @@ export const WorkScheduleCalendar: FC<{
   };
 
   const today = new Date();
-  const minDate = new Date(today.getFullYear(), today.getMonth(), 1);
+  const minDate = today;
+  const maxDate = new Date(today.getFullYear(), today.getMonth() + calendarMonths, today.getDate() - 1);
 
   return (
     <div className="p-4 custom-datepicker">
@@ -45,6 +51,7 @@ export const WorkScheduleCalendar: FC<{
         placeholderText="Выберите рабочие дни"
         onSelect={(date) => handleSelect(date as Date)}
         minDate={minDate}
+        maxDate={maxDate}
       />
     </div>
   );

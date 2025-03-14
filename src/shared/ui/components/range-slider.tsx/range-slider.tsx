@@ -9,6 +9,7 @@ type RangeSliderProps = {
     step?: number;
     label: string;
     unit: string;
+    className?: string;
 };
 
 export const RangeSlider: FC<RangeSliderProps> = ({
@@ -19,9 +20,10 @@ export const RangeSlider: FC<RangeSliderProps> = ({
     step = 1,
     label,
     unit,
+    className,
 }) => {
     return (
-        <Base>
+        <Base className={className}>
             <div className="w-full max-w-xs">
                 <div className="w-full flex justify-between">
                     <p className="text-sm font-semibold">{label}</p>

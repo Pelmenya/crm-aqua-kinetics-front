@@ -14,7 +14,8 @@ export type TAccountServiceState = {
     coordinates: TNullable<TCoordinates>;
     carNumber: TNullable<string>;
     carModel: TNullable<string>;
-    workDays: TNullable<TWorkDay[]>; // Изменено на TNullable
+    workDays: TNullable<TWorkDay[]>;
+    calendarMonths: TNullable<number>;
     selectedWorkDay: TNullable<TWorkDay>;
     isEditorOpen: boolean;
 };
@@ -26,7 +27,8 @@ const initialState: TAccountServiceState = {
     radiusKm: null,
     carNumber: null,
     carModel: null,
-    workDays: null, // Установлено в null
+    workDays: null,
+    calendarMonths: null,
     selectedWorkDay: null,
     isEditorOpen: false,
 };
@@ -91,6 +93,10 @@ export const accountServiceSlice = createSlice({
         closeEditor(state) {
             state.isEditorOpen = false;
         },
+        setCalendarMonths(state, action: PayloadAction<number>) {
+            state.calendarMonths = action.payload;
+
+        }
     },
 });
 
@@ -106,4 +112,5 @@ export const {
     saveWorkDay,
     removeWorkDay,
     closeEditor,
+    setCalendarMonths,
 } = accountServiceSlice.actions;

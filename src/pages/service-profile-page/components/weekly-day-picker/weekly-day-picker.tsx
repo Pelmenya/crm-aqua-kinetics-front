@@ -30,8 +30,8 @@ export const WeeklyDayPicker: FC<TWeeklyDayPickerProps> = ({ workDays, onDaySele
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-lg text-center font-bold mb-4">Выберите рабочие дни (Неделя)</h2>
+    <div className="px-4">
+      <h2 className="text-sm font-semibold mb-4">Выберите рабочие дни (Неделя)</h2>
       <div className="flex space-x-2">
         {daysOfWeek.map((day) => (
           <button
