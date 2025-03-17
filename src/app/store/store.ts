@@ -8,6 +8,7 @@ import { accountServiceSlice } from '@/entities/account-service/model/account-se
 import { accountServiceApi } from '@/entities/account-service/api/account-service-api';
 import { calendarServiceSlice } from '@/features/calendar-service/model/calendar-service-slice';
 import { calendarServiceApi } from '@/features/calendar-service/api/calendar-service-api';
+import { moySkladApi } from '@/features/moy-sklad/api/moy-sklad-api';
 
 export const store = configureStore({
     reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
         [realEstateApi.reducerPath]: realEstateApi.reducer,
         [accountServiceApi.reducerPath]: accountServiceApi.reducer,
         [calendarServiceApi.reducerPath]: calendarServiceApi.reducer,
+        [moySkladApi.reducerPath]: moySkladApi.reducer,
         user: userSlice.reducer,
         realEstate: realEstateSlice.reducer,
         accountService: accountServiceSlice.reducer,
@@ -28,6 +30,7 @@ export const store = configureStore({
             realEstateApi.middleware,
             accountServiceApi.middleware,
             calendarServiceApi.middleware,
+            moySkladApi.middleware,
         ]),
 });
 

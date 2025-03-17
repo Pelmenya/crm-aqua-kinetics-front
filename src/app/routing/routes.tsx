@@ -17,6 +17,7 @@ import { AccountService } from '@/entities/account-service/ui/account-service/ac
 import { ServiceCalendarPage } from '@/pages/calendar-page/calendar-page';
 import { ServiceLocationPage } from '@/pages/service-location-page/service-location-page';
 import { ServiceProfilePage } from '@/pages/service-profile-page/service-profile-page';
+import { CatalogPage } from '@/pages/catalog-page/catalog-page';
 
 interface Route {
     path: string;
@@ -34,23 +35,24 @@ export const routes: Route[] = [
         path: '/account',
         Component: AccountPage,
         children: [
-/*      { path: '/account/admin', Component: <></> },
-        { path: '/account/manager', Component: <></> },
- */   
+            /*      { path: '/account/admin', Component: <></> },
+                    { path: '/account/manager', Component: <></> },
+             */
             { path: '/account/client', Component: AccountClient },
             { path: '/account/service', Component: AccountService },
         ]
     },
+    { path: '/catalog', Component: CatalogPage },
     {
-        path: '/service-calendar', 
+        path: '/service-calendar',
         Component: ServiceCalendarPage,
     },
     {
-        path: '/service-location', 
+        path: '/service-location',
         Component: ServiceLocationPage,
     },
     {
-        path: '/service-profile', 
+        path: '/service-profile',
         Component: ServiceProfilePage,
     },
     {
