@@ -2,30 +2,57 @@ import { TCreateRealEstate } from "@/features/real-estate/api/real-estate-api";
 import { FC, useMemo } from "react";
 import apartmentsBackground from './bg-apartament.jpg';
 import houseBackground from './bg-house.png';
+import promBackground from './bg-promo.png'; // предположим, что у вас есть изображение для "prom"
 
-export const RealEstateCard: FC<Partial<TCreateRealEstate> & { onClick?: () => void }> = ({ address, activeType, onClick }) => {
+type RealEstateCardProps = Partial<TCreateRealEstate> & { onClick?: () => void };
 
+export const RealEstateCard: FC<RealEstateCardProps> = ({ address, activeType, onClick }) => {
 
     // Выбираем фон в зависимости от activeType
-    const backgroundStyle = activeType === "apartment" ? apartmentsBackground : houseBackground;
-    const typeRealEstate = useMemo(() => activeType === 'apartment' ? 'Квартира по адресу:' : 'Дом по адресу:', [activeType])
+    const backgroundImage = useMemo(() => {
+        switch (activeType) {
+            case "apartment":
+                return apartmentsBackground;
+            case "house":
+                return houseBackground;
+            case "prom":
+                return promBackground;
+            default:
+                return houseBackground; // или какой-то дефолтный фон
+        }
+    }, [activeType]);
+
+    const realEstateTypeText = useMemo(() => {
+        switch (activeType) {
+            case "apartment":
+                return 'Квартира по адресу:';
+            case "house":
+                return 'Дом по адресу:';
+            case "prom":
+                return 'Промышленный объект по адресу:';
+            default:
+                return 'Объект недвижимости по адресу:';
+        }
+    }, [activeType]);
 
     return (
-        <div onClick={onClick}
+        <div 
+            onClick={onClick}
             className="border border-base-300 bg-base-100 rounded-box flex column items-center justify-center cursor-pointer"
         >
             <div className="w-full h-[106px] relative">
                 <div className="relative z-3 p-4">
-                    <p className="font-medium tracking-tight text-[16px]">{typeRealEstate}</p>
+                    <p className="font-medium tracking-tight text-[16px]">{realEstateTypeText}</p>
                     <p className="tracking-tight text-min max-w-56 opacity-70 line-clamp-3">{address}</p>
                 </div>
                 <div className="absolute top-0 right-0 w-[207px] h-[106px] rounded-tr-box rounded-br-box overflow-hidden">
-                    <img src={backgroundStyle} className="w-full h-full z-0" />
+                    <img src={backgroundImage} className="w-full h-full z-0" alt="Real Estate Background" />
                     <div
                         className="absolute top-0 left-0 w-full h-full z-1 pointer-events-none rounded-tr-box rounded-br-box"
                         style={{
                             background: 'linear-gradient(to right, var(--color-base-100), rgba(255, 255, 255, .5))'
-                        }} />
+                        }}
+                    />
                 </div>
             </div>
         </div>

@@ -5,6 +5,10 @@ export type TCoordinates = {
     longitude: number;
 };
 
+export type TRealEstateType = 'house' | 'apartment' | 'prom';
+export type TRealEstateSourceWater = 'borehole' | 'well' | 'reservoir' | 'waterSupply';
+
+
 export type TWaterIntakePoints = {
     toilet: number;
     sink: number;
@@ -19,9 +23,9 @@ export type TRealEstateState = {
     address: string | null;
     coordinates: TCoordinates | null;
     waterIntakePoints: TWaterIntakePoints;
-    activeType: 'house' | 'apartment';
+    activeType: TRealEstateType
     residents: number;
-    activeSource: 'borehole' | 'well' | 'reservoir' | 'waterSupply';
+    activeSource: TRealEstateSourceWater;
 };
 
 // Установите начальное состояние
@@ -70,13 +74,13 @@ export const realEstateSlice = createSlice({
                 state.waterIntakePoints[action.payload] -= 1;
             }
         },
-        setActiveType(state, action: PayloadAction<'house' | 'apartment'>) {
+        setActiveType(state, action: PayloadAction<TRealEstateType>) {
             state.activeType = action.payload;
         },
         setResidents(state, action: PayloadAction<number>) {
             state.residents = action.payload;
         },
-        setActiveSource(state, action: PayloadAction<'borehole' | 'well' | 'reservoir' | 'waterSupply'>) {
+        setActiveSource(state, action: PayloadAction<TRealEstateSourceWater>) {
             state.activeSource = action.payload;
         },
         setProgress(state, action: PayloadAction<number>) {

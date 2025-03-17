@@ -10,7 +10,7 @@ export const RealEstateList: FC<{ realEstatesList: TCreateRealEstate[] }> = ({ r
     return (
         <div className="w-full flex flex-col gap-2 bg-base-300">
             <div className="flex w-full items-center justify-between">
-                <h4>Дома и квартиры</h4>
+                <h4>Дома, квартиры и промобъекты</h4>
                 <ButtonWithIcon onClick={() => navigate('/add-house/step-1')} icon="plus" />
             </div>
             {
