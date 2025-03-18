@@ -4,7 +4,7 @@ import React from 'react';
 import { ProductCard } from '../product-card/product-card';
 
 export const ProductList: React.FC = () => {
-    const { data: products, error, isLoading } = useGetProductsQuery({});
+    const { data: products, error, isLoading } = useGetProductsQuery({limit: 200});
 
     if (isLoading) return <div>Loading products...</div>;
     if (error) return <div>Error loading products</div>;

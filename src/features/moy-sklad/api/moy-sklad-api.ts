@@ -21,7 +21,7 @@ export type TProductImage = {
 export const moySkladApi = createApi({
   reducerPath: 'moySkladApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BACKEND_BASE_URL + '/moysklad',
+    baseUrl: import.meta.env.VITE_BACKEND_BASE_URL + '',
   }),
   endpoints: (builder) => ({
     getProducts: builder.query<TProduct[], { q?: string; limit?: number; offset?: number }>({
@@ -39,7 +39,7 @@ export const moySkladApi = createApi({
     }),
     downloadImage: builder.query<Blob, string>({
       query: (downloadHref: string) => ({
-        url: `image?href=${encodeURIComponent(downloadHref)}`,
+        url: `/moysklad/image?href=${encodeURIComponent(downloadHref)}`,
         method: 'GET',
         responseHandler: (response) => response.blob(), // Обработка ответа как Blob
       }),
