@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ProductList } from "./components/product-list/product-list";
+import { ProductList } from "../../features/moy-sklad/ui/product-list/product-list";
 import { Page } from "@/shared/ui/components/page/page";
 
 export const CatalogPage: FC = () => {
