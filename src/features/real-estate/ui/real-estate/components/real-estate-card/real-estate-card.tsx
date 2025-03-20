@@ -25,13 +25,13 @@ export const RealEstateCard: FC<RealEstateCardProps> = ({ address, activeType, o
     const realEstateTypeText = useMemo(() => {
         switch (activeType) {
             case "apartment":
-                return 'Квартира по адресу:';
+                return 'Квартира';
             case "house":
-                return 'Дом по адресу:';
+                return 'Дом';
             case "prom":
-                return 'Промышленный объект по адресу:';
+                return 'Промышленный объект';
             default:
-                return 'Объект недвижимости по адресу:';
+                return 'Объект недвижимости';
         }
     }, [activeType]);
 
