@@ -1,3 +1,4 @@
+import { TNullable } from '@/shared/lib/types/t-nullable';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // Типы для товаров и изображений
@@ -18,12 +19,31 @@ export type TProductImage = {
     };
 };
 
+export type TGroup = {
+    id: number;
+    groupId: string;
+    parentGroupName: TNullable<string>;
+    groupName: TNullable<string>;
+    shouldDisplay: boolean;
+    minPrice?: number;
+    bundles?: [];
+    products?: [];
+    services?: [];
+}
+
+
 export const moySkladApi = createApi({
     reducerPath: 'moySkladApi',
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_BACKEND_BASE_URL + '/moysklad',
     }),
     endpoints: (builder) => ({
+        getTopLevelGroups: builder.query<TGroup[], void>({
+            query: () => ({
+                url: 'top-level-groups', 
+                method: 'GET',
+            }),
+        }),
         getProducts: builder.query<TProduct[], { q?: string; limit?: number; offset?: number }>({
             query: ({ q = '', limit = 10, offset = 0 }) => ({
                 url: 'product',
@@ -48,6 +68,7 @@ export const moySkladApi = createApi({
 });
 
 export const {
+    useGetTopLevelGroupsQuery,
     useGetProductsQuery,
     useGetProductImagesQuery,
     useDownloadImageQuery,
