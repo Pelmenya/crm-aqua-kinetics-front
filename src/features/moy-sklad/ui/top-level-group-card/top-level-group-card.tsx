@@ -7,6 +7,7 @@ import {
 } from "../../api/moy-sklad-api";
 import { GroupInfo } from "../group-info/group-info";
 import { base64ToBlob } from "@/shared/lib/helpers/base64-to-blob";
+import { Loading } from "@/shared/ui/components/loading/loading";
 
 
 export const TopLevelGroupCard: FC<{ group: TGroup }> =
@@ -32,7 +33,12 @@ export const TopLevelGroupCard: FC<{ group: TGroup }> =
                     />
                     <figure>
                         {isImageLoading || isLoading ? (
-                            <div>Loading image...</div>
+                            <Loading
+                                className="w-[150px] flex items-center justify-center"
+                                color="text-primary"
+                                size="loading-xs"
+                                type="loading-infinity"
+                            />
                         ) : imageUrl ? (
                             <img className="max-h-[100px] absolute bottom-0 right-4" src={imageUrl} alt={mainImage?.title || 'Category image'} />
                         ) : (
