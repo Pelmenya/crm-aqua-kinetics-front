@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { useGetTopLevelGroupsQuery } from "../../api/moy-sklad-api";
-import { DataJson } from "@/shared/ui/helpers/data-json/data-json";
+//import { DataJson } from "@/shared/ui/helpers/data-json/data-json";
 import { TopLevelGroupCard } from "../top-level-group-card/top-level-group-card";
 
-export const GroupList: FC<{ onSelectGroup: (groupId: string) => void }> = ({ onSelectGroup }) => {
+export const GroupList: FC = () => {
     const { data: groups, error, isLoading } = useGetTopLevelGroupsQuery();
 
     if (isLoading) return <div>Loading groups...</div>;
@@ -14,7 +14,7 @@ export const GroupList: FC<{ onSelectGroup: (groupId: string) => void }> = ({ on
             {groups?.map((group) => (
                 <TopLevelGroupCard  key={group.id} group={group} />
             ))}
-            <DataJson data={groups} />
+            {/* <DataJson data={groups} /> */}
         </div>
     );
 };

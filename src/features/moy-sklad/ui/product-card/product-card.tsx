@@ -1,5 +1,6 @@
 import { FC } from 'react';
-import { TProduct, useDownloadImageQuery, useGetProductImagesQuery } from '@/features/moy-sklad/api/moy-sklad-api';
+import { useDownloadImageQuery, useGetProductImagesQuery } from '@/features/moy-sklad/api/moy-sklad-api';
+import { TProduct } from '../../model/types/t-product';
 
 export const ProductCard: FC<{ product: TProduct }> = ({ product }) => {
     // Получаем изображения

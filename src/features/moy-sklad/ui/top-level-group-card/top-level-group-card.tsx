@@ -1,21 +1,44 @@
 import { Base } from "@/shared/ui/components/base/base";
 import { FC } from "react";
-import { TGroup } from "../../api/moy-sklad-api";
-import imgSoftener from './imgSoftener.png';
-import imgDwm from './imgDwm.png';
-import imgLinefilters from './imgLinefilters.png';
+import { TGroup } from "../../model/types/t-group";
+import {
+    useDownloadImageQuery,
+    useGetBundleImagesQuery
+} from "../../api/moy-sklad-api";
+import { GroupInfo } from "../group-info/group-info";
 
 export const TopLevelGroupCard: FC<{ group: TGroup }> =
     ({ group }) => {
+
+        const { data: images, error, isLoading } = useGetBundleImagesQuery(group.systemBundle.id);
+        // Всегда вызываем хук для загрузки изображения, но с условием `skip`
+        const mainImage = images?.[0];
+        const downloadHref = mainImage?.meta.downloadHref || '';
+        const { data: imageBlob, isLoading: isImageLoading } = useDownloadImageQuery(downloadHref, {
+            skip: !mainImage,
+        });
+        const imageUrl = imageBlob ? URL.createObjectURL(imageBlob) : null;
+        // Убедитесь, что состояние рендеринга не изменяет количество вызовов хуков
+        if (isLoading) return <div>Loading images...</div>;
+        if (error) return <div>Error loading images</div>;
+
         return (
             <Base className="px-4 pt-0 pb-0 w-full relative">
                 <div className="min-h-[115px] max-h-[115px] flex items-center w-full">
-                    <div className="flex flex-col w-[180px] gap-0.5">
-                        <h5 className="text-md font-bold tracking-tight ">{group.groupName}</h5>
-                        <p className="text-xs tracking-tight opacity-60">{group?.bundle?.description}</p>
-                        <h5 className="text-md font-bold tracking-tight text-primary">{"от 49 900Р"}</h5>
-                    </div>
-                    <img className="max-h-[100px] absolute bottom-0 right-4" src={group.groupName === 'Waterboss' ? imgSoftener: imgLinefilters} alt={group.groupName || ''}/>
+                    <GroupInfo 
+                        title={group.groupName} 
+                        description={group.systemBundle.description} 
+                        minPrice={49900} 
+                    />
+                    <figure>
+                        {isImageLoading ? (
+                            <div>Loading image...</div>
+                        ) : imageUrl ? (
+                            <img className="max-h-[100px] absolute bottom-0 right-4" src={imageUrl} alt={mainImage?.title || 'Category image'} />
+                        ) : (
+                            <div className="max-h-[100px] absolute bottom-0 right-4">No Image Available</div>
+                        )}
+                    </figure>
                 </div>
             </Base>)
 

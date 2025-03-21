@@ -1,36 +1,7 @@
-import { TNullable } from '@/shared/lib/types/t-nullable';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-// Типы для товаров и изображений
-export type TProduct = {
-    id: string;
-    name: string;
-    description?: string;
-};
-
-export type TProductImage = {
-    meta: {
-        downloadHref: string;
-    };
-    title: string;
-    filename: string;
-    miniature: {
-        downloadHref: string;
-    };
-};
-
-export type TGroup = {
-    id: number;
-    groupId: string;
-    parentGroupName: TNullable<string>;
-    groupName: TNullable<string>;
-    shouldDisplay: boolean;
-    minPrice?: number;
-    bundles?: [];
-    products?: [];
-    services?: [];
-}
-
+import { TGroup } from '../model/types/t-group';
+import { TProduct } from '../model/types/t-product';
+import { TImage } from '../model/types/t-image';
 
 export const moySkladApi = createApi({
     reducerPath: 'moySkladApi',
@@ -51,7 +22,13 @@ export const moySkladApi = createApi({
                 params: { q, limit, offset },
             }),
         }),
-        getProductImages: builder.query<TProductImage[], string>({
+        getBundleImages: builder.query<TImage[], string>({
+            query: (bundleId: string) => ({
+                url: `bundle/${bundleId}/images`,
+                method: 'GET',
+            }),
+        }),
+        getProductImages: builder.query<TImage[], string>({
             query: (productId: string) => ({
                 url: `product/${productId}/images`,
                 method: 'GET',
@@ -71,5 +48,6 @@ export const {
     useGetTopLevelGroupsQuery,
     useGetProductsQuery,
     useGetProductImagesQuery,
+    useGetBundleImagesQuery,
     useDownloadImageQuery,
 } = moySkladApi;
