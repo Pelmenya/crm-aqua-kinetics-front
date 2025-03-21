@@ -24,14 +24,14 @@ export const store = configureStore({
         calendarService: calendarServiceSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat([
+        getDefaultMiddleware().concat(
             authApi.middleware,
             addressApi.middleware,
             realEstateApi.middleware,
             accountServiceApi.middleware,
             calendarServiceApi.middleware,
             moySkladApi.middleware,
-        ]),
+        ),
 });
 
 export type TRootState = ReturnType<typeof store.getState>;

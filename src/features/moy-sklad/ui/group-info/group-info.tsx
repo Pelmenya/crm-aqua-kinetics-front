@@ -9,7 +9,7 @@ export const GroupInfo: FC<{ title: TNullable<string>, description: string, minP
             <div className="flex flex-col w-[180px] gap-0.5">
                 <h5 className="text-md font-bold tracking-tight ">{title}</h5>
                 <p className="text-xs tracking-tight opacity-60">{description}</p>
-                <h5 className="text-md font-bold tracking-tight text-primary">{`от ${minPrice.toLocaleString()}₽`}</h5>
+                <p className="text-md font-bold tracking-tight text-primary">{`от ${minPrice.toLocaleString()}₽`}</p>
             </div>
         )
     }

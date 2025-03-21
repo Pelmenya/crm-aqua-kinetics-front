@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TGroup } from '../model/types/t-group';
 import { TProduct } from '../model/types/t-product';
 import { TImage } from '../model/types/t-image';
+import { blobToBase64 } from '@/shared/lib/helpers/blob-to-base64';
 
 export const moySkladApi = createApi({
     reducerPath: 'moySkladApi',
@@ -34,11 +35,14 @@ export const moySkladApi = createApi({
                 method: 'GET',
             }),
         }),
-        downloadImage: builder.query<Blob, string>({
+        downloadImage: builder.query<string, string>({
             query: (downloadHref: string) => ({
                 url: `image?href=${encodeURIComponent(downloadHref)}`,
                 method: 'GET',
-                responseHandler: (response) => response.blob(), // Обработка ответа как Blob
+                responseHandler: async (response) => {
+                    const blob = await response.blob();
+                    return await blobToBase64(blob); // Для сериализации в редакс, 
+                },
             }),
         }),
     }),

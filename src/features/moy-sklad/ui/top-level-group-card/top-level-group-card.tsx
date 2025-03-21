@@ -6,6 +6,8 @@ import {
     useGetBundleImagesQuery
 } from "../../api/moy-sklad-api";
 import { GroupInfo } from "../group-info/group-info";
+import { base64ToBlob } from "@/shared/lib/helpers/base64-to-blob";
+
 
 export const TopLevelGroupCard: FC<{ group: TGroup }> =
     ({ group }) => {
@@ -14,24 +16,22 @@ export const TopLevelGroupCard: FC<{ group: TGroup }> =
         // Всегда вызываем хук для загрузки изображения, но с условием `skip`
         const mainImage = images?.[0];
         const downloadHref = mainImage?.meta.downloadHref || '';
-        const { data: imageBlob, isLoading: isImageLoading } = useDownloadImageQuery(downloadHref, {
+        const { data: imageBase64, isLoading: isImageLoading } = useDownloadImageQuery(downloadHref, {
             skip: !mainImage,
         });
-        const imageUrl = imageBlob ? URL.createObjectURL(imageBlob) : null;
-        // Убедитесь, что состояние рендеринга не изменяет количество вызовов хуков
-        if (isLoading) return <div>Loading images...</div>;
+        const imageUrl = imageBase64 ? URL.createObjectURL(base64ToBlob(imageBase64)) : null;
         if (error) return <div>Error loading images</div>;
 
         return (
             <Base className="px-4 pt-0 pb-0 w-full relative">
                 <div className="min-h-[115px] max-h-[115px] flex items-center w-full">
-                    <GroupInfo 
-                        title={group.groupName} 
-                        description={group.systemBundle.description} 
-                        minPrice={49900} 
+                    <GroupInfo
+                        title={group.groupName}
+                        description={group.systemBundle.description}
+                        minPrice={49900}
                     />
                     <figure>
-                        {isImageLoading ? (
+                        {isImageLoading || isLoading ? (
                             <div>Loading image...</div>
                         ) : imageUrl ? (
                             <img className="max-h-[100px] absolute bottom-0 right-4" src={imageUrl} alt={mainImage?.title || 'Category image'} />
