@@ -1,11 +1,19 @@
 import { FC } from "react";
-import { useGetTopLevelGroupsQuery } from "../../api/moy-sklad-api";
-//import { DataJson } from "@/shared/ui/helpers/data-json/data-json";
+import { DataJson } from "@/shared/ui/helpers/data-json/data-json";
 import { TopLevelGroupCard } from "../top-level-group-card/top-level-group-card";
 import { Loading } from "@/shared/ui/components/loading/loading";
+import { GroupCard } from "../group-card/group-card";
+import { TGroup } from "../../model/types/t-group";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SerializedError } from "@reduxjs/toolkit";
 
-export const GroupList: FC = () => {
-    const { data: groups, error, isLoading } = useGetTopLevelGroupsQuery();
+export const GroupList: FC<{ 
+    cardType: 'top' | 'sub';
+    groups: TGroup[];
+    error: FetchBaseQueryError | SerializedError | undefined;
+    isLoading: boolean;
+    
+}> = ({ cardType, groups, error, isLoading }) => {
 
     if (isLoading) return (
         <Loading
@@ -19,7 +27,10 @@ export const GroupList: FC = () => {
     return (
         <div className="flex flex-col gap-2 px-4">
             {groups?.map((group) => (
-                <TopLevelGroupCard key={group.id} group={group} />
+                cardType === "top"
+                    ? <TopLevelGroupCard key={group.id} group={group} />
+                    : cardType === "sub" ? <GroupCard key={group.id} group={group} />
+                        : null
             ))}
             {/* <DataJson data={groups} /> */}
         </div>

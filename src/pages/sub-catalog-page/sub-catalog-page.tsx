@@ -1,14 +1,16 @@
 import { FC } from "react";
 import { Page } from "@/shared/ui/components/page/page";
 import { GroupList } from "@/features/moy-sklad/ui/group-list/group-list";
-import { useGetTopLevelGroupsQuery } from "@/features/moy-sklad/api/moy-sklad-api";
+import { useNavigate, useParams } from "react-router-dom";
 
-export const CatalogPage: FC = () => {
-    const { data, error, isLoading } = useGetTopLevelGroupsQuery();
+export const SubCatalogPage: FC = () => {
+    const navigate = useNavigate();
+    const { id } = useParams<{ id: string }>();
 
+    
     return (
         <Page footer={true} className="bg-base-300">
             <h1 className="block w-full text-center py-4 text-xl font-bold">Каталог</h1>
-            <GroupList cardType="top" groups={data || []} error={error} isLoading={isLoading}/>
+            
         </Page>)
 }
