@@ -9,8 +9,10 @@ import { Link } from "@/app/link/link";
 export const Footer: FC = () => {
     const location = useLocation();
 
-    const getIconColor = (path: string) => {
-        return location.pathname.split('/').includes(path) ? 'text-primary' : 'text-default';
+    // Improved getIconColor function to handle single or multiple paths
+    const getIconColor = (paths: string | string[]) => {
+        const pathArray = Array.isArray(paths) ? paths : [paths];
+        return pathArray.some(path => location.pathname.includes(path)) ? 'text-primary' : 'text-default';
     };
 
     return (
@@ -18,15 +20,15 @@ export const Footer: FC = () => {
             <Link to='/account' className={getIconColor('account')}>
                 <Home />
             </Link>
-            <Link to='/catalog' className={getIconColor('catalog')}>
+            <Link to='/catalog' className={getIconColor(['catalog', 'sub-catalog'])}>
                 <Category />
             </Link>
-            <div className={getIconColor('chat')}>
+            <Link to='/chat' className={getIconColor('chat')}>
                 <Chat />
-            </div>
-            <div className={getIconColor('info')}>
+            </Link>
+            <Link to='/info' className={getIconColor('info')}>
                 <InfoSquare />
-            </div>
+            </Link>
         </div>
     );
 }

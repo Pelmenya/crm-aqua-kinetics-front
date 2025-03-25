@@ -3,15 +3,13 @@ import { Page } from "@/shared/ui/components/page/page";
 import { GroupList } from "@/features/moy-sklad/ui/group-list/group-list";
 import { useGetSubGroupsQuery, useGetProductsByGroupQuery } from "@/features/moy-sklad/api/moy-sklad-api";
 import { useParams } from "react-router-dom";
-import { ProductList } from "@/features/moy-sklad/ui/product-card/product-card";
+import { ProductList } from "@/features/moy-sklad/ui/product-list/product-list";
 
 export const SubCatalogPage: FC = () => {
     const { id } = useParams<{ id: string }>();
     const { data: subGroups, error: subGroupsError, isLoading: isLoadingSubGroups } = useGetSubGroupsQuery(id || '');
     const { data: products, error: productsError, isLoading: isLoadingProducts } = useGetProductsByGroupQuery(id || '');
 
-    console.log(subGroups);
-    
     return (
         <Page footer={true} className="bg-base-300">
             <h1 className="block w-full text-center py-4 text-xl font-bold">Подкатегории</h1>

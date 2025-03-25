@@ -17,7 +17,6 @@ export const TopLevelGroupCard: FC<{ group: TGroup }> =
         const navigate = useNavigate();
 
         const handleClick = () => {
-            console.log(group.id)
             navigate(`/sub-catalog/${group.id}`);
         };
 
@@ -50,7 +49,7 @@ export const TopLevelGroupCard: FC<{ group: TGroup }> =
                         ) : imageUrl ? (
                             <img className="max-h-[100px] absolute bottom-0 right-4" src={imageUrl} alt={mainImage?.title || 'Category image'} />
                         ) : (
-                            <div className="max-h-[100px] absolute bottom-0 right-4">No Image Available</div>
+                            <div className="max-h-[100px] absolute bottom-0 right-4 text-sm">No Image Available</div>
                         )}
                     </figure>
                 </div>
