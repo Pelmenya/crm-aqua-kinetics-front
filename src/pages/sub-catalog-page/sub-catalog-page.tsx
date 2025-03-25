@@ -12,13 +12,20 @@ export const SubCatalogPage: FC = () => {
 
     return (
         <Page footer={true} className="bg-base-300">
-            <h1 className="block w-full text-center py-4 text-xl font-bold">Подкатегории</h1>
             {subGroupsError && <div>Error loading subgroups</div>}
-            <GroupList cardType="sub" groups={subGroups || []} error={subGroupsError} isLoading={isLoadingSubGroups} />
-
-            <h2 className="block w-full text-center py-4 text-lg font-bold">Товары</h2>
-            {productsError && <div>Error loading products</div>}
-            <ProductList products={products || []} isLoading={isLoadingProducts} />
+            <GroupList 
+                cardType="sub" 
+                groups={subGroups || []} 
+                error={subGroupsError} 
+                isLoading={isLoadingSubGroups} 
+                title="Подкатегории"
+            />
+            <ProductList 
+                products={products || []} 
+                isLoading={isLoadingProducts} 
+                error={productsError}
+                title="Товары"
+            />
         </Page>
     )
 }
