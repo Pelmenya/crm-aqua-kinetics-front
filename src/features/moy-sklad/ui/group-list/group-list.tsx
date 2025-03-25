@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { DataJson } from "@/shared/ui/helpers/data-json/data-json";
 import { TopLevelGroupCard } from "../top-level-group-card/top-level-group-card";
 import { Loading } from "@/shared/ui/components/loading/loading";
 import { GroupCard } from "../group-card/group-card";

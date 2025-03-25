@@ -1,3 +1,5 @@
+// features/moy-sklad/api/moy-sklad-api.ts
+
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { TGroup } from '../model/types/t-group';
 import { TProduct } from '../model/types/t-product';
@@ -16,11 +18,16 @@ export const moySkladApi = createApi({
                 method: 'GET',
             }),
         }),
-        getProducts: builder.query<TProduct[], { q?: string; limit?: number; offset?: number }>({
-            query: ({ q = '', limit = 10, offset = 0 }) => ({
-                url: 'product',
+        getSubGroups: builder.query<TGroup[], string>({
+            query: (groupId: string) => ({
+                url: `group/${groupId}/groups`,
                 method: 'GET',
-                params: { q, limit, offset },
+            }),
+        }),
+        getProductsByGroup: builder.query<TProduct[], string>({
+            query: (groupId: string) => ({
+                url: `group/${groupId}/products`,
+                method: 'GET',
             }),
         }),
         getBundleImages: builder.query<TImage[], string>({
@@ -41,7 +48,7 @@ export const moySkladApi = createApi({
                 method: 'GET',
                 responseHandler: async (response) => {
                     const blob = await response.blob();
-                    return await blobToBase64(blob); // Для сериализации в редакс, 
+                    return await blobToBase64(blob); // Для сериализации в редакс
                 },
             }),
         }),
@@ -50,7 +57,8 @@ export const moySkladApi = createApi({
 
 export const {
     useGetTopLevelGroupsQuery,
-    useGetProductsQuery,
+    useGetSubGroupsQuery,
+    useGetProductsByGroupQuery,
     useGetProductImagesQuery,
     useGetBundleImagesQuery,
     useDownloadImageQuery,

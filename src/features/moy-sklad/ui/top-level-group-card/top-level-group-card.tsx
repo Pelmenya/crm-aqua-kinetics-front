@@ -8,10 +8,18 @@ import {
 import { GroupInfo } from "../group-info/group-info";
 import { base64ToBlob } from "@/shared/lib/helpers/base64-to-blob";
 import { Loading } from "@/shared/ui/components/loading/loading";
+import { useNavigate } from "react-router-dom";
 
 
 export const TopLevelGroupCard: FC<{ group: TGroup }> =
     ({ group }) => {
+
+        const navigate = useNavigate();
+
+        const handleClick = () => {
+            console.log(group.id)
+            navigate(`/sub-catalog/${group.id}`);
+        };
 
         const { data: images, error, isLoading } = useGetBundleImagesQuery(group.systemBundle.id);
         // Всегда вызываем хук для загрузки изображения, но с условием `skip`
@@ -25,7 +33,7 @@ export const TopLevelGroupCard: FC<{ group: TGroup }> =
 
         return (
             <Base className="px-4 pt-0 pb-0 w-full relative">
-                <div className="min-h-[115px] max-h-[115px] flex items-center w-full">
+                <div className="min-h-[115px] max-h-[115px] flex items-center w-full" onClick={handleClick}>
                     <GroupInfo
                         title={group.groupName}
                         description={group.systemBundle.description}
