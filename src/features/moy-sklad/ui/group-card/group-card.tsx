@@ -27,11 +27,8 @@ export const GroupCard: FC<{ group: TGroup }> =
             navigate(`/sub-catalog/${group.id}`);
         };
         return (
-            <Base className="px-4 pt-0 pb-0 w-full relative">
-                <div
-                    className="min-h-[115px] max-h-[115px] flex items-center gap-4 w-full"
-                    onClick={handleClick}
-                >
+            <Base className="px-4 pt-0 pb-0 w-full relative" onClick={handleClick}>
+                <div className="min-h-[115px] max-h-[115px] flex items-center gap-4 w-full">
                     <figure className="bg-base-300 w-[80px] h-[80px] flex items-center justify-center rounded-sm">
                         {isImageLoading || isLoading ? (
                             <Loading

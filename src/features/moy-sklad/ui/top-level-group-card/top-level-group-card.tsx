@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 
 export const TopLevelGroupCard: FC<{ group: TGroup }> =
     ({ group }) => {
-
         const navigate = useNavigate();
 
         const handleClick = () => {
@@ -31,8 +30,8 @@ export const TopLevelGroupCard: FC<{ group: TGroup }> =
         if (error) return <div>Error loading images</div>;
 
         return (
-            <Base className="px-4 pt-0 pb-0 w-full relative">
-                <div className="min-h-[115px] max-h-[115px] flex items-center w-full" onClick={handleClick}>
+            <Base className="px-4 pt-0 pb-0 w-full relative" onClick={handleClick}>
+                <div className="min-h-[115px] max-h-[115px] flex items-center w-full">
                     <GroupInfo
                         title={group.groupName}
                         description={group.systemBundle.description}

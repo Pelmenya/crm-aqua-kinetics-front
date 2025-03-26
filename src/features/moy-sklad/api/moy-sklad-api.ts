@@ -24,6 +24,12 @@ export const moySkladApi = createApi({
                 method: 'GET',
             }),
         }),
+        getProduct: builder.query<TProduct, string>({
+            query: (productId: string) => ({
+                url: `product/${productId}`,
+                method: 'GET',
+            }),
+        }),
         getProductsByGroup: builder.query<TProduct[], string>({
             query: (groupId: string) => ({
                 url: `group/${groupId}/products`,
@@ -58,6 +64,7 @@ export const moySkladApi = createApi({
 export const {
     useGetTopLevelGroupsQuery,
     useGetSubGroupsQuery,
+    useGetProductQuery,
     useGetProductsByGroupQuery,
     useGetProductImagesQuery,
     useGetBundleImagesQuery,

@@ -50,6 +50,11 @@
   .gradient-text {
     @apply bg-gradient-to-r from-primary to-info text-transparent bg-clip-text;
   }
+
+  .gradient-bg {
+    background: radial-gradient(circle, var(--color-base-200), var(--color-primary));
+  }
+
 }
 
 html, body, #root {
@@ -130,3 +135,11 @@ html, body, #root {
     }
   }
   
+  .swiper {
+    .swiper-pagination-bullet {
+      @apply bg-base-100 opacity-40; /* Цвет неактивных точек */
+    }
+    .swiper-pagination-bullet-active {
+      @apply bg-base-100 opacity-90; /* Цвет активной точки */
+    }
+  }

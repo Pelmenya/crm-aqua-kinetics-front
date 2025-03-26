@@ -19,6 +19,7 @@ import { ServiceLocationPage } from '@/pages/service-location-page/service-locat
 import { ServiceProfilePage } from '@/pages/service-profile-page/service-profile-page';
 import { CatalogPage } from '@/pages/catalog-page/catalog-page';
 import { SubCatalogPage } from '@/pages/sub-catalog-page/sub-catalog-page';
+import { ProductPage } from '@/pages/product-page/product-page';
 
 interface Route {
     path: string;
@@ -63,7 +64,8 @@ export const routes: Route[] = [
             { path: '/add-house/step-3', Component: AddHouseStepThree },
         ]
     },
-    {  path: '/sub-catalog/:id', Component: SubCatalogPage },
+    { path: '/sub-catalog/:id', Component: SubCatalogPage },
+    { path: '/product/:id', Component: ProductPage },
     { path: '/real-estate-page/:id', Component: RealEstatePage },
     { path: '/init-data', Component: InitDataPage },
     { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },

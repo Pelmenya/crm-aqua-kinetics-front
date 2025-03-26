@@ -8,7 +8,4 @@ export type TGroup = {
     shouldDisplay: boolean;
     systemBundle: TSystemBundle;
     minPrice?: number;
-    bundles?: [];
-    products?: [];
-    services?: [];
 }
