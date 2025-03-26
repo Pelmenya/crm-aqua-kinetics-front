@@ -18,7 +18,10 @@ export const ProductPage: FC = () => {
     return (
         <Page className="pb-16">
             {product && <ProductSlider id={product.id} />}
-            <h1>{product?.name}</h1>
+            <div className="bg-base-100 rounded-t-lg p-4 mt-[-2rem]">
+                <h1 className="text-xl w-[60%]">{product?.name}</h1>
+            </div>
+            
         </Page>
     )
 }

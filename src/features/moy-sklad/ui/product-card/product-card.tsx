@@ -51,8 +51,8 @@ export const ProductCard: FC<{ product: TProduct }> = ({ product }) => {
             <div className="mt-auto flex flex-col">
                 <h3 className="font-semibold text-min line-clamp-2">{product.name}</h3>
                 <p className="text-ex-min line-clamp-2">{product.description}</p>
-                <p className="text-sm font-bold tracking-tight text-primary">{(78000).toLocaleString() + '₽'}</p>
-            </div>
+{/*                 <p className="text-sm font-bold tracking-tight text-primary">{(78000).toLocaleString() + '₽'}</p>
+ */}            </div>
         </Base>
     );
 };
