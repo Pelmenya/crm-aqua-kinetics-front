@@ -25,7 +25,7 @@ export function Page({ children, back = true, footer = false, className }: Props
     }, [back]);
 
     return (
-        <div className={cn('bg-base-100 w-[100vw] min-h-[100vh] min-h-[100vh] max-w-sm relative', className)}>
+        <div className={cn('bg-base-100 w-[100vw] min-h-[100vh] min-h-[100vh] max-w-sm relative', className, {['pb-16']: footer})}>
             {children}
             {footer ? <Footer /> : null}
         </div>

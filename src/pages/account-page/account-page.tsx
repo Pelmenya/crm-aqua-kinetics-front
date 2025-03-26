@@ -9,13 +9,10 @@ export const AccountPage: FC = () => {
     useRoleBasedNavigation('/account'); // передаем базовый путь
 
     return (
-        <Page back={false} footer={true}>
-            <div className="w-full h-full min-h-[100vh] px-4 gap-2 bg-base-300 pb-16">
+        <Page back={false} footer={true} className="px-4 gap-2 bg-base-300">
                 <AccountHeader title="Личный кабинет" />
                 <UserInfo />
                 <Outlet />
-            </div>
         </Page>
-
     )
 }
