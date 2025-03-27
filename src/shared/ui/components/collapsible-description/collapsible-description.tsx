@@ -38,7 +38,7 @@ export const CollapsibleDescription: FC<{ description: string }> = ({ descriptio
             {isButtonVisible && (
                 <button
                     className={cn('btn btn-link btn-xs flex items-center w-full transition-all duration-300 ease-in-out', {
-                        'mt-0': isExpanded,
+                        'mt-1': isExpanded,
                         'mt-[-0.5rem]': !isExpanded
                     })}
                     onClick={toggleDescription}

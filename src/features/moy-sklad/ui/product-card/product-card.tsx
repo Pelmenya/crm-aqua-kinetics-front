@@ -8,8 +8,6 @@ import { useNavigate } from "react-router-dom";
 
 export const ProductCard: FC<{ product: TProduct }> = ({ product }) => {
     const navigate = useNavigate();
-  
-    
     const { data: images, error, isLoading } = useGetProductImagesQuery(product.id);
     const mainImage = images?.[0];
     const downloadHref = mainImage?.meta.downloadHref || '';
