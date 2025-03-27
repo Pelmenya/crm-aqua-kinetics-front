@@ -5,6 +5,7 @@ import {
     miniApp,
     initData,
     $debug,
+    swipeBehavior,
     init as initSDK,
 } from '@telegram-apps/sdk-react';
 
@@ -33,7 +34,10 @@ export function init(debug: boolean): void {
     backButton.mount();
     miniApp.mount();
     themeParams.mount();
+    swipeBehavior.mount() // отключает вертикальный свайп,нужно для корректной работы слайдеров, чтоб окно не закрывалось
     initData.restore();
+
+
     void viewport
         .mount()
         .catch(e => {
@@ -42,10 +46,12 @@ export function init(debug: boolean): void {
         .then(() => {
             viewport.bindCssVars();
             viewport.expand();
-            //viewport.requestFullscreen();
+            swipeBehavior.disableVertical() // отключает вертикальный свайп,нужно для корректной работы слайдеров, чтоб окно не закрывалось
+            //viewport.requestFullscreen(); // полноэкранный режим
         });
 
     // Define components-related CSS variables.
     miniApp.bindCssVars();
     themeParams.bindCssVars();
+
 }

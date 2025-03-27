@@ -1,6 +1,6 @@
-export type TProduct = {
+export type TService = {
     id: string;
     name: string;
+    rateOfHours: number;
     description?: string;
-    servicesIds?: string[];
 };

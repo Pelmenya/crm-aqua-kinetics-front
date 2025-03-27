@@ -5,6 +5,7 @@ import { TGroup } from '../model/types/t-group';
 import { TProduct } from '../model/types/t-product';
 import { TImage } from '../model/types/t-image';
 import { blobToBase64 } from '@/shared/lib/helpers/blob-to-base64';
+import { TService } from '../model/types/t-service';
 
 export const moySkladApi = createApi({
     reducerPath: 'moySkladApi',
@@ -27,6 +28,12 @@ export const moySkladApi = createApi({
         getProduct: builder.query<TProduct, string>({
             query: (productId: string) => ({
                 url: `product/${productId}`,
+                method: 'GET',
+            }),
+        }),
+        getService: builder.query<TService, string>({
+            query: (serviceId: string) => ({
+                url: `service/${serviceId}`,
                 method: 'GET',
             }),
         }),
@@ -65,6 +72,7 @@ export const {
     useGetTopLevelGroupsQuery,
     useGetSubGroupsQuery,
     useGetProductQuery,
+    useGetServiceQuery,
     useGetProductsByGroupQuery,
     useGetProductImagesQuery,
     useGetBundleImagesQuery,
