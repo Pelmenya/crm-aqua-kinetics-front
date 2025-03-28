@@ -23,7 +23,7 @@ export const ServiceCard: FC<TServiceCardProps> = ({
     return (
         <div className='flex py-2 items-center justify-between gap-2'>
             <div className='flex items-center gap-2 flex-grow'>
-                <label htmlFor={id} className='text-sm flex items-center gap-2 min-h-12'>
+                <label htmlFor={id} className='text-sm flex items-center gap-4 min-h-12'>
                     <input
                         id={id}
                         type="checkbox"

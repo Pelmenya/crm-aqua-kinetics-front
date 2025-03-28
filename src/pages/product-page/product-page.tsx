@@ -7,75 +7,106 @@ import { CollapsibleDescription } from '@/shared/ui/components/collapsible-descr
 import { Loading } from '@/shared/ui/components/loading/loading';
 import { CatalogHeader } from '@/widgets/catalog-header/catalog-header';
 import { ServicesList } from '@/features/moy-sklad/ui/service-list/service-list';
-// import { Cart } from '@/shared/ui/icons/cart';
-// import { Counter } from '@/shared/ui/components/counter/counter';
+import { Cart } from '@/shared/ui/icons/cart';
+import { Counter } from '@/shared/ui/components/counter/counter';
 
 export const ProductPage: FC = () => {
     const { id } = useParams<{ id: string }>();
     const { data: product, error: errorProduct, isLoading: isLoadingProduct } = useGetProductQuery(id || '');
 
-    // Управление состоянием продукта
-    //const [productCount, setProductCount] = useState<number>(0);
+    // Управление состоянием продукта и его услуг для корзины
+    const [cartState, setCartState] = useState<{
+        product: { id: string; name: string; count: number; description?: string };
+        services: Record<string, { count: number; checked: boolean }>;
+    }>({
+        product: { id: '', name: '', count: 0, description: '' },
+        services: {}
+    });
 
-    // Управление состоянием для всех сервисов
-    const [serviceStates, setServiceStates] = useState<Record<string, { count: number; checked: boolean }>>({});
+    useEffect(() => {
+        if (product) {
+            setCartState({
+                product: {
+                    id: product.id,
+                    name: product.name,
+                    count: 0,
+                    description: product.description
+                },
+                services: product.servicesIds?.reduce((acc, serviceId) => {
+                    acc[serviceId] = { count: 0, checked: false };
+                    return acc;
+                }, {} as Record<string, { count: number; checked: boolean }>) || {}
+            });
+        }
+    }, [product]);
 
     // Функции для управления состоянием продукта
-    /*
-        const handleProductIncrement = () => setProductCount(productCount + 1);
-    
-        const handleProductDecrement = () => {
-            setProductCount((state) => Math.max(state - 1, 0));
-        };
-     */
-    // Функции для управления состоянием сервисов
-    const handleIncrement = (serviceId: string) => {
-        setServiceStates((prevState) => ({
+    const handleProductIncrement = () => {
+        setCartState(prevState => ({
             ...prevState,
-            [serviceId]: {
-                ...prevState[serviceId],
-                count: prevState[serviceId].count + 1
+            product: {
+                ...prevState.product,
+                count: prevState.product.count + 1
+            }
+        }));
+    };
+
+    const handleProductDecrement = () => {
+        setCartState(prevState => ({
+            ...prevState,
+            product: {
+                ...prevState.product,
+                count: Math.max(prevState.product.count - 1, 0)
+            }
+        }));
+    };
+
+    // Функции для управления состоянием услуг
+    const handleIncrement = (serviceId: string) => {
+        setCartState(prevState => ({
+            ...prevState,
+            services: {
+                ...prevState.services,
+                [serviceId]: {
+                    ...prevState.services[serviceId],
+                    count: prevState.services[serviceId].count + 1
+                }
             }
         }));
     };
 
     const handleDecrement = (serviceId: string) => {
-        setServiceStates((prevState) => {
-            const newCount = Math.max(prevState[serviceId].count - 1, 0);
+        setCartState(prevState => {
+            const newCount = Math.max(prevState.services[serviceId].count - 1, 0);
             return {
                 ...prevState,
-                [serviceId]: {
-                    ...prevState[serviceId],
-                    count: newCount,
-                    checked: newCount > 0 // Сбрасываем checked, если count становится 0
+                services: {
+                    ...prevState.services,
+                    [serviceId]: {
+                        ...prevState.services[serviceId],
+                        count: newCount,
+                        checked: newCount > 0
+                    }
                 }
             };
         });
     };
 
     const handleCheckboxChange = (serviceId: string) => {
-        setServiceStates((prevState) => {
-            const newChecked = !prevState[serviceId]?.checked;
+        setCartState(prevState => {
+            const newChecked = !prevState.services[serviceId].checked;
             return {
                 ...prevState,
-                [serviceId]: {
-                    count: newChecked ? 1 : 0,
-                    checked: newChecked
+                services: {
+                    ...prevState.services,
+                    [serviceId]: {
+                        count: newChecked ? 1 : 0,
+                        checked: newChecked
+                    }
                 }
             };
         });
     };
-
-    useEffect(() => {
-        // Инициализация состояния для всех сервисов при загрузке продукта
-        if (product?.servicesIds) {
-            const initialState = product.servicesIds.reduce((acc, serviceId) => {
-                acc[serviceId] = { count: 0, checked: false };
-                return acc;
-            }, {} as Record<string, { count: number; checked: boolean }>);
-            setServiceStates(initialState);
-        }
-    }, [product?.servicesIds]);
 
     if (isLoadingProduct) {
         return (
@@ -99,29 +130,28 @@ export const ProductPage: FC = () => {
                         <ProductSlider id={product.id} />
                         <div className="bg-base-100 rounded-t-lg p-4 mt-[-2rem] flex flex-col items-end gap-4">
                             <div className='flex flex-col items-end gap-4'>
-                                <h1 className="text-xl opacity-80">{product?.name}</h1>
+                                <h1 className="text-xl opacity-80">{product.name}</h1>
                             </div>
-                            {product?.description && <CollapsibleDescription description={product.description} />}
-                            {/*                             <div className='flex-grow'>
-                                {productCount === 0 ? (
+                            {product.description && <CollapsibleDescription description={product.description} />}
+                            <div className='flex-grow'>
+                                {cartState.product.count === 0 ? (
                                     <button className='btn btn-primary' onClick={handleProductIncrement}>
                                         {"Добавить в "}
                                         <Cart />
                                     </button>
                                 ) : (
                                     <Counter
-                                        count={productCount}
+                                        count={cartState.product.count}
                                         onIncrement={handleProductIncrement}
                                         onDecrement={handleProductDecrement}
                                         minCount={0}
                                     />
                                 )}
                             </div>
- */}
-                            {product?.servicesIds && (
+                            {product.servicesIds && (
                                 <ServicesList
                                     servicesIds={product.servicesIds}
-                                    serviceStates={serviceStates}
+                                    serviceStates={cartState.services}
                                     onIncrement={handleIncrement}
                                     onDecrement={handleDecrement}
                                     onCheckboxChange={handleCheckboxChange}

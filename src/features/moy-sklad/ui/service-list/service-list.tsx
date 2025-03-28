@@ -17,18 +17,21 @@ export const ServicesList: FC<TServicesListProps> = ({
     onCheckboxChange
 }) => {
     return (
-        <div className='grid grid-cols-1 gap-2'>
-            {servicesIds.map(id => (
-                <ServiceCard
-                    key={id}
-                    id={id}
-                    count={serviceStates[id]?.count || 0}
-                    checked={serviceStates[id]?.checked || false}
-                    onIncrement={() => onIncrement(id)}
-                    onDecrement={() => onDecrement(id)}
-                    onCheckboxChange={() => onCheckboxChange(id)}
-                />
-            ))}
+        <div>
+            <h2 className="text-lg">Выберите услуги</h2>
+            <div className='grid grid-cols-1 gap-2'>
+                {servicesIds.map(id => (
+                    <ServiceCard
+                        key={id}
+                        id={id}
+                        count={serviceStates[id]?.count || 0}
+                        checked={serviceStates[id]?.checked || false}
+                        onIncrement={() => onIncrement(id)}
+                        onDecrement={() => onDecrement(id)}
+                        onCheckboxChange={() => onCheckboxChange(id)}
+                    />
+                ))}
+            </div>
         </div>
     );
 };

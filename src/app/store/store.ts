@@ -9,6 +9,7 @@ import { accountServiceApi } from '@/entities/account-service/api/account-servic
 import { calendarServiceSlice } from '@/features/calendar-service/model/calendar-service-slice';
 import { calendarServiceApi } from '@/features/calendar-service/api/calendar-service-api';
 import { moySkladApi } from '@/features/moy-sklad/api/moy-sklad-api';
+import { cartReducer } from '@/features/cart/model/cart-slice';
 
 export const store = configureStore({
     reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
         realEstate: realEstateSlice.reducer,
         accountService: accountServiceSlice.reducer,
         calendarService: calendarServiceSlice.reducer,
+        cart: cartReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(
