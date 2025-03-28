@@ -32,20 +32,24 @@ export const ServiceCard: FC<{ id: string }> = ({ id }) => {
     }, [count]);
 
     return (
-        <Base className={`px-4 gap-4 flex items-center ${checked ? 'justify-between' : 'justify-start'} w-full`}>
-            <label htmlFor={id} className='text-min items-center flex gap-2 min-h-12'>
-                <input 
-                    id={id} 
-                    type="checkbox" 
-                    checked={checked} 
-                    onChange={handleCheckboxChange} 
-                    className="checkbox checkbox-sm" 
-                />
-                {service?.name}
-            </label>
+        <Base className='px-4 flex items-center justify-between'>
+            <div className='flex items-center gap-2 flex-grow'>
+                <label htmlFor={id} className='text-sm flex items-center gap-2 min-h-14'>
+                    <input 
+                        id={id} 
+                        type="checkbox" 
+                        checked={checked} 
+                        onChange={handleCheckboxChange} 
+                        className="checkbox checkbox-sm" 
+                    />
+                    {service?.name}
+                </label>
+            </div>
             {/* Условно рендерим Counter только если checked: true */}
             {checked && (
-                <Counter onDecrement={handleOnDecrement} onIncrement={handleOnIncrement} count={count} minCount={0}/>
+                <div className='flex-shrink-0'>
+                    <Counter onDecrement={handleOnDecrement} onIncrement={handleOnIncrement} count={count} minCount={0}/>
+                </div>
             )}
         </Base>
     );

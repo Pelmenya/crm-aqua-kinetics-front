@@ -8,6 +8,7 @@ import { Base } from '@/shared/ui/components/base/base';
 import { ButtonWithIcon } from '@/shared/ui/components/button-with-icon/button-with-icon';
 import { ConfirmDialog } from '@/shared/ui/components/confirm-dialog/confirm-dialog';
 import { Loading } from '@/shared/ui/components/loading/loading';
+import { Link } from '@/app/link/link';
 
 export const RealEstatePage: React.FC = () => {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ export const RealEstatePage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
 
     const { data, error, isLoading } = useGetRealEstateByIdQuery({ id: Number(id), authKey });
-    
+
     // Use the delete mutation hook
     const [deleteRealEstate] = useDeleteRealEstateMutation();
 
@@ -25,7 +26,7 @@ export const RealEstatePage: React.FC = () => {
     const handleOpenDialog = () => {
         setIsDialogOpen(true);
     };
-    
+
     const handleCloseDialog = () => {
         setIsDialogOpen(false);
     };
@@ -57,7 +58,7 @@ export const RealEstatePage: React.FC = () => {
                         У Вас пока нет оборудования
                     </Base>
                 </div>
-                <button className='btn btn-primary'>Вызвать мастера</button>
+                <Link to="/catalog" className='btn btn-primary'>Выбрать оборудование</Link>
             </div>
             <ConfirmDialog
                 isOpen={isDialogOpen}
