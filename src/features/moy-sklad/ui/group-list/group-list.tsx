@@ -27,7 +27,7 @@ export const GroupList: FC<{
 
     return (
         <>
-            {title && groups.length > 0 ? <h1 className="block w-full text-center py-4 text-xl font-bold">{title}</h1> : null}
+            {title && groups.length > 0 ? <h1 className="block w-full text-center pb-2 text-lg font-semibold">{title}</h1> : null}
             <div className="flex flex-col gap-2 px-4">
                 {groups?.map((group) => (
                     cardType === "top"

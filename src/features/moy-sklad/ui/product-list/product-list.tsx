@@ -30,7 +30,7 @@ export const ProductList: FC<{
 
         return (
             <>
-                {title && products.length > 0 ? <h2 className="block w-full text-center py-4 text-xl font-bold">{title}</h2> : null}
+                {title && products.length > 0 ? <h2 className="block w-full text-center pb-2 text-lg font-semibold">{title}</h2> : null}
                 <div className="grid grid-cols-2 gap-2 px-4">
                     {products.map((product) => (
                         <ProductCard key={product.id} product={product} />
