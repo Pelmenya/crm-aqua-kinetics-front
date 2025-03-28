@@ -10,7 +10,8 @@ export const Breadcrumbs: React.FC<{
     items: TBreadcrumb[];
 }> = ({ items }) => {
     return (
-        <div className="breadcrumbs text-sm px-4">
+        <nav className="breadcrumbs text-sm px-4">
+            
             <ul className='flex flex-wrap'>
                 {items.map((item, index) => (
                     <li key={index}>
@@ -22,6 +23,6 @@ export const Breadcrumbs: React.FC<{
                     </li>
                 ))}
             </ul>
-        </div>
+        </nav>
     );
 };
