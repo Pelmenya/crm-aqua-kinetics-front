@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { useGetProductQuery } from "@/features/moy-sklad/api/moy-sklad-api";
 import { ProductSlider } from "@/features/moy-sklad/ui/product-slider/product-slider";
 import { Page } from "@/shared/ui/components/page/page";
@@ -9,43 +9,23 @@ import { CatalogHeader } from '@/widgets/catalog-header/catalog-header';
 import { ServicesList } from '@/features/moy-sklad/ui/service-list/service-list';
 import { Cart } from '@/shared/ui/icons/cart';
 import { Counter } from '@/shared/ui/components/counter/counter';
-import { TRootState } from '@/app/store/store';
 import { addProductToCart, addServiceToProduct, updateProductCount, updateServiceCount } from '@/features/cart/model/cart-slice';
 import { useAppDispatch } from '@/shared/lib/hooks/use-app-dispatch';
-import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
-import { TService } from '@/features/moy-sklad/model/types/t-service';
-import { useUpdateCartStateMutation } from '@/features/cart/api/cart-api';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
+import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
+import { useCartSynchronization } from '@/shared/lib/hooks/use-сart-synchronization';
+import { TRootState } from '@/app/store/store';
+import { TService } from '@/features/moy-sklad/model/types/t-service';
 
 export const ProductPage: FC = () => {
     const { id } = useParams<{ id: string }>();
+    const dispatch = useAppDispatch();
+    const cartItem = useAppSelector((state: TRootState) => state.cart.items[id || '']);
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw || '';
-
     const { data: product, error: errorProduct, isLoading: isLoadingProduct } = useGetProductQuery(id || '');
-    const [updateCartState] = useUpdateCartStateMutation();
 
-    const dispatch = useAppDispatch();
-    const cart = useAppSelector((state: TRootState) => state.cart.items);
-    const cartItem = cart[id || ''];
-
-    const syncCartWithBackend = async (updatedCart: typeof cart) => {
-        try {
-            await updateCartState({ authKey, cartState: { items: updatedCart } }).unwrap();
-        } catch (error) {
-            console.error('Failed to update cart state on backend', error);
-        }
-    };
-
-    useEffect(() => {
-        if (cartItem) {
-            const updatedCartState = {
-                ...cart,
-                [String(id)]: cartItem,
-            };
-            syncCartWithBackend(updatedCartState);
-        }
-    }, [cartItem, cart, id]);
+    useCartSynchronization(authKey, id);
 
     const handleProductIncrement = () => {
         if (id && product) {
