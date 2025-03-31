@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC } from 'react';
 import { useGetProductQuery } from "@/features/moy-sklad/api/moy-sklad-api";
 import { ProductSlider } from "@/features/moy-sklad/ui/product-slider/product-slider";
 import { Page } from "@/shared/ui/components/page/page";
@@ -9,103 +9,67 @@ import { CatalogHeader } from '@/widgets/catalog-header/catalog-header';
 import { ServicesList } from '@/features/moy-sklad/ui/service-list/service-list';
 import { Cart } from '@/shared/ui/icons/cart';
 import { Counter } from '@/shared/ui/components/counter/counter';
+import { TRootState } from '@/app/store/store';
+import { addProductToCart, addServiceToProduct, updateProductCount, updateServiceCount } from '@/features/cart/model/cart-slice';
+import { useAppDispatch } from '@/shared/lib/hooks/use-app-dispatch';
+import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
+import { TService } from '@/features/moy-sklad/model/types/t-service';
 
 export const ProductPage: FC = () => {
     const { id } = useParams<{ id: string }>();
     const { data: product, error: errorProduct, isLoading: isLoadingProduct } = useGetProductQuery(id || '');
 
-    // Управление состоянием продукта и его услуг для корзины
-    const [cartState, setCartState] = useState<{
-        product: { id: string; name: string; count: number; description?: string };
-        services: Record<string, { count: number; checked: boolean }>;
-    }>({
-        product: { id: '', name: '', count: 0, description: '' },
-        services: {}
-    });
+    const dispatch = useAppDispatch();
+    const cartItem = useAppSelector((state: TRootState) => state.cart.items[id || '']);
 
-    useEffect(() => {
-        if (product) {
-            setCartState({
-                product: {
-                    id: product.id,
-                    name: product.name,
-                    count: 0,
-                    description: product.description
-                },
-                services: product.servicesIds?.reduce((acc, serviceId) => {
-                    acc[serviceId] = { count: 0, checked: false };
-                    return acc;
-                }, {} as Record<string, { count: number; checked: boolean }>) || {}
-            });
-        }
-    }, [product]);
-
-    // Функции для управления состоянием продукта
     const handleProductIncrement = () => {
-        setCartState(prevState => ({
-            ...prevState,
-            product: {
-                ...prevState.product,
-                count: prevState.product.count + 1
+        if (id && product) {
+            // Добавляем товар в корзину, если его еще нет
+            if (!cartItem) {
+                dispatch(addProductToCart({ product, count: 1 }));
+            } else {
+                dispatch(updateProductCount({ productId: id, count: (cartItem.count || 0) + 1 }));
             }
-        }));
+        }
     };
 
     const handleProductDecrement = () => {
-        setCartState(prevState => ({
-            ...prevState,
-            product: {
-                ...prevState.product,
-                count: Math.max(prevState.product.count - 1, 0)
-            }
-        }));
+        if (id && product && cartItem) {
+            const newCount = Math.max(cartItem.count - 1, 0);
+            dispatch(updateProductCount({ productId: id, count: newCount }));
+        }
     };
 
-    // Функции для управления состоянием услуг
     const handleIncrement = (serviceId: string) => {
-        setCartState(prevState => ({
-            ...prevState,
-            services: {
-                ...prevState.services,
-                [serviceId]: {
-                    ...prevState.services[serviceId],
-                    count: prevState.services[serviceId].count + 1
-                }
+        if (id && product) {
+            if (!cartItem) {
+                // Если товара нет в корзине, добавляем его при выборе услуги
+                dispatch(addProductToCart({ product, count: 0 }));
             }
-        }));
+            dispatch(updateServiceCount({ productId: id, serviceId, count: (cartItem?.services[serviceId]?.count || 0) + 1 }));
+        }
     };
 
     const handleDecrement = (serviceId: string) => {
-        setCartState(prevState => {
-            const newCount = Math.max(prevState.services[serviceId].count - 1, 0);
-            return {
-                ...prevState,
-                services: {
-                    ...prevState.services,
-                    [serviceId]: {
-                        ...prevState.services[serviceId],
-                        count: newCount,
-                        checked: newCount > 0
-                    }
-                }
-            };
-        });
+        if (id && product && cartItem) {
+            const newCount = Math.max((cartItem.services[serviceId]?.count || 0) - 1, 0);
+            dispatch(updateServiceCount({ productId: id, serviceId, count: newCount }));
+        }
     };
 
     const handleCheckboxChange = (serviceId: string) => {
-        setCartState(prevState => {
-            const newChecked = !prevState.services[serviceId].checked;
-            return {
-                ...prevState,
-                services: {
-                    ...prevState.services,
-                    [serviceId]: {
-                        count: newChecked ? 1 : 0,
-                        checked: newChecked
-                    }
-                }
-            };
-        });
+        if (id && product) {
+            if (!cartItem) {
+                // Если товара нет в корзине, добавляем его при выборе услуги
+                dispatch(addProductToCart({ product, count: 0 }));
+            }
+            if (cartItem?.services[serviceId]) {
+                const newChecked = !(cartItem.services[serviceId].checked);
+                dispatch(updateServiceCount({ productId: id, serviceId, count: newChecked ? 1 : 0 }));
+            } else {
+                dispatch(addServiceToProduct({ productId: id, service: { id: serviceId } as TService, count: 1 }));
+            }
+        }
     };
 
     if (isLoadingProduct) {
@@ -124,8 +88,8 @@ export const ProductPage: FC = () => {
     return (
         <Page className="relative">
             <CatalogHeader title='' className='absolute top-0 left-0 text-base-100' />
-            {product
-                ? <div className='flex flex-col justify-between'>
+            {product && (
+                <div className='flex flex-col justify-between'>
                     <div>
                         <ProductSlider id={product.id} />
                         <div className="bg-base-100 rounded-t-lg p-4 mt-[-2rem] flex flex-col items-end gap-4">
@@ -134,14 +98,14 @@ export const ProductPage: FC = () => {
                             </div>
                             {product.description && <CollapsibleDescription description={product.description} />}
                             <div className='flex-grow'>
-                                {cartState.product.count === 0 ? (
+                                {(cartItem?.count || 0) === 0 ? (
                                     <button className='btn btn-primary' onClick={handleProductIncrement}>
                                         {"Добавить в "}
                                         <Cart />
                                     </button>
                                 ) : (
                                     <Counter
-                                        count={cartState.product.count}
+                                        count={cartItem?.count || 0}
                                         onIncrement={handleProductIncrement}
                                         onDecrement={handleProductDecrement}
                                         minCount={0}
@@ -151,7 +115,7 @@ export const ProductPage: FC = () => {
                             {product.servicesIds && (
                                 <ServicesList
                                     servicesIds={product.servicesIds}
-                                    serviceStates={cartState.services}
+                                    serviceStates={cartItem?.services || {}}
                                     onIncrement={handleIncrement}
                                     onDecrement={handleDecrement}
                                     onCheckboxChange={handleCheckboxChange}
@@ -160,8 +124,7 @@ export const ProductPage: FC = () => {
                         </div>
                     </div>
                 </div>
-                : null
-            }
+            )}
         </Page>
     );
 };

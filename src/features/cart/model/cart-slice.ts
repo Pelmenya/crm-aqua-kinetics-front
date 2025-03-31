@@ -5,7 +5,7 @@ import { TService } from '@/features/moy-sklad/model/types/t-service';
 type TCartItem = {
     product: TProduct;
     count: number;
-    services: Record<string, { service: TService; count: number; checked: boolean }>;
+    services: Record<string, { service: Partial<TService>; count: number; checked: boolean }>;
 };
 
 type TCartState = {
@@ -16,7 +16,7 @@ const initialState: TCartState = {
     items: {},
 };
 
-const cartSlice = createSlice({
+export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
@@ -38,10 +38,11 @@ const cartSlice = createSlice({
                 state.items[productId].count = count;
             }
         },
-        addServiceToProduct: (state, action: PayloadAction<{ productId: string; service: TService; count: number }>) => {
+        addServiceToProduct: (state, action: PayloadAction<{ productId: string; service: Partial<TService>; count: number }>) => {
             const { productId, service, count } = action.payload;
-            if (state.items[productId]) {
+            if (state.items[productId] && service.id) {
                 state.items[productId].services[service.id] = { service, count, checked: count > 0 };
+                console.log({ service, count, checked: count > 0 })
             }
         },
         updateServiceCount: (state, action: PayloadAction<{ productId: string; serviceId: string; count: number }>) => {
@@ -49,6 +50,7 @@ const cartSlice = createSlice({
             if (state.items[productId] && state.items[productId].services[serviceId]) {
                 state.items[productId].services[serviceId].count = count;
                 state.items[productId].services[serviceId].checked = count > 0;
+                console.log({ count, checked: count > 0 })
             }
         },
         removeProductFromCart: (state, action: PayloadAction<string>) => {
@@ -72,4 +74,3 @@ export const {
     removeServiceFromProduct,
 } = cartSlice.actions;
 
-export const cartReducer = cartSlice.reducer;
