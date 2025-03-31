@@ -26,7 +26,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
     if (error && 'message' in error) return <div>Error loading cart: {error.message}</div>;
 
-    console.log(cart)
     return (
         <>
             {isLoading ? (
