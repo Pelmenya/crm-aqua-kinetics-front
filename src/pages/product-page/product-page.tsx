@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { useGetProductQuery } from "@/features/moy-sklad/api/moy-sklad-api";
+import { useGetProductByIdQuery } from "@/features/moy-sklad/api/moy-sklad-api";
 import { ProductSlider } from "@/features/moy-sklad/ui/product-slider/product-slider";
 import { Page } from "@/shared/ui/components/page/page";
 import { useParams } from "react-router-dom";
@@ -23,7 +23,7 @@ export const ProductPage: FC = () => {
     const cartItem = useAppSelector((state: TRootState) => state.cart.items[id || '']);
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw || '';
-    const { data: product, error: errorProduct, isLoading: isLoadingProduct } = useGetProductQuery(id || '');
+    const { data: product, error: errorProduct, isLoading: isLoadingProduct } = useGetProductByIdQuery(id || '');
 
     useCartSynchronization(authKey, id);
 

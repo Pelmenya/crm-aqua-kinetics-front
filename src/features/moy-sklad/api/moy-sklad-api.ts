@@ -31,7 +31,7 @@ export const moySkladApi = createApi({
                 method: 'GET',
             }),
         }),
-        getProduct: builder.query<TProduct, string>({
+        getProductById: builder.query<TProduct, string>({
             query: (productId: string) => ({
                 url: `product/${productId}`,
                 method: 'GET',
@@ -78,7 +78,7 @@ export const {
     useGetTopLevelGroupsQuery,
     useGetSubGroupsQuery,
     useGetGroupPathQuery,
-    useGetProductQuery,
+    useGetProductByIdQuery,
     useGetServiceQuery,
     useGetProductsByGroupQuery,
     useGetProductImagesQuery,
