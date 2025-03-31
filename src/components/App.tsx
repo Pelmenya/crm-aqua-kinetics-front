@@ -5,6 +5,7 @@ import { Navigate, Route, Routes, HashRouter } from 'react-router-dom';
 import { routes } from '@/app/routing/routes';
 import { useEffect } from 'react';
 import { AuthProvider } from '@/app/providers/auth-provider/auth-provider';
+import { CartProvider } from '@/app/providers/cart-provider/cart-provider';
 
 export function App() {
     const lp = useLaunchParams();
@@ -22,16 +23,18 @@ export function App() {
         >
             <HashRouter>
                 <AuthProvider>
-                    <Routes>
-                        {routes.map((route) => (
-                            <Route key={route.path} path={route.path} element={<route.Component />}>
-                                {route.children && route.children.map((child) => (
-                                    <Route key={child.path} path={child.path} element={<child.Component />} />
-                                ))}
-                            </Route>
-                        ))}
-                        <Route path="*" element={<Navigate to="/" />} />
-                    </Routes>
+                    <CartProvider>
+                        <Routes>
+                            {routes.map((route) => (
+                                <Route key={route.path} path={route.path} element={<route.Component />}>
+                                    {route.children && route.children.map((child) => (
+                                        <Route key={child.path} path={child.path} element={<child.Component />} />
+                                    ))}
+                                </Route>
+                            ))}
+                            <Route path="*" element={<Navigate to="/" />} />
+                        </Routes>
+                    </CartProvider>
                 </AuthProvider>
             </HashRouter>
         </AppRoot>

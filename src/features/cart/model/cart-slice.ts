@@ -2,17 +2,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TProduct } from '@/features/moy-sklad/model/types/t-product';
 import { TService } from '@/features/moy-sklad/model/types/t-service';
 
-type TCartItem = {
+export type TCartItem = {
     product: TProduct;
     count: number;
     services: Record<string, { service: Partial<TService>; count: number; checked: boolean }>;
 };
 
-type TCartState = {
+export type TCartState = {
     items: Record<string, TCartItem>;
 };
 
-const initialState: TCartState = {
+export const initialState: TCartState = {
     items: {},
 };
 
@@ -20,6 +20,9 @@ export const cartSlice = createSlice({
     name: 'cart',
     initialState,
     reducers: {
+        setCart: (state, action: PayloadAction<TCartState>) => {
+            state.items = action.payload.items;
+        },
         addProductToCart: (state, action: PayloadAction<{ product: TProduct; count: number }>) => {
             const { product, count } = action.payload;
             if (!state.items[product.id]) {
@@ -66,6 +69,7 @@ export const cartSlice = createSlice({
 });
 
 export const {
+    setCart,
     addProductToCart,
     updateProductCount,
     addServiceToProduct,
