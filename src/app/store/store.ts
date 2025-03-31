@@ -11,6 +11,9 @@ import { calendarServiceApi } from '@/features/calendar-service/api/calendar-ser
 import { moySkladApi } from '@/features/moy-sklad/api/moy-sklad-api';
 import { cartSlice } from '@/features/cart/model/cart-slice';
 import { cartApi } from '@/features/cart/api/cart-api';
+import logger from 'redux-logger';
+
+const isDev = process.env.NODE_ENV === 'development';
 
 export const store = configureStore({
     reducer: {
@@ -27,8 +30,8 @@ export const store = configureStore({
         calendarService: calendarServiceSlice.reducer,
         cart: cartSlice.reducer,
     },
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(
+    middleware: (getDefaultMiddleware) => {
+        const middlewares = getDefaultMiddleware().concat(
             authApi.middleware,
             addressApi.middleware,
             realEstateApi.middleware,
@@ -36,7 +39,14 @@ export const store = configureStore({
             calendarServiceApi.middleware,
             moySkladApi.middleware,
             cartApi.middleware,
-        ),
+        );
+
+        if (isDev) {
+            middlewares.push(logger);
+        }
+
+        return middlewares;
+    },
 });
 
 export type TRootState = ReturnType<typeof store.getState>;
