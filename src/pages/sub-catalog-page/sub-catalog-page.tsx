@@ -5,6 +5,7 @@ import { useGetSubGroupsQuery, useGetProductsByGroupQuery, useGetGroupPathQuery 
 import { useParams } from "react-router-dom";
 import { ProductList } from "@/features/moy-sklad/ui/product-list/product-list";
 import { Breadcrumbs } from "@/shared/ui/components/breadcrumbs/breadcrumbs";
+import { CatalogHeader } from "@/widgets/catalog-header/catalog-header";
 
 export const SubCatalogPage: FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -22,7 +23,8 @@ export const SubCatalogPage: FC = () => {
     ];
 
     return (
-        <Page footer={true} className="bg-base-300 pt-2 space-y-2">
+        <Page footer={true} className="bg-base-300">
+            <CatalogHeader />
             {subGroupsError && <div>Error loading subgroups</div>}
             {isLoadingPath ? (
                 <div>Loading breadcrumbs...</div>

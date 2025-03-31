@@ -10,11 +10,10 @@ export const Breadcrumbs: React.FC<{
     items: TBreadcrumb[];
 }> = ({ items }) => {
     return (
-        <nav className="breadcrumbs text-sm px-4">
-            
-            <ul className='flex flex-wrap'>
+        <nav className="text-sm py-2">
+            <ul className='flex flex-wrap gap-2'>
                 {items.map((item, index) => (
-                    <li key={index}>
+                    <li className="badge" key={index}>
                         {item.path ? (
                             <Link to={item.path}>{item.name}</Link>
                         ) : (
