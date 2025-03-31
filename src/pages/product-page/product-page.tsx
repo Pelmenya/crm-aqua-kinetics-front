@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useGetProductQuery } from "@/features/moy-sklad/api/moy-sklad-api";
 import { ProductSlider } from "@/features/moy-sklad/ui/product-slider/product-slider";
 import { Page } from "@/shared/ui/components/page/page";
@@ -10,82 +10,77 @@ import { ServicesList } from '@/features/moy-sklad/ui/service-list/service-list'
 import { Cart } from '@/shared/ui/icons/cart';
 import { Counter } from '@/shared/ui/components/counter/counter';
 import { TRootState } from '@/app/store/store';
-import { addProductToCart, addServiceToProduct, updateProductCount, updateServiceCount, removeProductFromCart } from '@/features/cart/model/cart-slice';
+import { addProductToCart, addServiceToProduct, updateProductCount, updateServiceCount } from '@/features/cart/model/cart-slice';
 import { useAppDispatch } from '@/shared/lib/hooks/use-app-dispatch';
 import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
 import { TService } from '@/features/moy-sklad/model/types/t-service';
-import { useUpdateCartStateMutation, useGetCartQuery } from '@/features/cart/api/cart-api';
+import { useUpdateCartStateMutation } from '@/features/cart/api/cart-api';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
 
 export const ProductPage: FC = () => {
     const { id } = useParams<{ id: string }>();
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw || '';
-    
+
     const { data: product, error: errorProduct, isLoading: isLoadingProduct } = useGetProductQuery(id || '');
-    const { refetch } = useGetCartQuery('', { skip: true }); // Получаем refetch
     const [updateCartState] = useUpdateCartStateMutation();
 
     const dispatch = useAppDispatch();
     const cart = useAppSelector((state: TRootState) => state.cart.items);
     const cartItem = cart[id || ''];
 
-    const syncCartWithBackend = async () => {
+    const syncCartWithBackend = async (updatedCart: typeof cart) => {
         try {
-            const updatedCartState = {
-                ...cart,
-                [String(id)]: cartItem,
-            };
-            await updateCartState({ authKey, cartState: { items: updatedCartState } }).unwrap();
-            console.log('Cart state updated on backend');
-            refetch(); // Перезапрашиваем состояние корзины
+            await updateCartState({ authKey, cartState: { items: updatedCart } }).unwrap();
         } catch (error) {
             console.error('Failed to update cart state on backend', error);
         }
     };
 
-    const handleProductIncrement = async () => {
+    useEffect(() => {
+        if (cartItem) {
+            const updatedCartState = {
+                ...cart,
+                [String(id)]: cartItem,
+            };
+            syncCartWithBackend(updatedCartState);
+        }
+    }, [cartItem, cart, id]);
+
+    const handleProductIncrement = () => {
         if (id && product) {
             if (!cartItem) {
                 dispatch(addProductToCart({ product, count: 1 }));
             } else {
                 dispatch(updateProductCount({ productId: id, count: cartItem.count + 1 }));
             }
-            await syncCartWithBackend();
         }
     };
 
-    const handleProductDecrement = async () => {
+    const handleProductDecrement = () => {
         if (id && product && cartItem) {
-            const newCount = cartItem.count - 1;
-            if (newCount > 0) {
-                dispatch(updateProductCount({ productId: id, count: newCount }));
-            } else {
-                dispatch(removeProductFromCart(id));
-            }
-            await syncCartWithBackend();
+            const newCount = Math.max(cartItem.count - 1, 0);
+            dispatch(updateProductCount({ productId: id, count: newCount }));
         }
     };
 
-    const handleIncrement = async (serviceId: string) => {
+    const handleIncrement = (serviceId: string) => {
         if (id && product) {
             if (!cartItem) {
                 dispatch(addProductToCart({ product, count: 0 }));
             }
             dispatch(updateServiceCount({ productId: id, serviceId, count: (cartItem?.services[serviceId]?.count || 0) + 1 }));
-            await syncCartWithBackend();
         }
     };
 
-    const handleDecrement = async (serviceId: string) => {
+    const handleDecrement = (serviceId: string) => {
         if (id && product && cartItem) {
             const newCount = Math.max((cartItem.services[serviceId]?.count || 0) - 1, 0);
             dispatch(updateServiceCount({ productId: id, serviceId, count: newCount }));
-            await syncCartWithBackend();
         }
     };
 
-    const handleCheckboxChange = async (serviceId: string) => {
+    const handleCheckboxChange = (serviceId: string) => {
         if (id && product) {
             if (!cartItem) {
                 dispatch(addProductToCart({ product, count: 0 }));
@@ -96,7 +91,6 @@ export const ProductPage: FC = () => {
             } else {
                 dispatch(addServiceToProduct({ productId: id, service: { id: serviceId } as TService, count: 1 }));
             }
-            await syncCartWithBackend();
         }
     };
 
