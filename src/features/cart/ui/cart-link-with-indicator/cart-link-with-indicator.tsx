@@ -12,9 +12,10 @@ export const CartLinkWithIndicator: FC = () => {
         <Link to='/cart' className="relative z-100">
             <div className="indicator">
                 <Cart />
-                <span className="indicator-item indicator-bottom indicator-start badge badge-xs badge-warning">
-                    {totalCartItemsCount}
-                </span>
+                {totalCartItemsCount > 0 ?
+                    <span className="indicator-item indicator-bottom indicator-start badge badge-xs badge-warning">
+                        {totalCartItemsCount}
+                    </span> : null}
             </div>
         </Link>
     );

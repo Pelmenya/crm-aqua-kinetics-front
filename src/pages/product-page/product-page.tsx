@@ -14,16 +14,16 @@ import { useAppDispatch } from '@/shared/lib/hooks/use-app-dispatch';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
 import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
 import { useCartSynchronization } from '@/shared/lib/hooks/use-сart-synchronization';
-import { TRootState } from '@/app/store/store';
 import { TService } from '@/features/moy-sklad/model/types/t-service';
+import { getCartItemById } from '@/features/cart/model/cart-selectors';
 
 export const ProductPage: FC = () => {
     const { id } = useParams<{ id: string }>();
     const dispatch = useAppDispatch();
-    const cartItem = useAppSelector((state: TRootState) => state.cart.items[id || '']);
+    const cartItem = useAppSelector(getCartItemById(String(id)));
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw || '';
-    const { data: product, error: errorProduct, isLoading: isLoadingProduct } = useGetProductByIdQuery(id || '');
+    const { data: product, error: errorProduct, isLoading: isLoadingProduct } = useGetProductByIdQuery(String(id));
 
     useCartSynchronization(authKey, id);
 
