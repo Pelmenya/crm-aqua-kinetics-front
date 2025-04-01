@@ -1,3 +1,4 @@
+import { Link } from "@/app/link/link";
 import { getCartItems } from "@/features/cart/model/cart-selectors";
 import { CartIsEmpty } from "@/features/cart/ui/cart-is-empty/cart-is-empty";
 import { CartList } from "@/features/cart/ui/cart-list/cart-list";
@@ -7,18 +8,21 @@ import { FC } from "react";
 
 export const CartPage: FC = () => {
     const cartItems = useAppSelector(getCartItems);
-
+    const cartIsFull = Object.keys(cartItems).length > 0;
     return (
         <Page back={true} className="bg-base-300 pt-2 flex flex-col justify-between gap-6">
             <div className="w-full">
                 <h1 className="block w-full text-center pb-4 text-lg font-bold">Корзина</h1>
-                {Object.keys(cartItems).length > 0 ? <>
+                {cartIsFull ? <>
                     <CartList items={cartItems} />
                 </> : <CartIsEmpty />
                 }
             </div>
             <div className="w-full px-4 pb-4">
-                <button className="btn btn-primary w-full">Оформить</button>
+                {cartIsFull 
+                    ? <Link to="/checkout" className="btn btn-primary w-full">Оформить</Link> 
+                    : <Link to="/catalog" className="btn btn-primary w-full">Вернуться в каталог</Link>}
+
             </div>
         </Page>
     )

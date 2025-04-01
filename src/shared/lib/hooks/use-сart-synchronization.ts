@@ -19,11 +19,11 @@ export const useCartSynchronization = (authKey: string, productId?: string) => {
                     };
 
                     await updateCartState({ authKey, cartState: { items: updatedCartState } }).unwrap();
-                    console.log('Cart state updated on backend');
                 } catch (error) {
                     console.error('Failed to update cart state on backend', error);
                 }
             } else {
+                // если изменились данные по товару и услугам до нуля, удаляем его
                 await updateCartState({ authKey, cartState: { items: { ...cart } } }).unwrap();
             }
         };

@@ -28,7 +28,7 @@ export const CartItem: FC<{ item: TCartItem }> = ({ item }) => {
     return (
         <Base className="p-4 w-full relative" onClick={handleClick}>
             <div className="flex items-start gap-4 w-full">
-                <figure className="bg-base-300 w-[80px] h-[80px] flex items-center justify-center rounded-sm indicator">
+                <figure className="bg-base-300 w-[80px] h-[80px] min-w-[80px] flex items-center justify-center rounded-sm indicator">
                     {isImageLoading || isLoading ? (
                         <Loading
                             className="w-[150px] flex items-center justify-center"
