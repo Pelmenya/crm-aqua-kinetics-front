@@ -88,7 +88,7 @@ export const ProductPage: FC = () => {
     if (errorProduct) return <div>Error loading product: {id}</div>;
 
     return (
-        <Page className="relative">
+        <Page footer={true} className="relative">
             <CatalogHeader title='' className='absolute top-0 left-0 text-base-100' />
             {product && (
                 <div className='flex flex-col justify-between'>

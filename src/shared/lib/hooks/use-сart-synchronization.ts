@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
 import { useUpdateCartStateMutation } from '@/features/cart/api/cart-api';
-import { TRootState } from '@/app/store/store';
+import { getCartItems } from '@/features/cart/model/cart-selectors';
 
 export const useCartSynchronization = (authKey: string, productId?: string) => {
-    const cart = useAppSelector((state: TRootState) => state.cart.items);
+    const cart = useAppSelector(getCartItems);
     const cartItem = productId ? cart[productId] : undefined;
     const [updateCartState] = useUpdateCartStateMutation();
 

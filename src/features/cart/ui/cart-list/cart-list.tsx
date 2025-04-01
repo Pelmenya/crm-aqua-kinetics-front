@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { TCartState } from '../../model/cart-slice';
-import { CartItem } from '../cart-card/cart-item';
+import { CartItem } from '../cart-item/cart-item';
 
 export const CartList: FC<TCartState> = ({ items }) => {
 

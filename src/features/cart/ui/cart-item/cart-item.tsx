@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDownloadImageQuery, useGetProductImagesQuery } from "@/features/moy-sklad/api/moy-sklad-api";
 import { ProductInfo } from "./components/product-info";
 import { TCartItem } from "../../model/cart-slice";
+import { ServicesList } from "./components/services-list";
 
 export const CartItem: FC<{ item: TCartItem }> = ({ item }) => {
     const { product, count, services } = item;
@@ -25,8 +26,8 @@ export const CartItem: FC<{ item: TCartItem }> = ({ item }) => {
     };
 
     return (
-        <Base className="px-4 pt-4 pb-0 w-full relative" onClick={handleClick}>
-            <div className="min-h-[115px] max-h-[115px] flex items-start gap-4 w-full">
+        <Base className="p-4 w-full relative" onClick={handleClick}>
+            <div className="flex items-start gap-4 w-full">
                 <figure className="bg-base-300 w-[80px] h-[80px] flex items-center justify-center rounded-sm indicator">
                     {isImageLoading || isLoading ? (
                         <Loading
@@ -46,8 +47,9 @@ export const CartItem: FC<{ item: TCartItem }> = ({ item }) => {
                     <ProductInfo
                         title={product.name}
                     />
+                    <ServicesList services={services}/>
                 </div>
-
+                    
             </div>
         </Base>)
 };

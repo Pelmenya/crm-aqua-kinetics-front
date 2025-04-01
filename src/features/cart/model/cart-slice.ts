@@ -4,6 +4,8 @@ import { TService } from '@/features/moy-sklad/model/types/t-service';
 
 export type TServiceList = Record<string, { service: Partial<TService>; count: number; checked: boolean }>;
 
+export type TServiceItem = { service: Partial<TService>; count: number; checked: boolean };
+
 export type TCartItem = {
     product: TProduct;
     count: number;
