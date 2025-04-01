@@ -20,7 +20,7 @@ export const Footer: FC = () => {
             <Link to='/account' className={getIconColor('account')}>
                 <Home />
             </Link>
-            <Link to='/catalog' className={getIconColor(['catalog', 'sub-catalog'])}>
+            <Link to='/catalog' className={getIconColor(['catalog', 'sub-catalog', 'product'])}>
                 <Category />
             </Link>
             <Link to='/chat' className={getIconColor('chat')}>

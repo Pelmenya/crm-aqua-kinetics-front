@@ -43,13 +43,12 @@ export const CartItem: FC<{ item: TCartItem }> = ({ item }) => {
                     )}
                     {count > 0 && <p className="indicator-item badge badge-xs badge-warning">{count}</p>}
                 </figure>
-                <div>
+                <div className="flex flex-col gap-1">
                     <ProductInfo
                         title={product.name}
                     />
                     <ServicesList services={services}/>
                 </div>
-                    
             </div>
         </Base>)
 };

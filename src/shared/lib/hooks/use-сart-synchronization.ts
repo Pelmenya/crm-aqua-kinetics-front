@@ -12,15 +12,19 @@ export const useCartSynchronization = (authKey: string, productId?: string) => {
         const syncCartWithBackend = async () => {
             if (productId && cartItem) {
                 try {
+
                     const updatedCartState = {
                         ...cart,
                         [String(productId)]: cartItem,
                     };
+
                     await updateCartState({ authKey, cartState: { items: updatedCartState } }).unwrap();
                     console.log('Cart state updated on backend');
                 } catch (error) {
                     console.error('Failed to update cart state on backend', error);
                 }
+            } else {
+                await updateCartState({ authKey, cartState: { items: { ...cart } } }).unwrap();
             }
         };
 
