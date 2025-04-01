@@ -20,6 +20,12 @@ export const initialState: TCartState = {
     items: {},
 };
 
+// Вспомогательная функция для проверки, должны ли мы удалить продукт
+const shouldRemoveProduct = (productItem: TCartItem): boolean => {
+    const allServicesZero = Object.values(productItem.services).every(service => service.count === 0);
+    return productItem.count === 0 && allServicesZero;
+};
+
 export const cartSlice = createSlice({
     name: 'cart',
     initialState,
@@ -43,13 +49,15 @@ export const cartSlice = createSlice({
             const { productId, count } = action.payload;
             if (state.items[productId]) {
                 state.items[productId].count = count;
+                if (shouldRemoveProduct(state.items[productId])) {
+                    delete state.items[productId];
+                }
             }
         },
         addServiceToProduct: (state, action: PayloadAction<{ productId: string; service: Partial<TService>; count: number }>) => {
             const { productId, service, count } = action.payload;
             if (state.items[productId] && service.id) {
                 state.items[productId].services[service.id] = { service, count, checked: count > 0 };
-                console.log({ service, count, checked: count > 0 })
             }
         },
         updateServiceCount: (state, action: PayloadAction<{ productId: string; serviceId: string; count: number }>) => {
@@ -57,7 +65,9 @@ export const cartSlice = createSlice({
             if (state.items[productId] && state.items[productId].services[serviceId]) {
                 state.items[productId].services[serviceId].count = count;
                 state.items[productId].services[serviceId].checked = count > 0;
-                console.log({ count, checked: count > 0 })
+                if (shouldRemoveProduct(state.items[productId])) {
+                    delete state.items[productId];
+                }
             }
         },
         removeProductFromCart: (state, action: PayloadAction<string>) => {
@@ -67,6 +77,9 @@ export const cartSlice = createSlice({
             const { productId, serviceId } = action.payload;
             if (state.items[productId] && state.items[productId].services[serviceId]) {
                 delete state.items[productId].services[serviceId];
+                if (shouldRemoveProduct(state.items[productId])) {
+                    delete state.items[productId];
+                }
             }
         },
     },
@@ -81,4 +94,3 @@ export const {
     removeProductFromCart,
     removeServiceFromProduct,
 } = cartSlice.actions;
-
