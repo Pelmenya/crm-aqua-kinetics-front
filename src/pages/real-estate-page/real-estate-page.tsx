@@ -9,15 +9,18 @@ import { ButtonWithIcon } from '@/shared/ui/components/button-with-icon/button-w
 import { ConfirmDialog } from '@/shared/ui/components/confirm-dialog/confirm-dialog';
 import { Loading } from '@/shared/ui/components/loading/loading';
 import { Link } from '@/app/link/link';
+import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
+import { getRealEstateLocation } from '@/features/real-estate/model/real-estate-selectors';
 
 export const RealEstatePage: React.FC = () => {
     const navigate = useNavigate();
     const lp = useLaunchParams();
+    const realEstateLocation = useAppSelector(getRealEstateLocation);
+    
     const authKey = lp.initDataRaw || '';
     const { id } = useParams<{ id: string }>();
 
     const { data, error, isLoading } = useGetRealEstateByIdQuery({ id: Number(id), authKey });
-
     // Use the delete mutation hook
     const [deleteRealEstate] = useDeleteRealEstateMutation();
 
@@ -35,7 +38,7 @@ export const RealEstatePage: React.FC = () => {
     const handleConfirm = async () => {
         try {
             await deleteRealEstate({ id: Number(id), authKey }).unwrap();
-            navigate('/account');
+            navigate(`/${realEstateLocation || 'account'}`);
         } catch (error) {
             console.error('Ошибка при удалении недвижимости:', error);
         } finally {

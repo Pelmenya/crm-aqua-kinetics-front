@@ -10,3 +10,4 @@ export const getWaterIntakePointCount = (point: keyof ReturnType<typeof getWater
     (state: TRootState) => state.realEstate.waterIntakePoints[point];
 export const getRealEstateState = (state: TRootState) => state.realEstate;
 export const getRealEstateProgress = (state: TRootState) => state.realEstate.progress;
+export const getRealEstateLocation = (state: TRootState) => state.realEstate.location;

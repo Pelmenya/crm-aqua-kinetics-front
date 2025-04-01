@@ -1,3 +1,4 @@
+import { TNullable } from '@/shared/lib/types/t-nullable';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type TCoordinates = {
@@ -8,7 +9,6 @@ export type TCoordinates = {
 export type TRealEstateType = 'house' | 'apartment' | 'prom';
 export type TRealEstateSourceWater = 'borehole' | 'well' | 'reservoir' | 'waterSupply';
 
-
 export type TWaterIntakePoints = {
     toilet: number;
     sink: number;
@@ -18,14 +18,20 @@ export type TWaterIntakePoints = {
     showerCabin: number;
 };
 
+export enum TRealEstateComponentLocation {
+    ACCOUNT = 'account',
+    CHECKOUT = 'checkout',
+}
+
 export type TRealEstateState = {
     progress: number;
-    address: string | null;
-    coordinates: TCoordinates | null;
+    address: TNullable<string>;
+    coordinates: TNullable<TCoordinates>;
     waterIntakePoints: TWaterIntakePoints;
     activeType: TRealEstateType
     residents: number;
     activeSource: TRealEstateSourceWater;
+    location: TNullable<TRealEstateComponentLocation>;
 };
 
 // Установите начальное состояние
@@ -44,6 +50,7 @@ const initialState: TRealEstateState = {
     activeType: 'house',
     residents: 2,
     activeSource: 'borehole',
+    location: null,
 };
 
 // Создайте slice
@@ -86,6 +93,9 @@ export const realEstateSlice = createSlice({
         setProgress(state, action: PayloadAction<number>) {
             state.progress = action.payload;
         },
+        setLocation(state, action: PayloadAction<TNullable<TRealEstateComponentLocation>>) {
+            state.location = action.payload;
+        }
     },
 });
 
@@ -100,4 +110,5 @@ export const {
     setResidents,
     setActiveSource,
     setProgress,
+    setLocation,
 } = realEstateSlice.actions;
