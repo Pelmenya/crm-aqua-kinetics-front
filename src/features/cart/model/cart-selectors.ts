@@ -17,3 +17,5 @@ export const getTotalCartItemsCount = (state: TRootState) => {
 // Селектор для получения элемента корзины по идентификатору продукта
 export const getCartItemById = (productId: string) => (state: TRootState) => 
     state.cart.items[productId];
+
+export const getIsLoadingFromServer = (state: TRootState) => state.cart.isLoadingFromServer;

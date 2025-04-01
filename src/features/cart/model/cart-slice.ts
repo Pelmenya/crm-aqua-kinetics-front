@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TProduct } from '@/features/moy-sklad/model/types/t-product';
 import { TService } from '@/features/moy-sklad/model/types/t-service';
+import { TNullable } from '@/shared/lib/types/t-nullable';
 
 export type TServiceList = Record<string, { service: Partial<TService>; count: number; checked: boolean }>;
 
@@ -14,10 +15,12 @@ export type TCartItem = {
 
 export type TCartState = {
     items: Record<string, TCartItem>;
+    isLoadingFromServer?: TNullable<boolean>;
 };
 
 export const initialState: TCartState = {
     items: {},
+    isLoadingFromServer: false,
 };
 
 // Вспомогательная функция для проверки, должны ли мы удалить продукт
@@ -32,6 +35,7 @@ export const cartSlice = createSlice({
     reducers: {
         setCart: (state, action: PayloadAction<TCartState>) => {
             state.items = action.payload.items;
+            state.isLoadingFromServer = true;
         },
         addProductToCart: (state, action: PayloadAction<{ product: TProduct; count: number }>) => {
             const { product, count } = action.payload;

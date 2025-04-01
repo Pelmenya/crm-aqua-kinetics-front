@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
 import { useUpdateCartStateMutation } from '@/features/cart/api/cart-api';
-import { getCartItems } from '@/features/cart/model/cart-selectors';
+import { getCartItems, getIsLoadingFromServer } from '@/features/cart/model/cart-selectors';
 
 export const useCartSynchronization = (authKey: string, productId?: string) => {
     const cart = useAppSelector(getCartItems);
+    const isLoadingFromServer = useAppSelector(getIsLoadingFromServer);
     const cartItem = productId ? cart[productId] : undefined;
     const [updateCartState] = useUpdateCartStateMutation();
 
@@ -23,8 +24,10 @@ export const useCartSynchronization = (authKey: string, productId?: string) => {
                     console.error('Failed to update cart state on backend', error);
                 }
             } else {
-                // если изменились данные по товару и услугам до нуля, удаляем его
-                await updateCartState({ authKey, cartState: { items: { ...cart } } }).unwrap();
+                if (isLoadingFromServer) {
+                    // если изменились данные по товару и услугам до нуля, удаляем его, при этом все с сервера загрузили
+                    await updateCartState({ authKey, cartState: { items: { ...cart } } }).unwrap();
+                }
             }
         };
 
