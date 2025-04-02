@@ -1,30 +1,29 @@
-import { TCreateRealEstate } from "@/entities/real-estate/api/real-estate-api";
 import { FC, useMemo } from "react";
+import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
+import { getRealEstateId } from "@/entities/order/model/order-selectors";
+import { TNullable } from "@/shared/lib/types/t-nullable";
 import apartmentsBackground from './bg-apartament.jpg';
 import houseBackground from './bg-house.png';
 import promBackground from './bg-promo.png'; 
 import { ERealEstateComponentLocation } from "@/entities/real-estate/model/real-estate-slice";
-import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
-import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
-import { getRealEstateId } from "@/entities/order/model/order-selectors";
-import { setSelectedRealEstateId } from "@/entities/order/model/order-slice";
-import { TNullable } from "@/shared/lib/types/t-nullable";
+import { TCreateRealEstate } from "@/entities/real-estate/api/real-estate-api";
+
 type RealEstateCardProps = {
     id: number;
     address: TNullable<string>;
     activeType: TNullable<TCreateRealEstate['activeType']>;
-    realEstateLocation: TNullable<ERealEstateComponentLocation>; // Добавляем realEstateLocation для определения нужного интерфейса
+    realEstateLocation: TNullable<ERealEstateComponentLocation>;
     onClick?: () => void;
 };
 
-export const RealEstateCard: FC<RealEstateCardProps> = ({ 
-    id, 
-    address, 
-    activeType, 
-    onClick, 
-    realEstateLocation 
+export const RealEstateCard: FC<RealEstateCardProps> = ({
+    id,
+    address,
+    activeType,
+    onClick,
+    realEstateLocation
 }) => {
-    const dispatch = useAppDispatch();
+
     const selectedRealEstateId = useAppSelector(getRealEstateId);
 
     const backgroundImage = useMemo(() => {
@@ -53,22 +52,17 @@ export const RealEstateCard: FC<RealEstateCardProps> = ({
         }
     }, [activeType]);
 
-    const handleRadioChange = () => {
-        dispatch(setSelectedRealEstateId(id));
-        onClick && onClick();
-    };
 
     return (
         <div
             onClick={onClick}
             className="border border-base-300 bg-base-100 rounded-box flex column items-center justify-center cursor-pointer"
         >
-            {realEstateLocation === ERealEstateComponentLocation.CHECKOUT && 
+            {realEstateLocation === ERealEstateComponentLocation.CHECKOUT &&
                 <input
-                    type="radio"
-                    className="ml-4 radio radio-sm radio-primary"
+                    type="checkbox"
+                    className="ml-4 checkbox checkbox-sm checkbox-primary"
                     checked={selectedRealEstateId === id}
-                    onChange={handleRadioChange}
                 />
             }
             <div className="w-full h-[106px] relative">

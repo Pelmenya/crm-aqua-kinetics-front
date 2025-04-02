@@ -7,18 +7,20 @@ import { useGetRealEstatesQuery } from "../../api/real-estate-api";
 import { RealEstateList } from "./components/real-estate-list/real-estate-list";
 import { Loading } from "@/shared/ui/components/loading/loading";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
 import { setLocation, ERealEstateComponentLocation } from "../../model/real-estate-slice";
 import { getRealEstateLocation } from "../../lib/get-real-estate-location";
+import { getRealEstateId } from "@/entities/order/model/order-selectors";
 import { setSelectedRealEstateId } from "@/entities/order/model/order-slice";
+import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
+import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
 
 export const RealEstate: FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const selectedRealEstateId = useAppSelector(getRealEstateId);
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw;
-    // Use the query hook to fetch data
     const { data, error, isLoading, refetch } = useGetRealEstatesQuery(authKey || '', {
         refetchOnMountOrArgChange: true,
     });
@@ -27,26 +29,39 @@ export const RealEstate: FC = () => {
     const realEstateListTitle = useMemo(() =>
         realEstateLocation === ERealEstateComponentLocation.ACCOUNT
             ? 'Дома, квартиры и промобъекты'
-            : realEstateLocation === ERealEstateComponentLocation.CHECKOUT ? 'Выберите недвижимость' : '', [realEstateLocation])
+            : realEstateLocation === ERealEstateComponentLocation.CHECKOUT ? 'Выберите недвижимость' : '', [realEstateLocation]);
+
     useEffect(() => {
         if (authKey) {
             refetch();
             dispatch(setLocation(realEstateLocation));
         }
-    }, [authKey, refetch, dispatch, location])
+    }, [authKey, refetch, dispatch, location]);
 
     const handleOnClickCard = (id: number) => {
         if (realEstateLocation === ERealEstateComponentLocation.ACCOUNT) {
-            navigate(`/real-estate-page/${id}`)
+            navigate(`/real-estate-page/${id}`);
         }
         if (realEstateLocation === ERealEstateComponentLocation.CHECKOUT) {
-            dispatch(setSelectedRealEstateId(id));
+            if (selectedRealEstateId === id) {
+                dispatch(setSelectedRealEstateId(null)); // Снять выбор
+            } else {
+                dispatch(setSelectedRealEstateId(id)); // Установить выбор
+            }
+
         }
-    }
+    };
+
+    const filteredData = useMemo(() => {
+        if (realEstateLocation === ERealEstateComponentLocation.CHECKOUT && selectedRealEstateId !== null) {
+            return data?.filter((realEstate) => realEstate.id === selectedRealEstateId);
+        }
+        return data;
+    }, [data, selectedRealEstateId, realEstateLocation]);
 
     return (
         <>
-            {data && data.length === 0 ?
+            {filteredData && filteredData.length === 0 ?
                 <Base>
                     <Link to="/add-house/step-1" className="opacity-50 pt-1 flex flex-col items-center gap-1">
                         <RoundPlus />
@@ -56,16 +71,16 @@ export const RealEstate: FC = () => {
                 : <>
                     {isLoading && <Loading color="text-primary" size="loading-xs" type="loading-infinity" />}
                     {error && <p>Error fetching data</p>}
-                    {data &&
+                    {filteredData &&
                         <RealEstateList
-                            realEstatesList={data}
+                            realEstatesList={filteredData}
                             onClickCard={handleOnClickCard}
                             title={realEstateListTitle}
-                            realEstateLocation={realEstateLocation} // передаём realEstateLocation
+                            realEstateLocation={realEstateLocation}
                         />
                     }
                 </>
             }
         </>
-    )
+    );
 };
