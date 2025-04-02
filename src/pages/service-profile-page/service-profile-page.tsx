@@ -90,6 +90,7 @@ export const ServiceProfilePage: FC = () => {
     }, []);
 
     const onEditorSave = useCallback((updatedDay: TWorkDay) => {
+        console.log(updatedDay)
         const dayExists = workDays ? workDays.some(day => day.dayOfWeek === updatedDay.dayOfWeek) : null;
 
         if (dayExists && workDays) {
@@ -99,7 +100,7 @@ export const ServiceProfilePage: FC = () => {
         } else {
             if (workDays) {
                 setWorkDays([...workDays, updatedDay]);
-            }
+            } else { setWorkDays([updatedDay]); }
         }
         setIsEditorOpen(false);
     }, [workDays]);
