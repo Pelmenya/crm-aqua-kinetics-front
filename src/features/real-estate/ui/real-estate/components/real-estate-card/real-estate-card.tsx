@@ -12,7 +12,7 @@ import { TNullable } from "@/shared/lib/types/t-nullable";
 type RealEstateCardProps = {
     id: number;
     address: TNullable<string>;
-    activeType: TCreateRealEstate['activeType'];
+    activeType: TNullable<TCreateRealEstate['activeType']>;
     realEstateLocation: TNullable<TRealEstateComponentLocation>; // Добавляем realEstateLocation для определения нужного интерфейса
     onClick?: () => void;
 };

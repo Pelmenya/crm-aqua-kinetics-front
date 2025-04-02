@@ -16,7 +16,7 @@ export const RealEstatePage: React.FC = () => {
     const navigate = useNavigate();
     const lp = useLaunchParams();
     const realEstateLocation = useAppSelector(getRealEstateLocation);
-    
+
     const authKey = lp.initDataRaw || '';
     const { id } = useParams<{ id: string }>();
 
@@ -56,7 +56,12 @@ export const RealEstatePage: React.FC = () => {
             <div className="w-full h-full min-h-[100vh] p-4 gap-2 bg-base-300 flex flex-col gap-4 justify-between">
                 <div className='flex flex-col gap-4 relative'>
                     <ButtonWithIcon onClick={handleOpenDialog} icon="minus" className='absolute top-3 right-3 z-10' />
-                    <RealEstateCard address={data?.address} activeType={data?.activeType} />
+                    <RealEstateCard
+                        id={Number(id)}
+                        realEstateLocation={realEstateLocation}
+                        address={data?.address || null}
+                        activeType={data?.activeType || null}
+                    />
                     <Base>
                         У Вас пока нет оборудования
                     </Base>
