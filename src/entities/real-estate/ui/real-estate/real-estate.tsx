@@ -8,7 +8,7 @@ import { RealEstateList } from "./components/real-estate-list/real-estate-list";
 import { Loading } from "@/shared/ui/components/loading/loading";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
-import { setLocation, TRealEstateComponentLocation } from "../../model/real-estate-slice";
+import { setLocation, ERealEstateComponentLocation } from "../../model/real-estate-slice";
 import { getRealEstateLocation } from "../../lib/get-real-estate-location";
 import { setSelectedRealEstateId } from "@/entities/order/model/order-slice";
 
@@ -25,9 +25,9 @@ export const RealEstate: FC = () => {
 
     const realEstateLocation = getRealEstateLocation(location);
     const realEstateListTitle = useMemo(() =>
-        realEstateLocation === TRealEstateComponentLocation.ACCOUNT
+        realEstateLocation === ERealEstateComponentLocation.ACCOUNT
             ? 'Дома, квартиры и промобъекты'
-            : realEstateLocation === TRealEstateComponentLocation.CHECKOUT ? 'Выберите недвижимость' : '', [realEstateLocation])
+            : realEstateLocation === ERealEstateComponentLocation.CHECKOUT ? 'Выберите недвижимость' : '', [realEstateLocation])
     useEffect(() => {
         if (authKey) {
             refetch();
@@ -36,10 +36,10 @@ export const RealEstate: FC = () => {
     }, [authKey, refetch, dispatch, location])
 
     const handleOnClickCard = (id: number) => {
-        if (realEstateLocation === TRealEstateComponentLocation.ACCOUNT) {
+        if (realEstateLocation === ERealEstateComponentLocation.ACCOUNT) {
             navigate(`/real-estate-page/${id}`)
         }
-        if (realEstateLocation === TRealEstateComponentLocation.CHECKOUT) {
+        if (realEstateLocation === ERealEstateComponentLocation.CHECKOUT) {
             dispatch(setSelectedRealEstateId(id));
         }
     }

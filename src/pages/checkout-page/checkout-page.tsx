@@ -1,4 +1,5 @@
 import { RealEstate } from "@/entities/real-estate/ui/real-estate/real-estate";
+import { UserInfo } from "@/entities/user/ui/user-info/user-info";
 import { Page } from "@/shared/ui/components/page/page";
 import { FC } from "react";
 
@@ -8,6 +9,7 @@ export const CheckoutPage: FC = () => {
         <Page back={true} className="bg-base-300 pt-2 flex flex-col justify-between gap-6 px-4">
             <div>
             <h1 className="block w-full text-center pb-4 text-lg font-bold">Оформление</h1>
+            <UserInfo />
             <RealEstate />
             </div>
             <div className="w-full pb-4">

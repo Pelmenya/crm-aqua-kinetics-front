@@ -3,13 +3,13 @@ import { FC } from "react";
 import { RealEstateCard } from "../real-estate-card/real-estate-card";
 import { useNavigate } from "react-router-dom";
 import { ButtonWithIcon } from "@/shared/ui/components/button-with-icon/button-with-icon";
-import { TRealEstateComponentLocation } from "@/entities/real-estate/model/real-estate-slice";
+import { ERealEstateComponentLocation } from "@/entities/real-estate/model/real-estate-slice";
 import { TNullable } from "@/shared/lib/types/t-nullable";
 
 export type TRealEatateListProps = {
     title: string;
     realEstatesList: TCreateRealEstate[];
-    realEstateLocation: TNullable<TRealEstateComponentLocation>;
+    realEstateLocation: TNullable<ERealEstateComponentLocation>;
     onClickCard: (id: number) => void;
 }
 

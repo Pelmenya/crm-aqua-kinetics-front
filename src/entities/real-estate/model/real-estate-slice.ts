@@ -18,7 +18,7 @@ export type TWaterIntakePoints = {
     showerCabin: number;
 };
 
-export enum TRealEstateComponentLocation {
+export enum ERealEstateComponentLocation {
     ACCOUNT = 'account',
     CHECKOUT = 'checkout',
 }
@@ -31,7 +31,7 @@ export type TRealEstateState = {
     activeType: TRealEstateType
     residents: number;
     activeSource: TRealEstateSourceWater;
-    location: TNullable<TRealEstateComponentLocation>;
+    location: TNullable<ERealEstateComponentLocation>;
 };
 
 // Установите начальное состояние
@@ -93,7 +93,7 @@ export const realEstateSlice = createSlice({
         setProgress(state, action: PayloadAction<number>) {
             state.progress = action.payload;
         },
-        setLocation(state, action: PayloadAction<TNullable<TRealEstateComponentLocation>>) {
+        setLocation(state, action: PayloadAction<TNullable<ERealEstateComponentLocation>>) {
             state.location = action.payload;
         }
     },
