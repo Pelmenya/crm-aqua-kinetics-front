@@ -22,6 +22,7 @@ import { SubCatalogPage } from '@/pages/sub-catalog-page/sub-catalog-page';
 import { ProductPage } from '@/pages/product-page/product-page';
 import { CartPage } from '@/pages/cart-page/cart-page';
 import { CheckoutPage } from '@/pages/checkout-page/checkout-page';
+import { ContractPage } from '@/pages/contract-page/contract-page';
 
 interface Route {
     path: string;
@@ -71,6 +72,7 @@ export const routes: Route[] = [
     { path: '/real-estate-page/:id', Component: RealEstatePage },
     { path: '/cart', Component: CartPage },
     { path: '/checkout', Component: CheckoutPage },
+    { path: '/contract', Component: ContractPage },
     { path: '/init-data', Component: InitDataPage },
     { path: '/theme-params', Component: ThemeParamsPage, title: 'Theme Params' },
     { path: '/launch-params', Component: LaunchParamsPage, title: 'Launch Params' },

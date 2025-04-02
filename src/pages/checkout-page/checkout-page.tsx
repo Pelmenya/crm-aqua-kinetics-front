@@ -1,3 +1,4 @@
+import { Link } from "@/app/link/link";
 import { getCartItems } from "@/entities/cart/model/cart-selectors";
 import { CartList } from "@/entities/cart/ui/cart-list/cart-list";
 import { CartTotal } from "@/entities/cart/ui/cart-total/cart-total";
@@ -27,9 +28,8 @@ export const CheckoutPage: FC = () => {
                     <CartList items={cartItems} />
                     <div className="w-full pb-4 flex flex-col gap-4 px-4 pt-2">
                         <CartTotal />
-                        <button className="btn btn-primary w-full">Найти исполнителя</button>
+                        <Link to='/contract' className="btn btn-primary w-full">Найти исполнителя</Link>
                     </div>
-
                 </div> : null
             }
         </Page>
