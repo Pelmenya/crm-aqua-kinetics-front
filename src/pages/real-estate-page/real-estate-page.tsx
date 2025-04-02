@@ -11,8 +11,13 @@ import { Loading } from '@/shared/ui/components/loading/loading';
 import { Link } from '@/app/link/link';
 import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
 import { getRealEstateLocation } from '@/entities/real-estate/model/real-estate-selectors';
+import { useAppDispatch } from '@/shared/lib/hooks/use-app-dispatch';
+import { getRealEstateId } from '@/entities/order/model/order-selectors';
+import { setSelectedRealEstateId } from '@/entities/order/model/order-slice';
 
 export const RealEstatePage: React.FC = () => {
+    const dispatch = useAppDispatch();
+    const realEstateId = useAppSelector(getRealEstateId);
     const navigate = useNavigate();
     const lp = useLaunchParams();
     const realEstateLocation = useAppSelector(getRealEstateLocation);
@@ -38,6 +43,7 @@ export const RealEstatePage: React.FC = () => {
     const handleConfirm = async () => {
         try {
             await deleteRealEstate({ id: Number(id), authKey }).unwrap();
+            if (realEstateId === Number(id)) { dispatch(setSelectedRealEstateId(null)) }
             navigate(`/${realEstateLocation || 'account'}`);
         } catch (error) {
             console.error('Ошибка при удалении недвижимости:', error);

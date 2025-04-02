@@ -9,6 +9,7 @@ import { FC } from "react";
 export const CartPage: FC = () => {
     const cartItems = useAppSelector(getCartItems);
     const cartIsFull = Object.keys(cartItems).length > 0;
+    
     return (
         <Page back={true} className="bg-base-300 pt-2 flex flex-col justify-between gap-6">
             <div className="w-full">
@@ -22,7 +23,6 @@ export const CartPage: FC = () => {
                 {cartIsFull 
                     ? <Link to="/checkout" className="btn btn-primary w-full">Оформить</Link> 
                     : <Link to="/catalog" className="btn btn-primary w-full">Вернуться в каталог</Link>}
-
             </div>
         </Page>
     )
