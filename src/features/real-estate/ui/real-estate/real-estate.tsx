@@ -1,6 +1,6 @@
 import { Base } from "@/shared/ui/components/base/base";
 import { RoundPlus } from "@/features/real-estate/ui/real-estate/components/round-plus/round-plus";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { Link } from "@/app/link/link";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
 import { useGetRealEstatesQuery } from "../../api/real-estate-api";
@@ -10,6 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
 import { setLocation, TRealEstateComponentLocation } from "../../model/real-estate-slice";
 import { getRealEstateLocation } from "../../lib/get-real-estate-location";
+import { setSelectedRealEstateId } from "@/features/order/model/order-slice";
 
 export const RealEstate: FC = () => {
     const location = useLocation();
@@ -23,7 +24,10 @@ export const RealEstate: FC = () => {
     });
 
     const realEstateLocation = getRealEstateLocation(location);
-
+    const realEstateListTitle = useMemo(() =>
+        realEstateLocation === TRealEstateComponentLocation.ACCOUNT
+            ? 'Дома, квартиры и промобъекты'
+            : realEstateLocation === TRealEstateComponentLocation.CHECKOUT ? 'Выберите недвижимость' : '', [realEstateLocation])
     useEffect(() => {
         if (authKey) {
             refetch();
@@ -36,7 +40,7 @@ export const RealEstate: FC = () => {
             navigate(`/real-estate-page/${id}`)
         }
         if (realEstateLocation === TRealEstateComponentLocation.CHECKOUT) {
-            console.log(id);
+            dispatch(setSelectedRealEstateId(id));
         }
     }
 
@@ -52,7 +56,14 @@ export const RealEstate: FC = () => {
                 : <>
                     {isLoading && <Loading color="text-primary" size="loading-xs" type="loading-infinity" />}
                     {error && <p>Error fetching data</p>}
-                    {data && <RealEstateList realEstatesList={data} onClickCard={handleOnClickCard}/>}
+                    {data &&
+                        <RealEstateList
+                            realEstatesList={data}
+                            onClickCard={handleOnClickCard}
+                            title={realEstateListTitle}
+                            realEstateLocation={realEstateLocation} // передаём realEstateLocation
+                        />
+                    }
                 </>
             }
         </>

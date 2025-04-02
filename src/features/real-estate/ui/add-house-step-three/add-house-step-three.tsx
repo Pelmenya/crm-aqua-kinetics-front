@@ -52,7 +52,7 @@ export const AddHouseStepThree: FC = () => {
                 authKey: authKey || '',
             }).unwrap();
             dispatch(setInitialState());
-            navigate(`/${realEstateLocation}`);
+            navigate(`/${realEstateLocation || 'account'}`);
             console.log("Данные успешно сохранены!", newRealEstateData);
         } catch (error) {
             console.error("Ошибка при сохранении данных:", error);

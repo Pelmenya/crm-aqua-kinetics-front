@@ -12,6 +12,7 @@ import { moySkladApi } from '@/features/moy-sklad/api/moy-sklad-api';
 import { cartSlice } from '@/features/cart/model/cart-slice';
 import { cartApi } from '@/features/cart/api/cart-api';
 import logger from 'redux-logger';
+import { orderSlice } from '@/features/order/model/order-slice';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -29,6 +30,7 @@ export const store = configureStore({
         accountService: accountServiceSlice.reducer,
         calendarService: calendarServiceSlice.reducer,
         cart: cartSlice.reducer,
+        order: orderSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         const middlewares = getDefaultMiddleware().concat(
