@@ -27,7 +27,7 @@ export const UserInfo: FC = () => {
                     </div>
                 </div>
                 : userLocation === EUserComponentLocation.CHECKOUT ?
-                    <div className="flex gap-4 py-4">
+                    <div className="flex gap-4 pb-4">
                         <img className="avatar w-10 h-10 rounded-full" src={tgUser?.photoUrl} alt={user?.username} />
                         <div>
                             <p className="font-semibold">{user?.first_name} {user?.last_name}</p>

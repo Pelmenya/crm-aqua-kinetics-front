@@ -11,6 +11,7 @@ export const CheckoutPage: FC = () => {
             <h1 className="block w-full text-center pb-4 text-lg font-bold">Оформление</h1>
             <UserInfo />
             <RealEstate />
+            
             </div>
             <div className="w-full pb-4">
                 <button className="btn btn-primary w-full">Оформить</button>
