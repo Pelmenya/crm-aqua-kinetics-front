@@ -1,7 +1,7 @@
 import { Link } from "@/app/link/link";
-import { getCartItems } from "@/features/cart/model/cart-selectors";
-import { CartIsEmpty } from "@/features/cart/ui/cart-is-empty/cart-is-empty";
-import { CartList } from "@/features/cart/ui/cart-list/cart-list";
+import { getCartItems } from "@/entities/cart/model/cart-selectors";
+import { CartIsEmpty } from "@/entities/cart/ui/cart-is-empty/cart-is-empty";
+import { CartList } from "@/entities/cart/ui/cart-list/cart-list";
 import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
 import { Page } from "@/shared/ui/components/page/page";
 import { FC } from "react";

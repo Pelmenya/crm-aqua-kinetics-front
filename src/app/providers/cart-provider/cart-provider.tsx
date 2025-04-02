@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAppDispatch } from '@/shared/lib/hooks/use-app-dispatch';
-import { useGetCartQuery } from '@/features/cart/api/cart-api';
-import { setCart } from '@/features/cart/model/cart-slice';
+import { useGetCartQuery } from '@/entities/cart/api/cart-api';
+import { setCart } from '@/entities/cart/model/cart-slice';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
 import { Page } from '@/shared/ui/components/page/page';
 import { Logo } from '@/shared/ui/components/logo/logo';

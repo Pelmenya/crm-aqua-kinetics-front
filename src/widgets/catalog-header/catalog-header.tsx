@@ -1,7 +1,7 @@
 //import { Search } from "@/shared/ui/icons/search";
 import { FC } from "react";
 import cn from 'classnames';
-import { CartLinkWithIndicator } from "@/features/cart/ui/cart-link-with-indicator/cart-link-with-indicator";
+import { CartLinkWithIndicator } from "@/entities/cart/ui/cart-link-with-indicator/cart-link-with-indicator";
 
 export const CatalogHeader: FC<{
     title?: string;

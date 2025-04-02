@@ -1,9 +1,9 @@
 
 import { AccountPage } from '@/pages/account-page/account-page';
 import { AddHousePage } from '@/pages/add-house/add-house-page';
-import { AddHouseStepOne } from '@/features/real-estate/ui/add-house-step-one/add-house-step-one';
-import { AddHouseStepThree } from '@/features/real-estate/ui/add-house-step-three/add-house-step-three';
-import { AddHouseStepTwo } from '@/features/real-estate/ui/add-house-step-two/add-house-step-two';
+import { AddHouseStepOne } from '@/entities/real-estate/ui/add-house-step-one/add-house-step-one';
+import { AddHouseStepThree } from '@/entities/real-estate/ui/add-house-step-three/add-house-step-three';
+import { AddHouseStepTwo } from '@/entities/real-estate/ui/add-house-step-two/add-house-step-two';
 import { InitDataPage } from '@/pages/delete_pages/InitDataPage';
 import { LaunchParamsPage } from '@/pages/delete_pages/LaunchParamsPage';
 import { ThemeParamsPage } from '@/pages/delete_pages/ThemeParamsPage';

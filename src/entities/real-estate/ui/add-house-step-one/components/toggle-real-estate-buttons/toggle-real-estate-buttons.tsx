@@ -1,4 +1,4 @@
-import { TRealEstateType } from "@/features/real-estate/model/real-estate-slice";
+import { TRealEstateType } from "@/entities/real-estate/model/real-estate-slice";
 import { FC } from "react";
 
 export const ToggleRealEstateButtons: FC<{ active: string, onToggle: (type: TRealEstateType) => void }> = ({ active, onToggle }) => {

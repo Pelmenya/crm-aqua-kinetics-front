@@ -1,9 +1,9 @@
-import { TCreateRealEstate } from "@/features/real-estate/api/real-estate-api";
+import { TCreateRealEstate } from "@/entities/real-estate/api/real-estate-api";
 import { FC } from "react";
 import { RealEstateCard } from "../real-estate-card/real-estate-card";
 import { useNavigate } from "react-router-dom";
 import { ButtonWithIcon } from "@/shared/ui/components/button-with-icon/button-with-icon";
-import { TRealEstateComponentLocation } from "@/features/real-estate/model/real-estate-slice";
+import { TRealEstateComponentLocation } from "@/entities/real-estate/model/real-estate-slice";
 import { TNullable } from "@/shared/lib/types/t-nullable";
 
 export type TRealEatateListProps = {

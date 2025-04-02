@@ -1,5 +1,5 @@
 import { Base } from "@/shared/ui/components/base/base";
-import { RoundPlus } from "@/features/real-estate/ui/real-estate/components/round-plus/round-plus";
+import { RoundPlus } from "@/entities/real-estate/ui/real-estate/components/round-plus/round-plus";
 import { FC, useEffect, useMemo } from "react";
 import { Link } from "@/app/link/link";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
 import { setLocation, TRealEstateComponentLocation } from "../../model/real-estate-slice";
 import { getRealEstateLocation } from "../../lib/get-real-estate-location";
-import { setSelectedRealEstateId } from "@/features/order/model/order-slice";
+import { setSelectedRealEstateId } from "@/entities/order/model/order-slice";
 
 export const RealEstate: FC = () => {
     const location = useLocation();

@@ -1,13 +1,13 @@
-import { TCreateRealEstate } from "@/features/real-estate/api/real-estate-api";
+import { TCreateRealEstate } from "@/entities/real-estate/api/real-estate-api";
 import { FC, useMemo } from "react";
 import apartmentsBackground from './bg-apartament.jpg';
 import houseBackground from './bg-house.png';
 import promBackground from './bg-promo.png'; 
-import { TRealEstateComponentLocation } from "@/features/real-estate/model/real-estate-slice";
+import { TRealEstateComponentLocation } from "@/entities/real-estate/model/real-estate-slice";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
 import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
-import { getRealEstateId } from "@/features/order/model/order-selectors";
-import { setSelectedRealEstateId } from "@/features/order/model/order-slice";
+import { getRealEstateId } from "@/entities/order/model/order-selectors";
+import { setSelectedRealEstateId } from "@/entities/order/model/order-slice";
 import { TNullable } from "@/shared/lib/types/t-nullable";
 type RealEstateCardProps = {
     id: number;

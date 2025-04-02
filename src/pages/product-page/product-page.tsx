@@ -9,13 +9,13 @@ import { CatalogHeader } from '@/widgets/catalog-header/catalog-header';
 import { ServicesList } from '@/features/moy-sklad/ui/service-list/service-list';
 import { Cart } from '@/shared/ui/icons/cart';
 import { Counter } from '@/shared/ui/components/counter/counter';
-import { addProductToCart, addServiceToProduct, updateProductCount, updateServiceCount } from '@/features/cart/model/cart-slice';
+import { addProductToCart, addServiceToProduct, updateProductCount, updateServiceCount } from '@/entities/cart/model/cart-slice';
 import { useAppDispatch } from '@/shared/lib/hooks/use-app-dispatch';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
 import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
 import { useCartSynchronization } from '@/shared/lib/hooks/use-сart-synchronization';
 import { TService } from '@/features/moy-sklad/model/types/t-service';
-import { getCartItemById } from '@/features/cart/model/cart-selectors';
+import { getCartItemById } from '@/entities/cart/model/cart-selectors';
 
 export const ProductPage: FC = () => {
     const { id } = useParams<{ id: string }>();

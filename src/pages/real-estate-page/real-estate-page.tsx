@@ -1,16 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetRealEstateByIdQuery, useDeleteRealEstateMutation } from '@/features/real-estate/api/real-estate-api';
+import { useGetRealEstateByIdQuery, useDeleteRealEstateMutation } from '@/entities/real-estate/api/real-estate-api';
 import { useLaunchParams } from '@telegram-apps/sdk-react';
 import { Page } from '@/shared/ui/components/page/page';
-import { RealEstateCard } from '@/features/real-estate/ui/real-estate/components/real-estate-card/real-estate-card';
+import { RealEstateCard } from '@/entities/real-estate/ui/real-estate/components/real-estate-card/real-estate-card';
 import { Base } from '@/shared/ui/components/base/base';
 import { ButtonWithIcon } from '@/shared/ui/components/button-with-icon/button-with-icon';
 import { ConfirmDialog } from '@/shared/ui/components/confirm-dialog/confirm-dialog';
 import { Loading } from '@/shared/ui/components/loading/loading';
 import { Link } from '@/app/link/link';
 import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
-import { getRealEstateLocation } from '@/features/real-estate/model/real-estate-selectors';
+import { getRealEstateLocation } from '@/entities/real-estate/model/real-estate-selectors';
 
 export const RealEstatePage: React.FC = () => {
     const navigate = useNavigate();

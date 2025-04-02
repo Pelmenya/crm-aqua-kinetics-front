@@ -1,4 +1,4 @@
-import { TServiceList } from "@/features/cart/model/cart-slice";
+import { TServiceList } from "@/entities/cart/model/cart-slice";
 import { FC } from "react";
 import { ServicesItem } from "./services-item";
 

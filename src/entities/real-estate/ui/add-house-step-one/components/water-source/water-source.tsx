@@ -4,7 +4,7 @@ import { Reservoir } from "./components/reservoir";
 import { WaterSupply } from "./components/water-supply";
 import { Borehole } from "./components/borehole";
 import { WaterSourceOption } from "./components/water-source-option/water-source-option";
-import { TRealEstateSourceWater } from "@/features/real-estate/model/real-estate-slice";
+import { TRealEstateSourceWater } from "@/entities/real-estate/model/real-estate-slice";
 
 
 export const WaterSource: FC<{ active: string, onToggle: (type: TRealEstateSourceWater) => void }> = ({ active, onToggle }) => {

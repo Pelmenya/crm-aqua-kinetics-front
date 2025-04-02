@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAppSelector } from '@/shared/lib/hooks/use-app-selector';
-import { useUpdateCartStateMutation } from '@/features/cart/api/cart-api';
-import { getCartItems, getIsLoadingFromServer } from '@/features/cart/model/cart-selectors';
+import { useUpdateCartStateMutation } from '@/entities/cart/api/cart-api';
+import { getCartItems, getIsLoadingFromServer } from '@/entities/cart/model/cart-selectors';
 
 export const useCartSynchronization = (authKey: string, productId?: string) => {
     const cart = useAppSelector(getCartItems);

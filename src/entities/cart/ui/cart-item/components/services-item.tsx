@@ -1,4 +1,4 @@
-import { TServiceItem } from "@/features/cart/model/cart-slice";
+import { TServiceItem } from "@/entities/cart/model/cart-slice";
 import { useGetServiceQuery } from "@/features/moy-sklad/api/moy-sklad-api";
 import { FC } from "react";
 

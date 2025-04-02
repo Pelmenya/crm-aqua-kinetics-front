@@ -1,4 +1,4 @@
-import { RealEstate } from "@/features/real-estate/ui/real-estate/real-estate";
+import { RealEstate } from "@/entities/real-estate/ui/real-estate/real-estate";
 import { Page } from "@/shared/ui/components/page/page";
 import { FC } from "react";
 
