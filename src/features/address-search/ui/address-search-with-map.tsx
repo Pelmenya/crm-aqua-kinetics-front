@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect } from 'react';
-import { Combobox } from '@headlessui/react';
+import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions } from '@headlessui/react';
 import _ from 'lodash';
 import { useGetAddressSuggestionsQuery, useGetCoordinatesQuery } from '../api/address-api';
 import { Map } from '@/shared/ui/components/map/map';
@@ -9,7 +9,6 @@ type TAddressSearchWithMapProps = {
     selectedAddress: string | null;
     coordinates: { latitude: number; longitude: number } | null;
     isViewCoordinates?: boolean;
-    radiusKm?: number;
     zoom?: number;
     onQueryChange: (query: string) => void;
     onSelectAddress: (address: string) => void;
@@ -21,7 +20,6 @@ export const AddressSearchWithMap: React.FC<TAddressSearchWithMapProps> = ({
     selectedAddress,
     coordinates,
     isViewCoordinates = true,
-    radiusKm,
     zoom,
     onQueryChange,
     onSelectAddress,
@@ -55,22 +53,22 @@ export const AddressSearchWithMap: React.FC<TAddressSearchWithMapProps> = ({
         <div className="w-full max-w-lg mx-auto">
             <div className="relative container">
                 <Combobox value={query} onChange={handleSelect}>
-                    <Combobox.Input
+                    <ComboboxInput
                         onChange={handleChange}
                         className="input input-primary w-full"
                         placeholder="Введите адрес"
                     />
                     {query && suggestions.length === 0 && (
-                        <Combobox.Options className="absolute z-10 bg-base-100 border border-primary rounded-md shadow-lg max-h-60 mt-1 w-full overflow-auto">
+                        <ComboboxOptions className="absolute z-10 bg-base-100 border border-primary rounded-md shadow-lg max-h-60 mt-1 w-full overflow-auto">
                             <div className="p-2">
                                 Нет подходящей подсказки
                             </div>
-                        </Combobox.Options>
+                        </ComboboxOptions>
                     )}
                     {suggestions.length > 0 && (
-                        <Combobox.Options className="absolute z-10 bg-base-100 border border-primary rounded-md shadow-lg max-h-60 mt-1 w-full overflow-auto">
+                        <ComboboxOptions className="absolute z-10 bg-base-100 border border-primary rounded-md shadow-lg max-h-60 mt-1 w-full overflow-auto">
                             {suggestions.map((suggestion) => (
-                                <Combobox.Option
+                                <ComboboxOption
                                     key={suggestion.sign}
                                     value={suggestion.value}
                                     className="cursor-pointer select-none relative hover:bg-blue-100"
@@ -83,15 +81,15 @@ export const AddressSearchWithMap: React.FC<TAddressSearchWithMapProps> = ({
                                             {suggestion.value}
                                         </span>
                                     )}
-                                </Combobox.Option>
+                                </ComboboxOption>
                             ))}
-                        </Combobox.Options>
+                        </ComboboxOptions>
                     )}
                 </Combobox>
             </div>
             {coordinates && (
                 <div className="grid w-full mt-4">
-                    <Map coordinates={[coordinates.latitude, coordinates.longitude]} radiusKm={radiusKm} zoom={zoom} />
+                    <Map coordinates={[coordinates.latitude, coordinates.longitude]} zoom={zoom} />
                     {isViewCoordinates && <p className='mt-2'>Координаты: {coordinates.latitude + ', ' + coordinates.longitude}</p>}
                 </div>
             )}

@@ -1,20 +1,16 @@
-import { YMaps, Map as MapComponent, Placemark, Circle } from '@pbe/react-yandex-maps';
+import { YMaps, Map as MapComponent, Placemark } from '@pbe/react-yandex-maps';
 import { Loading } from '../loading/loading';
 
 export type MapProps = {
     coordinates: number[] | null;
-    radiusKm?: number;
     zoom?: number; 
 };
 
-export const Map = ({ coordinates, radiusKm, zoom = 17 }: MapProps) => {
+export const Map = ({ coordinates, zoom = 17 }: MapProps) => {
     if (!coordinates) {
         return <Loading size='loading-lg' color='text-primary' type='loading-infinity' />; // Или отображайте индикатор загрузки
     }
     
-    // Конвертируем радиус из километров в метры для отображения на карте
-    const radiusMeters = (radiusKm ?? 0) * 1000;
-
     return (
         <YMaps
             query={{
@@ -28,17 +24,6 @@ export const Map = ({ coordinates, radiusKm, zoom = 17 }: MapProps) => {
                     height={'250px'}
                 >
                     <Placemark geometry={coordinates} />
-                    {radiusMeters > 0 && (
-                        <Circle
-                            geometry={[coordinates, radiusMeters]}
-                            options={{
-                                draggable: false,
-                                fillColor: 'rgba(0, 123, 255, 0.3)', // Полупрозрачный синий цвет
-                                strokeColor: 'rgba(0, 123, 255, 0.7)',
-                                strokeWidth: 2,
-                            }}
-                        />
-                    )}
                 </MapComponent>
             </div>
         </YMaps>

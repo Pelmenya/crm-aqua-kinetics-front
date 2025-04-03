@@ -10,7 +10,6 @@ export type TCoordinates = {
 export type TAccountServiceState = {
     id: TNullable<string>;
     address: TNullable<string>;
-    radiusKm: TNullable<number>;
     coordinates: TNullable<TCoordinates>;
     carNumber: TNullable<string>;
     carModel: TNullable<string>;
@@ -24,7 +23,6 @@ const initialState: TAccountServiceState = {
     id: null,
     address: null,
     coordinates: null,
-    radiusKm: null,
     carNumber: null,
     carModel: null,
     workDays: null,
@@ -40,9 +38,6 @@ export const accountServiceSlice = createSlice({
         setAddress(state, action: PayloadAction<TNullable<string>>) {
             state.address = action.payload;
         },
-        setRadiusKm(state, action: PayloadAction<TNullable<number>>) {
-            state.radiusKm = action.payload;
-        },
         setCoordinates(state, action: PayloadAction<TNullable<TCoordinates>>) {
             state.coordinates = action.payload;
         },
@@ -55,7 +50,6 @@ export const accountServiceSlice = createSlice({
         resetAccountServiceState(state) {
             state.id = initialState.id;
             state.address = initialState.address;
-            state.radiusKm = initialState.radiusKm;
             state.coordinates = initialState.coordinates;
             state.carNumber = initialState.carNumber;
             state.carModel = initialState.carModel;
@@ -102,7 +96,6 @@ export const accountServiceSlice = createSlice({
 
 export const {
     setAddress,
-    setRadiusKm,
     setCoordinates,
     setCarNumber,
     setCarModel,

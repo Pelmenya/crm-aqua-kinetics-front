@@ -3,19 +3,14 @@ import { useForm } from "react-hook-form";
 import { FormWithTitle } from "@/shared/ui/components/form-with-title/form-with-title";
 import { AddressSearchWithMap } from "@/features/address-search/ui/address-search-with-map";
 import { getAccountServiceState } from "@/entities/account-service/model/account-service-selectors";
-import { setAddress, setCoordinates, setRadiusKm } from "@/entities/account-service/model/account-service-slice";
+import { setAddress, setCoordinates } from "@/entities/account-service/model/account-service-slice";
 import { Page } from "@/shared/ui/components/page/page";
 import { TCreateAccountService, useCreateOrUpdateAccountServiceMutation, useGetAccountServiceByUserQuery } from "@/entities/account-service/api/account-service-api";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
-import { RangeSlider } from "@/shared/ui/components/range-slider.tsx/range-slider";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
 import { useAppSelector } from "@/shared/lib/hooks/use-app-selector";
 import { Loading } from "@/shared/ui/components/loading/loading";
-
-export type TLocationFormInputs = {
-    radiusKm: number;
-};
 
 export const ServiceLocationPage: FC = () => {
     const navigate = useNavigate();
@@ -23,7 +18,7 @@ export const ServiceLocationPage: FC = () => {
     const accountServiceFromRedux = useAppSelector(getAccountServiceState);
     const [createAccountService, { isLoading }] = useCreateOrUpdateAccountServiceMutation();
 
-    const { handleSubmit, setValue } = useForm<TLocationFormInputs>();
+    const { handleSubmit } = useForm();
 
     const lp = useLaunchParams();
     const authKey = lp.initDataRaw || '';
@@ -51,12 +46,8 @@ export const ServiceLocationPage: FC = () => {
             ) {
                 dispatch(setCoordinates(accountServiceFromBack.coordinates));
             }
-            if (accountServiceFromBack.radiusKm !== accountServiceFromRedux.radiusKm) {
-                dispatch(setRadiusKm(accountServiceFromBack.radiusKm));
-                setValue('radiusKm', Number(accountServiceFromBack.radiusKm));
-            }
         }
-    }, [accountServiceFromBack, dispatch, setValue]);
+    }, [accountServiceFromBack, dispatch]);
 
     const onSubmit = async () => {
         try {
@@ -79,11 +70,6 @@ export const ServiceLocationPage: FC = () => {
         }
     };
 
-    const handleRadiusChange = (value: number) => {
-        setValue('radiusKm', value);
-        dispatch(setRadiusKm(value));
-    };
-
     // Проверка состояния загрузки
     if (isFetching) {
         return <Loading color="text-primary" size="loading-xs" type="loading-infinity" />;
@@ -97,29 +83,18 @@ export const ServiceLocationPage: FC = () => {
                     onSubmit={handleSubmit(onSubmit)}
                     submitButtonText="Сохранить"
                     isLoading={isLoading}
-                    isDisabledSubmitBtn={!accountServiceFromRedux.address || !accountServiceFromRedux.radiusKm}
+                    isDisabledSubmitBtn={!accountServiceFromRedux.address}
                 >
                     <AddressSearchWithMap
                         query={accountServiceFromRedux.address || ''}
                         selectedAddress={accountServiceFromRedux.address}
                         coordinates={accountServiceFromRedux.coordinates || null}
                         isViewCoordinates={false}
-                        radiusKm={accountServiceFromRedux.radiusKm || 0}
                         onQueryChange={(query) => dispatch(setAddress(query))}
                         onSelectAddress={(address) => dispatch(setAddress(address))}
                         onCoordinatesChange={(coords) => dispatch(setCoordinates(coords))}
-                        zoom={7}
+                        zoom={17}
                     />
-                    <div className="grid w-full">
-                        <RangeSlider
-                            value={accountServiceFromRedux.radiusKm || 0}
-                            onChange={handleRadiusChange}
-                            min={0}
-                            max={150}
-                            label="Радиус выезда"
-                            unit="км."
-                        />
-                    </div>
                 </FormWithTitle>
             </div>
         </Page>
