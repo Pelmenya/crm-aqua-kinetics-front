@@ -107,6 +107,7 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
         <YMaps query={{ apikey: import.meta.env.VITE_YM_API_KEY }}>
             <div>
                 <Map defaultState={mapState} width="100%" height="calc(100vh - 80px)" onClick={handleMapClick}>
+                <Placemark geometry={[coordinates.latitude, coordinates.longitude]} />
                     {generalArea.length > 0 && (
                         <Polygon
                             geometry={[generalArea]}
