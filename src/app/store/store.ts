@@ -13,6 +13,7 @@ import { cartSlice } from '@/entities/cart/model/cart-slice';
 import { cartApi } from '@/entities/cart/api/cart-api';
 import logger from 'redux-logger';
 import { orderSlice } from '@/entities/order/model/order-slice';
+import { serviceAreaSlice } from '@/features/map-with-polyline-editor/model/service-area-slice';
 
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -31,6 +32,7 @@ export const store = configureStore({
         calendarService: calendarServiceSlice.reducer,
         cart: cartSlice.reducer,
         order: orderSlice.reducer,
+        serviceArea: serviceAreaSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => {
         const middlewares = getDefaultMiddleware().concat(

@@ -1,5 +1,5 @@
 import { useGetAccountServiceByUserQuery } from "@/entities/account-service/api/account-service-api";
-import { MapWithPolyline } from "@/features/map-with-polyline-editor/map-with-polyline-editor";
+import { MapWithPolylineEditor } from "@/features/map-with-polyline-editor/ui/map-with-polyline-editor";
 import { Loading } from "@/shared/ui/components/loading/loading";
 import { Page } from "@/shared/ui/components/page/page";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
@@ -25,7 +25,7 @@ console.log(accountServiceFromBack?.coordinates?.coordinates)
                         type="loading-infinity"
                     /> :
                     accountServiceFromBack?.coordinates 
-                        ? <MapWithPolyline coordinates={{ 
+                        ? <MapWithPolylineEditor coordinates={{ 
                             longitude: accountServiceFromBack?.coordinates.coordinates[0], 
                             latitude: accountServiceFromBack?.coordinates.coordinates[1]}} /> 
                         : null
