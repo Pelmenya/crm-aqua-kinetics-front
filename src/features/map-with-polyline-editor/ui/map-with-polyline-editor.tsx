@@ -1,9 +1,8 @@
 import { FC, useState, useCallback } from 'react';
 import { YMaps, Map, Polyline, Polygon } from '@pbe/react-yandex-maps';
 import { useDispatch, useSelector } from 'react-redux';
-import { addWorkDayArea, removeWorkDayArea, resetAreas, setGeneralArea, updateWorkDayArea, WorkDayArea } from '../model/service-area-slice';
+import { addWorkDayArea, removeWorkDayArea, resetAreas, setGeneralArea, WorkDayArea } from '../model/service-area-slice';
 import { TRootState } from '@/app/store/store';
-import { polygon as turfPolygon, booleanContains } from '@turf/turf';
 import { TCoordinates } from '../model/service-area-slice';
 import { PolygonEditorModal } from './poligon-editor-modal';
 
@@ -44,17 +43,10 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
             if (!generalArea.length) {
                 dispatch(setGeneralArea(newPolygon));
             } else {
-                const newPolygonTurf = turfPolygon([newPolygon]);
-                const generalAreaTurf = turfPolygon([generalArea]);
-
-                if (booleanContains(generalAreaTurf, newPolygonTurf)) {
-                    setSelectedWorkDay({ day: '', coordinates: newPolygon, color: '#FF000088', name: '' });
-                    setIsModalOpen(true);
-                } else {
-                    console.error("Новый полигон выходит за пределы общего ареала");
-                }
+                setSelectedWorkDay({ day: '', coordinates: newPolygon, color: '#FF000088', name: '' });
+                setIsModalOpen(true);
             }
-            setLineCoords([]);
+            setLineCoords([]); // Очистить линии после закрытия
         }
     }, [lineCoords, dispatch, generalArea]);
 
@@ -70,11 +62,7 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
 
     const handleModalSave = (workDayData: WorkDayArea) => {
         if (workDayData.coordinates.length > 2) {
-            if (selectedWorkDay) {
-                dispatch(updateWorkDayArea(workDayData));
-            } else {
                 dispatch(addWorkDayArea(workDayData));
-            }
         } else {
             console.error("Недостаточно точек для создания полигона");
         }
@@ -105,10 +93,7 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
                                 strokeWidth: 3,
                                 fillOpacity: 0.1, // Сделать полигон полупрозрачным для видимости
                             }}
-                            onClick={(e: ymaps.IEvent) => {
-                                const clickedCoords = e.get('coords');
-                                console.log('General area clicked', clickedCoords); // Отладочный вывод
-                            }}
+                            onClick={handleMapClick}
                         />
                     )}
                     <Polyline
