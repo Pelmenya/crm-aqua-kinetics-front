@@ -23,6 +23,7 @@ import { ProductPage } from '@/pages/product-page/product-page';
 import { CartPage } from '@/pages/cart-page/cart-page';
 import { CheckoutPage } from '@/pages/checkout-page/checkout-page';
 import { ContractPage } from '@/pages/contract-page/contract-page';
+import { ServiceAreaPage } from '@/pages/service-area-page/service-area-page';
 
 interface Route {
     path: string;
@@ -48,18 +49,10 @@ export const routes: Route[] = [
         ]
     },
     { path: '/catalog', Component: CatalogPage },
-    {
-        path: '/service-calendar',
-        Component: ServiceCalendarPage,
-    },
-    {
-        path: '/service-location',
-        Component: ServiceLocationPage,
-    },
-    {
-        path: '/service-profile',
-        Component: ServiceProfilePage,
-    },
+    { path: '/service-calendar', Component: ServiceCalendarPage },
+    { path: '/service-location', Component: ServiceLocationPage },
+    { path: '/service-profile', Component: ServiceProfilePage },
+    { path: '/service-area', Component: ServiceAreaPage },
     {
         path: '/add-house', Component: AddHousePage, children: [
             { path: '/add-house/step-1', Component: AddHouseStepOne },

@@ -7,7 +7,7 @@ export type TCoordinates = {
 };
 
 // Тип для создания AccountService
-export type TCreateAccountService = Omit<TAccountServiceState, 'coordinates'> & {
+export type TAccountService = Omit<TAccountServiceState, 'coordinates'> & {
     coordinates: { type: 'Point'; coordinates: [number, number] } | null;
 };
 
@@ -18,7 +18,7 @@ export const accountServiceApi = createApi({
         baseUrl: import.meta.env.VITE_BACKEND_BASE_URL + '/service',
     }),
     endpoints: (builder) => ({
-        createOrUpdateAccountService: builder.mutation<TAccountServiceState, { newAccountService: TCreateAccountService; authKey: string }>({
+        createOrUpdateAccountService: builder.mutation<TAccountServiceState, { newAccountService: TAccountService; authKey: string }>({
             query: ({ newAccountService, authKey }) => ({
                 url: 'account',
                 method: 'POST',
@@ -29,7 +29,7 @@ export const accountServiceApi = createApi({
                 },
             }),
         }),
-        getAccountServiceByUser: builder.query<TAccountServiceState, string>({
+        getAccountServiceByUser: builder.query<TAccountService, string>({
             query: (authKey) => ({
                 url: 'account',
                 method: 'GET',

@@ -9,6 +9,7 @@ import { Loading } from "@/shared/ui/components/loading/loading";
 import { Profile } from "@/shared/ui/icons/profile";
 import { daysOfWeek } from "@/shared/lib/helpers/days-of-week";
 import { getDayByIdx } from "@/shared/lib/helpers/get-day-by-idx";
+import { Area } from "@/shared/ui/icons/area";
 
 export const AccountService: FC = () => {
     const [isProfile, setIsProfile] = useState(false);
@@ -77,6 +78,16 @@ export const AccountService: FC = () => {
                         <Location />
                     </CardService>
                 </Link>
+                {isLocation ?
+                    <Link to='/service-area'>
+                        <CardService
+                            fullWidth={true}
+                            title="Зоны обслуживания"
+                            status="Еще нет зон обслуживания"
+                        >
+                            <Area />
+                        </CardService>
+                    </Link> : null}
                 {isLocation ?
                     <Link to="/service-profile" >
                         <CardService

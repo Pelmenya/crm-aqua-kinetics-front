@@ -5,7 +5,7 @@ import { AddressSearchWithMap } from "@/features/address-search/ui/address-searc
 import { getAccountServiceState } from "@/entities/account-service/model/account-service-selectors";
 import { setAddress, setCoordinates } from "@/entities/account-service/model/account-service-slice";
 import { Page } from "@/shared/ui/components/page/page";
-import { TCreateAccountService, useCreateOrUpdateAccountServiceMutation, useGetAccountServiceByUserQuery } from "@/entities/account-service/api/account-service-api";
+import { TAccountService, useCreateOrUpdateAccountServiceMutation, useGetAccountServiceByUserQuery } from "@/entities/account-service/api/account-service-api";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/shared/lib/hooks/use-app-dispatch";
@@ -39,19 +39,12 @@ export const ServiceLocationPage: FC = () => {
             if (accountServiceFromBack.address !== accountServiceFromRedux.address) {
                 dispatch(setAddress(accountServiceFromBack.address || null));
             }
-            if (
-                accountServiceFromBack.coordinates &&
-                (accountServiceFromBack.coordinates.latitude !== accountServiceFromRedux.coordinates?.latitude ||
-                    accountServiceFromBack.coordinates.longitude !== accountServiceFromRedux.coordinates?.longitude)
-            ) {
-                dispatch(setCoordinates(accountServiceFromBack.coordinates));
-            }
         }
     }, [accountServiceFromBack, dispatch]);
 
     const onSubmit = async () => {
         try {
-            const newAccountService: TCreateAccountService = {
+            const newAccountService: TAccountService = {
                 ...accountServiceFromRedux,
                 coordinates: accountServiceFromRedux.coordinates ? {
                     type: 'Point',

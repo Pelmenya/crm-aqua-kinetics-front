@@ -1,14 +1,17 @@
 import { FC, useState } from 'react';
 import { YMaps, Map, Polyline, Polygon } from '@pbe/react-yandex-maps';
+import { TCoordinates } from '@/entities/account-service/model/account-service-slice';
 
 // Компонент карты
-export const MapWithPolyline: FC = () => {
+export const MapWithPolyline: FC<{coordinates: TCoordinates}> = ({
+    coordinates
+}) => {
     const [lineCoords, setLineCoords] = useState<number[][]>([]);
     const [polygonCoords, setPolygonCoords] = useState<number[][] | null>(null);
 
     // Начальные координаты центра карты
     const mapState = {
-        center: [55.751574, 37.573856], // Москва
+        center: [coordinates.latitude, coordinates.longitude], // Москва
         zoom: 10,
     };
 
@@ -37,7 +40,7 @@ export const MapWithPolyline: FC = () => {
         }}
         >
             <div>
-                <Map defaultState={mapState} width="100%" height="calc(100vh - 120px)" onClick={handleMapClick}>
+                <Map defaultState={mapState} width="100%" height="calc(100vh - 80px)" onClick={handleMapClick}>
                     <Polyline
                         geometry={lineCoords}
                         options={{
