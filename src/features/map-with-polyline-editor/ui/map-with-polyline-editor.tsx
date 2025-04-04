@@ -1,8 +1,9 @@
 import { FC, useState, useCallback } from 'react';
-import { YMaps, Map, Polyline, Polygon } from '@pbe/react-yandex-maps';
+import { YMaps, Map, Polyline, Polygon, Placemark } from '@pbe/react-yandex-maps';
 import { useDispatch, useSelector } from 'react-redux';
 import { addWorkDayArea, removeWorkDayArea, resetAreas, setGeneralArea, WorkDayArea } from '../model/service-area-slice';
 import { TRootState } from '@/app/store/store';
+import { polygon as turfPolygon, booleanContains, booleanPointInPolygon, point } from '@turf/turf';
 import { TCoordinates } from '../model/service-area-slice';
 import { PolygonEditorModal } from './poligon-editor-modal';
 
@@ -21,12 +22,23 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
 
     const mapState = {
         center: [coordinates.latitude, coordinates.longitude],
-        zoom: 10,
+        zoom: 12, // Увеличен зум для лучшей видимости
     };
 
     const handleMapClick = useCallback((event: ymaps.IEvent) => {
         const coords = event.get('coords');
         console.log('Clicked coordinates:', coords); // Отладочный вывод
+
+        if (generalArea.length > 0) {
+            const p = point(coords);
+            const generalAreaTurf = turfPolygon([generalArea]);
+
+            if (!booleanPointInPolygon(p, generalAreaTurf)) {
+                console.error("Точка выходит за пределы главного полигона");
+                return;
+            }
+        }
+
         setLineCoords((prevCoords) => {
             if (prevCoords.length > 0 && areCoordsClose(prevCoords[0], coords)) {
                 handleCloseLine();
@@ -34,7 +46,7 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
             }
             return [...prevCoords, coords];
         });
-    }, [lineCoords]);
+    }, [lineCoords, generalArea]);
 
     const handleCloseLine = useCallback(() => {
         if (lineCoords.length > 2) {
@@ -43,10 +55,17 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
             if (!generalArea.length) {
                 dispatch(setGeneralArea(newPolygon));
             } else {
-                setSelectedWorkDay({ day: '', coordinates: newPolygon, color: '#FF000088', name: '' });
-                setIsModalOpen(true);
+                const newPolygonTurf = turfPolygon([newPolygon]);
+                const generalAreaTurf = turfPolygon([generalArea]);
+
+                if (booleanContains(generalAreaTurf, newPolygonTurf)) {
+                    setSelectedWorkDay({ day: '', coordinates: newPolygon, color: '#FF000088', name: '' });
+                    setIsModalOpen(true);
+                } else {
+                    console.error("Новый полигон выходит за пределы общего ареала");
+                }
             }
-            setLineCoords([]); // Очистить линии после закрытия
+            setLineCoords([]);
         }
     }, [lineCoords, dispatch, generalArea]);
 
@@ -55,6 +74,10 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
         setLineCoords([]);
     }, [dispatch]);
 
+    const handleUndo = useCallback(() => {
+        setLineCoords((prevCoords) => prevCoords.slice(0, -1));
+    }, []);
+
     const handleModalClose = () => {
         setIsModalOpen(false);
         setSelectedWorkDay(null);
@@ -62,7 +85,7 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
 
     const handleModalSave = (workDayData: WorkDayArea) => {
         if (workDayData.coordinates.length > 2) {
-                dispatch(addWorkDayArea(workDayData));
+            dispatch(addWorkDayArea(workDayData));
         } else {
             console.error("Недостаточно точек для создания полигона");
         }
@@ -91,7 +114,7 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
                                 fillColor: '#00FF0088',
                                 strokeColor: '#0000FF',
                                 strokeWidth: 3,
-                                fillOpacity: 0.1, // Сделать полигон полупрозрачным для видимости
+                                fillOpacity: 0.1,
                             }}
                             onClick={handleMapClick}
                         />
@@ -104,6 +127,16 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
                             strokeStyle: 'solid',
                         }}
                     />
+                    {lineCoords.map((coord, index) => (
+                        <Placemark
+                            key={index}
+                            geometry={coord}
+                            options={{
+                                preset: 'islands#redCircleIcon', // Используем предустановленный стиль
+                                iconColor: '#FF0000', // Цвет точек (если нужен)
+                            }}
+                        />
+                    ))}
                     {workDayAreas.map((area, index) => (
                         <Polygon
                             key={index}
@@ -112,19 +145,23 @@ export const MapWithPolylineEditor: FC<TProps> = ({ coordinates }) => {
                                 fillColor: area.color,
                                 strokeColor: '#FF0000',
                                 strokeWidth: 3,
-                                fillOpacity: 0.5, // Полупрозрачность для видимости
+                                fillOpacity: 0.5,
                             }}
-                            onClick={() => {
-                                console.log('WorkDay area clicked', area); // Отладочный вывод
-                                setSelectedWorkDay(area);
-                                setIsModalOpen(true);
+                            onClick={(e: ymaps.IEvent) => {
+                                if (lineCoords.length === 0) {
+                                    setSelectedWorkDay(area);
+                                    setIsModalOpen(true);
+                                } else {
+                                    handleMapClick(e);
+                                }
                             }}
                         />
                     ))}
                 </Map>
                 <div className="pt-4 group space-x-2">
-                    <button className="btn btn-primary w-[48%]" onClick={handleCloseLine}>Замкнуть линию</button>
-                    <button className="btn btn-secondary w-[48%]" onClick={handleClear}>Очистить</button>
+                    <button className="btn btn-primary w-[30%]" onClick={handleCloseLine}>Замкнуть линию</button>
+                    <button className="btn btn-secondary w-[30%]" onClick={handleClear}>Очистить</button>
+                    <button className="btn btn-secondary w-[30%]" onClick={handleUndo}>Отменить действие</button>
                 </div>
             </div>
             {isModalOpen && selectedWorkDay && (
